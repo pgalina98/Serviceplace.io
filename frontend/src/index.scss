@@ -15,6 +15,8 @@ $light-grey: #eff4f7;
 $title-grey: #a9abac;
 $blue-grey: #444f60;
 $muted-grey: #999;
+$light-blue: #4fc1ea;
+$blue: #1572a1;
 $light-blue-grey: #98a9c3;
 $medium-grey: #66676b;
 $basaltic-grey: #878787;
@@ -28,6 +30,28 @@ $dark-grey: #344258;
 $border-grey: #ccc;
 $muted-grey: #999;
 $section-grey: #fbfbfb;
+
+/* ==========================================================================
+Custom scrollbar
+========================================================================== */
+
+::-webkit-scrollbar {
+  width: 13px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 13px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $light-blue;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $blue;
+}
 
 /* ==========================================================================
 General Keyframes animations
