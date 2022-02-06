@@ -1,15 +1,11 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from "react";
-import Navbar from "../components/navbar/navbar";
-import NavbarSticky from "../components/navbarsticky/navbarsticky";
 
 class Homepage extends React.Component {
   render() {
     return (
       <div>
-        <Navbar />
-        <NavbarSticky />
         <section className="hero is-default is-bold">
           <div className="hero-body">
             <div className="container">

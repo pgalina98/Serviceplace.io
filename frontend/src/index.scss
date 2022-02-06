@@ -727,7 +727,7 @@ Navbar
         margin-top: 4px;
         border-top-color: $secondary;
         .navbar-item {
-          padding: 10px 20px;
+          padding: 10px 20px !important;
         }
       }
       &:hover {

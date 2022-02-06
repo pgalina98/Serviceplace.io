@@ -2,18 +2,21 @@
 
 import React from "react";
 
-const Navbar = () => {
+import { Link } from "react-router-dom";
+
+const Navbar = ({ id }) => {
   return (
     <nav
+      id={id}
       className="navbar is-fresh is-transparent no-shadow"
       role="navigation"
       aria-label="main navigation"
     >
       <div className="container">
         <div className="navbar-brand">
-          <a className="navbar-item">
+          <Link to="/" className="navbar-item" style={{ marginBottom: 10 }}>
             <div className="title">Serviceplace.io</div>
-          </a>
+          </Link>
 
           <a className="navbar-item is-hidden-desktop is-hidden-tablet">
             <div
@@ -80,12 +83,15 @@ const Navbar = () => {
           </div>
 
           <div className="navbar-end">
-            <a href="#" className="navbar-item is-secondary">
-              Features
-            </a>
-            <a href="#" className="navbar-item is-secondary">
-              Pricing
-            </a>
+            <Link to="/services" className="navbar-item is-secondary">
+              Services
+            </Link>
+            <Link to="/profile" className="navbar-item is-secondary">
+              Profile
+            </Link>
+            <Link to="/faq" className="navbar-item is-secondary">
+              FAQ
+            </Link>
             <div className="navbar-item has-dropdown is-hoverable">
               <a className="navbar-link">Dropdown</a>
 
@@ -95,18 +101,18 @@ const Navbar = () => {
                 <a className="navbar-item">Dropdown item</a>
               </div>
             </div>
-            <a
-              href="#"
+            <Link
+              to="/login"
               className="navbar-item is-secondary modal-trigger"
               data-modal="auth-modal"
             >
               Log in
-            </a>
-            <a className="navbar-item">
+            </Link>
+            <Link to="/register" className="navbar-item">
               <span className="button signup-button rounded secondary-btn raised">
                 Sign up
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
