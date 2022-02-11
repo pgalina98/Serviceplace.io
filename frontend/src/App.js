@@ -1,9 +1,12 @@
 import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+
+import initializeStore from "./store";
 
 import Homepage from "./pages/homepage";
-import FrequentlyAskedQuestions from "./pages/frequentlyaskedquestions";
+import FrequentlyAskedQuestions from "./pages/frequently-asked-questions";
 import Profile from "./pages/profile";
 import Servkces from "./pages/services";
 import Login from "./pages/login";
@@ -12,9 +15,11 @@ import Register from "./pages/regiister";
 import Sidebar from "./components/sidebar/sidebar";
 import Navbar from "components/navbar/navbar";
 
+const store = initializeStore();
+
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <Router>
         <Navbar id="navbar" />
         <Navbar id="navbar-clone" />
@@ -28,7 +33,7 @@ function App() {
           <Route path="/" element={<Homepage />} />
         </Routes>
       </Router>
-    </div>
+    </Provider>
   );
 }
 
