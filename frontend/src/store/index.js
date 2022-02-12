@@ -27,7 +27,9 @@ const initializeStore = () => {
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 
-  store.dispatch = initializeDispatchWithLogger(store);
+  if (process.env.NODE_ENV === "development") {
+    store.dispatch = initializeDispatchWithLogger(store);
+  }
 
   return store;
 };
