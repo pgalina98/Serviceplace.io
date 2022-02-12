@@ -10,7 +10,7 @@ import FrequentlyAskedQuestions from "./pages/frequently-asked-questions";
 import Profile from "./pages/profile";
 import Servkces from "./pages/services";
 import Login from "./pages/login";
-import Register from "./pages/regiister";
+import Register from "./pages/register";
 
 import Sidebar from "./components/sidebar/sidebar";
 import Navbar from "components/navbar/navbar";

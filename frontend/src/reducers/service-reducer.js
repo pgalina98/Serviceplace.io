@@ -2,7 +2,7 @@ import { ACTION_TYPES } from "../actions/service-actions";
 import { SUCCESS } from "../utils/action-type-util";
 
 const initialState = {
-  items: [],
+  services: [],
 };
 
 const serviceReducer = (state = initialState, action) => {
@@ -10,7 +10,7 @@ const serviceReducer = (state = initialState, action) => {
     case SUCCESS(ACTION_TYPES.GET_SERVICES_DATA): {
       return {
         ...state,
-        items: action.payload,
+        services: action.payload,
       };
     }
 
