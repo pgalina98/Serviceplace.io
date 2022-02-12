@@ -13,7 +13,7 @@ export const fetchServices = () => {
   const snapshot = getDocs(servicesCollection);
   snapshot.then((response) => {
     response.forEach((document) => {
-      services.push({ id: document.id, name: document.data().name });
+      services.push({ ...document.data() });
     });
   });
 

@@ -1,9 +1,29 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from "react";
+import { connect } from "react-redux";
+
+import ServiceCard from "../components/service-card/service-card";
+import { getServices } from "actions/service-actions";
 
 class Homepage extends React.Component {
+  state = {
+    services: [],
+  };
+
+  componentDidMount() {
+    this.props.dispatch(getServices());
+  }
+
+  renderServices = (services) => {
+    return services.map((service) => (
+      <ServiceCard key={service.id} data={service} />
+    ));
+  };
+
   render() {
+    const { services } = this.props;
+
     return (
       <div>
         <section className="hero is-default is-bold">
@@ -49,87 +69,10 @@ class Homepage extends React.Component {
 
             <div className="content-wrapper">
               <div className="columns">
-                <div className="column is-one-third">
-                  <div
-                    className="feature-card is-bordered has-text-centered revealOnScroll delay-1"
-                    data-animation="fadeInLeft"
-                  >
-                    <div className="card-title">
-                      <h4>App builder</h4>
-                    </div>
-                    <div className="card-icon">
-                      <img
-                        src="https://images.unsplash.com/photo-1574333751899-72c1e3d963fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80"
-                        alt=""
-                      />
-                    </div>
-                    <div className="card-text">
-                      <p>This is some explanatory text that is on two rows</p>
-                    </div>
-                    <div className="card-action">
-                      <a
-                        href="#"
-                        className="button btn-align-md accent-btn raised"
-                      >
-                        Free Trial
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="column">
-                  <div
-                    className="feature-card is-bordered has-text-centered revealOnScroll delay-2"
-                    data-animation="fadeInLeft"
-                  >
-                    <div className="card-title">
-                      <h4>Cloud integration</h4>
-                    </div>
-                    <div className="card-icon">
-                      <img
-                        src="https://images.unsplash.com/photo-1574333751899-72c1e3d963fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80"
-                        alt=""
-                      />
-                    </div>
-                    <div className="card-text">
-                      <p>This is some explanatory text that is on two rows</p>
-                    </div>
-                    <div className="card-action">
-                      <a
-                        href="#"
-                        className="button btn-align-md secondary-btn raised"
-                      >
-                        Get Started
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <div className="column">
-                  <div
-                    className="feature-card is-bordered has-text-centered revealOnScroll delay-3"
-                    data-animation="fadeInLeft"
-                  >
-                    <div className="card-title">
-                      <h4>Addons & Plugins</h4>
-                    </div>
-                    <div className="card-icon">
-                      <img
-                        src="https://images.unsplash.com/photo-1574333751899-72c1e3d963fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80"
-                        alt=""
-                      />
-                    </div>
-                    <div className="card-text">
-                      <p>This is some explanatory text that is on two rows</p>
-                    </div>
-                    <div className="card-action">
-                      <a
-                        href="#"
-                        className="button btn-align-md primary-btn raised"
-                      >
-                        Get Started
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                {services &&
+                  services.map((service) => (
+                    <ServiceCard key={service.id} data={service} />
+                  ))}
               </div>
             </div>
           </div>
@@ -139,4 +82,6 @@ class Homepage extends React.Component {
   }
 }
 
-export default Homepage;
+const mapStateToProps = (state) => ({ services: state.serviceState.services });
+
+export default connect(mapStateToProps)(Homepage);
