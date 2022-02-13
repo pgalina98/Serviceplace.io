@@ -1,7 +1,8 @@
 import { createStore, combineReducers } from "redux";
 
 import {
-  initializeDispatchWithLoggerMiddleware,
+  initializeDispatchWithLogger,
+  initializeDispatchWithPromiseSupport,
   applyMiddlewares,
 } from "../config/dispatch-middlewares";
 
@@ -20,8 +21,9 @@ const initializeStore = () => {
   );
 
   if (process.env.NODE_ENV === "development") {
-    middlewares.push(initializeDispatchWithLoggerMiddleware);
+    middlewares.push(initializeDispatchWithLogger);
   }
+  middlewares.push(initializeDispatchWithPromiseSupport);
 
   applyMiddlewares(store, middlewares);
 

@@ -1,4 +1,4 @@
-export const initializeDispatchWithLoggerMiddleware =
+export const initializeDispatchWithLogger =
   (store) => (dispatch) => (action) => {
     console.group(action.type);
     console.log("[DISPATCHED ACTION]:", action);
@@ -8,6 +8,15 @@ export const initializeDispatchWithLoggerMiddleware =
     console.groupEnd(action.type);
 
     return dispatchedAction;
+  };
+
+export const initializeDispatchWithPromiseSupport =
+  (store) => (dispatch) => (action) => {
+    if (typeof action.payload.then === "function") {
+      return action.payload.then(dispatch);
+    }
+
+    return dispatch(action);
   };
 
 export const applyMiddlewares = (store, middlewares) => {
