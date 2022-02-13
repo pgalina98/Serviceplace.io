@@ -2,7 +2,7 @@
 
 import React from "react";
 
-const ServiceCard = () => {
+const ServiceCard = ({ data: service }) => {
   return (
     <div className="column">
       <div
@@ -10,16 +10,13 @@ const ServiceCard = () => {
         data-animation="fadeInLeft"
       >
         <div className="card-title">
-          <h4>Addons & Plugins</h4>
+          <h4>{service.title}</h4>
         </div>
         <div className="card-icon">
-          <img
-            src="https://images.unsplash.com/photo-1574333751899-72c1e3d963fd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80"
-            alt=""
-          />
+          <img src={service.image} alt="" />
         </div>
         <div className="card-text">
-          <p>This is some explanatory text that is on two rows</p>
+          <p>{service.description}</p>
         </div>
         <div className="card-action">
           <a href="#" className="button btn-align-md primary-btn raised">

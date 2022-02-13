@@ -4,7 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import ServiceCard from "../components/service-card/service-card";
-import { getServices } from "actions/service-actions";
+import { fetchServices } from "actions/service-actions";
 
 class Homepage extends React.Component {
   state = {
@@ -12,7 +12,9 @@ class Homepage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(getServices());
+    fetchServices().then((services) => {
+      this.setState({ services });
+    });
   }
 
   renderServices = (services) => {
@@ -22,7 +24,7 @@ class Homepage extends React.Component {
   };
 
   render() {
-    const { services } = this.props;
+    const { services } = this.state;
 
     return (
       <div>
@@ -68,12 +70,7 @@ class Homepage extends React.Component {
             </div>
 
             <div className="content-wrapper">
-              <div className="columns">
-                {services &&
-                  services.map((service) => (
-                    <ServiceCard key={service.id} data={service} />
-                  ))}
-              </div>
+              <div className="columns">{this.renderServices(services)}</div>
             </div>
           </div>
         </section>
@@ -82,6 +79,6 @@ class Homepage extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ services: state.serviceState.services });
+const mapStateToProps = (state) => ({ services: state.servicesState.services });
 
 export default connect(mapStateToProps)(Homepage);

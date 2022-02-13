@@ -1,4 +1,4 @@
-import { doc, getDocs } from "firebase/firestore";
+import { getDocs } from "firebase/firestore";
 
 import { SUCCESS } from "utils/action-type-util";
 import { servicesCollection } from "../firebase/firestore/collections";
@@ -7,22 +7,17 @@ export const ACTION_TYPES = {
   GET_SERVICES_DATA: "servicesState/GET_SERVICES_DATA",
 };
 
-export const fetchServices = () => {
-  const services = [];
-
-  const snapshot = getDocs(servicesCollection);
-  snapshot.then((response) => {
-    response.forEach((document) => {
-      services.push({ ...document.data() });
-    });
-  });
-
-  return services;
+export const fetchServices = async () => {
+  const snapshot = await getDocs(servicesCollection);
+  return snapshot.docs.map((document) => document.data());
 };
 
 export const getServices = () => {
-  return {
-    type: SUCCESS(ACTION_TYPES.GET_SERVICES_DATA),
-    payload: fetchServices(),
-  };
+  const snapshot = getDocs(servicesCollection);
+  snapshot.then((document) => {
+    return {
+      type: SUCCESS(ACTION_TYPES.GET_SERVICES_DATA),
+      payload: document.docs,
+    };
+  });
 };

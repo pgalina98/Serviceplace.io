@@ -1,15 +1,6 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
-import { getServices } from "actions/service-actions";
+import React from "react";
 
 const Services = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getServices());
-  });
-
   return <div>Services page</div>;
 };
 

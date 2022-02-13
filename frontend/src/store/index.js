@@ -19,7 +19,7 @@ const initializeDispatchWithLogger = (store) => {
 
 const initializeStore = () => {
   const combinedReducers = combineReducers({
-    serviceState: serviceReducer,
+    servicesState: serviceReducer,
   });
 
   const store = createStore(
