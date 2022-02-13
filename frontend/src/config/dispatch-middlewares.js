@@ -1,7 +1,5 @@
-export const initializeDispatchWithLoggerMiddleware = (store) => {
-  const dispatch = store.dispatch;
-
-  return (action) => {
+export const initializeDispatchWithLoggerMiddleware =
+  (store) => (dispatch) => (action) => {
     console.group(action.type);
     console.log("[DISPATCHED ACTION]:", action);
     console.log("[PREVIOUS STATE]:", store.getState());
@@ -11,10 +9,9 @@ export const initializeDispatchWithLoggerMiddleware = (store) => {
 
     return dispatchedAction;
   };
-};
 
 export const applyMiddlewares = (store, middlewares) => {
   middlewares.forEach((middleware) => {
-    store.dispatch = middleware(store);
+    store.dispatch = middleware(store)(store.dispatch);
   });
 };
