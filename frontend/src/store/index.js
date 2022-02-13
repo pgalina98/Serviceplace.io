@@ -1,23 +1,15 @@
 import { createStore, combineReducers } from "redux";
 
+import {
+  initializeDispatchWithLoggerMiddleware,
+  applyMiddlewares,
+} from "../config/dispatch-middlewares";
+
 import serviceReducer from "reducers/service-reducer";
 
-const initializeDispatchWithLogger = (store) => {
-  const dispatch = store.dispatch;
-
-  return (action) => {
-    console.group(action.type);
-    console.log("[DISPATCHED ACTION]:", action);
-    console.log("[PREVIOUS STATE]:", store.getState());
-    const dispatchedAction = dispatch(action);
-    console.log("[NEW STATE]:", store.getState());
-    console.groupEnd(action.type);
-
-    return dispatchedAction;
-  };
-};
-
 const initializeStore = () => {
+  const middlewares = [];
+
   const combinedReducers = combineReducers({
     servicesState: serviceReducer,
   });
@@ -28,8 +20,10 @@ const initializeStore = () => {
   );
 
   if (process.env.NODE_ENV === "development") {
-    store.dispatch = initializeDispatchWithLogger(store);
+    middlewares.push(initializeDispatchWithLoggerMiddleware);
   }
+
+  applyMiddlewares(store, middlewares);
 
   return store;
 };

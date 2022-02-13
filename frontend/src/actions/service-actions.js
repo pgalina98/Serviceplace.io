@@ -9,7 +9,12 @@ export const ACTION_TYPES = {
 
 export const fetchServices = async () => {
   const snapshot = await getDocs(servicesCollection);
-  return snapshot.docs.map((document) => document.data());
+  return snapshot.docs.map((document) => {
+    return {
+      id: document.id,
+      ...document.data(),
+    };
+  });
 };
 
 export const getServices = () => {
