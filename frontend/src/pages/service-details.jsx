@@ -12,7 +12,6 @@ const ServiceDetails = () => {
 
   useEffect(() => {
     dispatch(getServiceById(id)).then((service) => {
-      console.log("SERVICE: ", service.payload);
       setService(service.payload);
     });
   }, []);
