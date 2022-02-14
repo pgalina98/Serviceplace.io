@@ -14,7 +14,7 @@ const ServiceDetails = () => {
     dispatch(getServiceById(id)).then((service) => {
       setService(service.payload);
     });
-  }, []);
+  }, [id]);
 
   return (
     <section className="hero is-fullheight is-default is-bold">
