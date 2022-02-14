@@ -8,10 +8,7 @@ const initialState = {
 const serviceReducer = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESS(ACTION_TYPES.GET_SERVICES_DATA): {
-      return {
-        ...state,
-        services: action.payload,
-      };
+      return { ...state, services: [...action.payload] };
     }
 
     default:

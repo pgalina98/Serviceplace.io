@@ -1,6 +1,7 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ data: service }) => {
   return (
@@ -19,9 +20,12 @@ const ServiceCard = ({ data: service }) => {
           <p>{service.description}</p>
         </div>
         <div className="card-action">
-          <a href="#" className="button btn-align-md primary-btn raised">
-            Get Started
-          </a>
+          <Link
+            to={`/services/${service.id}`}
+            className="button btn-align-md primary-btn raised"
+          >
+            Learn more
+          </Link>
         </div>
       </div>
     </div>

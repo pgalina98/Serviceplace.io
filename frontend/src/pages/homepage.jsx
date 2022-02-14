@@ -4,7 +4,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import ServiceCard from "../components/service-card/service-card";
-import { fetchServices } from "actions/service-actions";
+import { getServices } from "actions/service-actions";
 
 class Homepage extends React.Component {
   state = {
@@ -12,8 +12,8 @@ class Homepage extends React.Component {
   };
 
   componentDidMount() {
-    fetchServices().then((services) => {
-      this.setState({ services });
+    this.props.dispatch(getServices()).then((services) => {
+      this.setState({ services: services.payload });
     });
   }
 

@@ -11,6 +11,7 @@ import Profile from "./pages/profile";
 import Servkces from "./pages/services";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import ServkceDetails from "./pages/service-details";
 
 import Sidebar from "./components/sidebar/sidebar";
 import Navbar from "components/navbar/navbar";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/faq" element={<FrequentlyAskedQuestions />} />
           <Route path="/services" element={<Servkces />} />
+          <Route path="/services/:id" element={<ServkceDetails />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Homepage />} />
         </Routes>

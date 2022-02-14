@@ -12,8 +12,8 @@ export const initializeDispatchWithLogger =
 
 export const initializeDispatchWithPromiseSupport =
   (store) => (dispatch) => (action) => {
-    if (typeof action.payload.then === "function") {
-      return action.payload.then(dispatch);
+    if (typeof action.then === "function") {
+      return action.then(dispatch);
     }
 
     return dispatch(action);
