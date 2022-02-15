@@ -1,7 +1,5 @@
-import { getDocs } from "firebase/firestore";
-
 import { SUCCESS } from "utils/action-type-util";
-import { servicesCollection } from "../firebase/firestore/collections";
+import * as api from "../firebase/api";
 
 export const ACTION_TYPES = {
   GET_SERVICES_DATA: "servicesState/GET_SERVICES_DATA",
@@ -9,9 +7,7 @@ export const ACTION_TYPES = {
 };
 
 export const getServices = () => {
-  const snapshot = getDocs(servicesCollection);
-
-  return snapshot.then((response) => {
+  return api.fetchServices().then((response) => {
     const services = response.docs.map((document) => ({
       id: document.id,
       ...document.data(),
@@ -22,9 +18,7 @@ export const getServices = () => {
 };
 
 export const getServiceById = (id) => {
-  const snapshot = getDocs(servicesCollection);
-
-  return snapshot.then((response) => {
+  return api.fetchServices().then((response) => {
     const service = response.docs
       .map((document) => ({
         id: document.id,
