@@ -6,17 +6,28 @@ import { useParams } from "react-router";
 
 import { getServiceById } from "../actions/service-actions";
 
+import Spinner from "../components/spinner/spinner";
+
 const ServiceDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const [service, setService] = useState();
 
   useEffect(() => {
+    setIsLoading(true);
+
     dispatch(getServiceById(id)).then((service) => {
       setService(service.payload);
+      setIsLoading(false);
     });
   }, [id]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <section className="hero is-fullheight is-default is-bold">
