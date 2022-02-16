@@ -3,17 +3,22 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import ServiceCard from "../components/service-card/service-card";
 import { getServices } from "actions/service-actions";
+
+import ServiceCard from "../components/service-card/service-card";
+import Spinner from "../components/spinner/spinner";
 
 class Homepage extends React.Component {
   state = {
     services: [],
+    isLoading: true,
   };
 
   componentDidMount() {
+    this.setState({ ...this.state.services, isLoading: true });
+
     this.props.dispatch(getServices()).then((services) => {
-      this.setState({ services: services.payload });
+      this.setState({ services: services.payload, isLoading: false });
     });
   }
 
@@ -24,7 +29,11 @@ class Homepage extends React.Component {
   };
 
   render() {
-    const { services } = this.state;
+    const { services, isLoading } = this.state;
+
+    if (isLoading) {
+      return <Spinner />;
+    }
 
     return (
       <div>
