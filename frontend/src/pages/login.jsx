@@ -11,7 +11,10 @@ const Login = () => {
           <p className="subtitle has-text-grey">Please login to proceed.</p>
           <div className="box">
             <figure className="avatar">
-              <img src="http://placehold.it/128x128" alt="avatar" />
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDtUSMTukZTR-a8r3sPbSzUeVwO9JKPsqgCQ&usqp=CAU"
+                alt="avatar"
+              />
             </figure>
             <form>
               <div className="field">
@@ -20,8 +23,8 @@ const Login = () => {
                     className="input is-large"
                     type="email"
                     placeholder="Your Email"
-                    autofocus=""
-                    autocomplete="email"
+                    autoFocus=""
+                    autoComplete="email"
                   />
                   <div className="form-error">
                     <span className="help is-danger">Email is required</span>
@@ -37,7 +40,7 @@ const Login = () => {
                     className="input is-large"
                     type="password"
                     placeholder="Your Password"
-                    autocomplete="current-password"
+                    autoComplete="current-password"
                   />
                   <div className="form-error">
                     <span className="help is-danger">Password is required</span>

@@ -1,8 +1,18 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
+/* eslint no-useless-escape: 0 */
 
 import React from "react";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const handleRegisterButtonClicked = (data) => {};
+
   return (
     <div className="auth-page">
       <div className="container has-text-centered">
@@ -11,85 +21,154 @@ const Register = () => {
           <p className="subtitle has-text-grey">Please Register to proceed.</p>
           <div className="box">
             <figure className="avatar">
-              <img src="http://placehold.it/128x128" alt="avatar" />
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDtUSMTukZTR-a8r3sPbSzUeVwO9JKPsqgCQ&usqp=CAU"
+                alt="avatar"
+              />
             </figure>
-            <form>
+            <form onSubmit={handleSubmit(handleRegisterButtonClicked)}>
               <div className="field">
                 <div className="control">
                   <input
+                    {...register("email", {
+                      required: true,
+                      pattern:
+                        /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
+                    })}
                     name="email"
                     className="input is-large"
                     type="email"
                     placeholder="Your Email"
-                    autofocus=""
-                    autocomplete="email"
+                    autoFocus=""
+                    autoComplete="email"
                   />
-                  <div className="form-error">
-                    <span className="help is-danger">Email is required</span>
-                    <span className="help is-danger">
-                      Email address is not valid
-                    </span>
-                  </div>
+                  {errors.email && (
+                    <div className="form-error">
+                      {errors.email.type === "required" ? (
+                        <span className="help is-danger">
+                          Email is required
+                        </span>
+                      ) : (
+                        <span className="help is-danger">
+                          Email address is not valid
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="field">
                 <div className="control">
                   <input
+                    {...register("fullName", {
+                      required: true,
+                      minLength: 10,
+                    })}
                     name="fullName"
                     className="input is-large"
                     type="text"
                     placeholder="Full Name"
-                    autofocus=""
+                    autoFocus=""
                   />
-                  <div className="form-error">
-                    <span className="help is-danger">Name is required</span>
-                    <span className="help is-danger">Name is not valid</span>
-                  </div>
+                  {errors.fullName && (
+                    <div className="form-error">
+                      {errors.fullName.type === "required" ? (
+                        <span className="help is-danger">
+                          Fullname is required
+                        </span>
+                      ) : (
+                        <span className="help is-danger">
+                          Fullname must contains at least 10 characters
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="field">
                 <div className="control">
                   <input
+                    {...register("avatar", {
+                      required: true,
+                      pattern:
+                        /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/,
+                    })}
                     name="avatar"
                     className="input is-large"
                     type="text"
                     placeholder="Avatar"
-                    autofocus=""
+                    autoFocus=""
                   />
-                  <div className="form-error">
-                    <span className="help is-danger">Avatar is required</span>
-                    <span className="help is-danger">Avatart is not valid</span>
-                  </div>
+                  {errors.avatar && (
+                    <div className="form-error">
+                      {errors.avatar.type === "required" ? (
+                        <span className="help is-danger">
+                          Avatar is required
+                        </span>
+                      ) : (
+                        <span className="help is-danger">
+                          Avatar URL is not valid
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="field">
                 <div className="control">
                   <input
+                    {...register("password", {
+                      required: true,
+                      minLength: 7,
+                    })}
                     name="password"
                     className="input is-large"
                     type="password"
                     placeholder="Your Password"
-                    autocomplete="current-password"
+                    autoComplete="current-password"
                   />
-                  <div className="form-error">
-                    <span className="help is-danger">Password is required</span>
-                  </div>
+                  {errors.password && (
+                    <div className="form-error">
+                      {errors.password.type === "required" ? (
+                        <span className="help is-danger">
+                          Password is required
+                        </span>
+                      ) : (
+                        <span className="help is-danger">
+                          Password must contains at least 10 characters
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="field">
                 <div className="control">
                   <input
+                    {...register("passwordConfirmation", {
+                      required: true,
+                      minLength: 7,
+                    })}
                     name="passwordConfirmation"
                     className="input is-large"
                     type="password"
                     placeholder="Repeat Password"
-                    autocomplete="current-password"
+                    autoComplete="current-password"
                   />
-                  <div className="form-error">
-                    <span className="help is-danger">
-                      Password Confirmation is required
-                    </span>
-                  </div>
+                  {errors.passwordConfirmation && (
+                    <div className="form-error">
+                      {errors.password.type === "required" ? (
+                        <span className="help is-danger">
+                          Password Confirmation is required
+                        </span>
+                      ) : (
+                        <span className="help is-danger">
+                          Password Confirmation must contains at least 10
+                          characters
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <button
