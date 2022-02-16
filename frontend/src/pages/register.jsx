@@ -4,13 +4,17 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-import { isValidImage } from "../helpers/validator";
+import {
+  isValidImage,
+  isConfirmationPasswordMatched,
+} from "../helpers/validator";
 
 const Register = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    getValues,
   } = useForm();
 
   const handleRegisterButtonClicked = (data) => {};
@@ -136,7 +140,7 @@ const Register = () => {
                         </span>
                       ) : (
                         <span className="help is-danger">
-                          Password must contains at least 10 characters
+                          Password must contains at least 7 characters
                         </span>
                       )}
                     </div>
@@ -149,6 +153,10 @@ const Register = () => {
                     {...register("passwordConfirmation", {
                       required: true,
                       minLength: 7,
+                      validate: {
+                        isConfirmationPasswordMatched:
+                          isConfirmationPasswordMatched(getValues),
+                      },
                     })}
                     name="passwordConfirmation"
                     className="input is-large"
@@ -158,13 +166,19 @@ const Register = () => {
                   />
                   {errors.passwordConfirmation && (
                     <div className="form-error">
-                      {errors.password.type === "required" ? (
+                      {errors.passwordConfirmation.type === "required" ? (
                         <span className="help is-danger">
                           Password Confirmation is required
                         </span>
+                      ) : errors.passwordConfirmation.type ===
+                        "isConfirmationPasswordMatched" ? (
+                        <span className="help is-danger">
+                          Password Confirmation not matched with password.
+                          Please try again!
+                        </span>
                       ) : (
                         <span className="help is-danger">
-                          Password Confirmation must contains at least 10
+                          Password Confirmation must contains at least 7
                           characters
                         </span>
                       )}
