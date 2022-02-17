@@ -4,6 +4,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
+import * as api from "../firebase/api/controllers/authentication-controller";
+
 import {
   isValidImage,
   isConfirmationPasswordMatched,
@@ -17,7 +19,9 @@ const Register = () => {
     getValues,
   } = useForm();
 
-  const handleRegisterButtonClicked = (data) => {};
+  const handleRegisterButtonClicked = (data) => {
+    api.registerUser(data);
+  };
 
   return (
     <div className="auth-page">

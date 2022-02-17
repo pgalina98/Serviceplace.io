@@ -1,5 +1,5 @@
 import { SUCCESS } from "utils/action-type-util";
-import * as api from "../firebase/api";
+import * as api from "../firebase/api/controllers/services-controller";
 
 export const ACTION_TYPES = {
   GET_SERVICES_DATA: "servicesState/GET_SERVICES_DATA",
