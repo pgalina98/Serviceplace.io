@@ -16,11 +16,15 @@ import ServkceDetails from "./pages/service-details";
 import Sidebar from "./components/sidebar/sidebar";
 import Navbar from "components/navbar/navbar";
 
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 const store = initializeStore();
 
 function App() {
   return (
     <Provider store={store}>
+      <ToastContainer />
       <Router>
         <Navbar id="navbar" />
         <Navbar id="navbar-clone" />
