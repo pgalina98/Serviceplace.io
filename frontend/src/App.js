@@ -2,6 +2,7 @@ import React from "react";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ToastProvider } from "react-toast-notifications";
 
 import initializeStore from "./store";
 
@@ -16,29 +17,27 @@ import ServkceDetails from "./pages/service-details";
 import Sidebar from "./components/sidebar/sidebar";
 import Navbar from "components/navbar/navbar";
 
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-
 const store = initializeStore();
 
 function App() {
   return (
     <Provider store={store}>
-      <ToastContainer />
-      <Router>
-        <Navbar id="navbar" />
-        <Navbar id="navbar-clone" />
-        <Sidebar />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/faq" element={<FrequentlyAskedQuestions />} />
-          <Route path="/services" element={<Servkces />} />
-          <Route path="/services/:id" element={<ServkceDetails />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<Homepage />} />
-        </Routes>
-      </Router>
+      <ToastProvider autoDismiss={true} autoDismissTimeout={4000}>
+        <Router>
+          <Navbar id="navbar" />
+          <Navbar id="navbar-clone" />
+          <Sidebar />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/faq" element={<FrequentlyAskedQuestions />} />
+            <Route path="/services" element={<Servkces />} />
+            <Route path="/services/:id" element={<ServkceDetails />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Homepage />} />
+          </Routes>
+        </Router>
+      </ToastProvider>
     </Provider>
   );
 }

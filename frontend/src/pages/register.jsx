@@ -3,8 +3,9 @@
 
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import { useToasts } from "react-toast-notifications";
 
+import { TOAST_TYPES } from "../utils/toast-util";
 import * as api from "../firebase/api/controllers/authentication-controller";
 
 import {
@@ -13,6 +14,8 @@ import {
 } from "../helpers/validator";
 
 const Register = () => {
+  const { addToast } = useToasts();
+
   const {
     register,
     formState: { errors },
@@ -21,7 +24,12 @@ const Register = () => {
   } = useForm();
 
   const handleRegisterButtonClicked = (data) => {
-    api.registerUser(data);
+    api
+      .registerUser(data)
+      .then()
+      .catch(({ message }) =>
+        addToast(message, { appearance: TOAST_TYPES.ERROR })
+      );
   };
 
   return (

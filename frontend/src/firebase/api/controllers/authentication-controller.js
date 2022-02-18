@@ -10,7 +10,7 @@ const createUser = async (data) => {
       services: [],
     });
   } catch (error) {
-    return Promise.reject(error.message);
+    return Promise.reject(error);
   }
 };
 
@@ -29,6 +29,6 @@ export const registerUser = async (user) => {
 
     return newUser;
   } catch (error) {
-    return Promise.reject(error.message);
+    return Promise.reject(error);
   }
 };
