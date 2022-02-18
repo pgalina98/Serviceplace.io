@@ -1,21 +1,23 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 /* eslint no-useless-escape: 0 */
 
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 
 import { TOAST_TYPES } from "../utils/toast-util";
 import * as api from "../firebase/api/controllers/authentication-controller";
-
+import { messages } from "../config/constants";
 import {
   isValidImage,
   isConfirmationPasswordMatched,
 } from "../helpers/validator";
+import { Button, Spinner } from "react-bootstrap";
 
 const Register = () => {
+  const navigate = useNavigate();
   const { addToast } = useToasts();
-
   const {
     register,
     formState: { errors },
@@ -23,13 +25,23 @@ const Register = () => {
     getValues,
   } = useForm();
 
+  const [isSavingData, setIsSavingData] = useState(false);
+
   const handleRegisterButtonClicked = (data) => {
+    setIsSavingData(true);
     api
       .registerUser(data)
-      .then()
-      .catch(({ message }) =>
-        addToast(message, { appearance: TOAST_TYPES.ERROR })
-      );
+      .then(() => {
+        addToast(messages.REGISTER_SUCCESS, {
+          appearance: TOAST_TYPES.SUCCESS,
+        });
+        setIsSavingData(false);
+        navigate("/");
+      })
+      .catch(({ message }) => {
+        setIsSavingData(false);
+        addToast(message, { appearance: TOAST_TYPES.ERROR });
+      });
   };
 
   return (
@@ -202,8 +214,13 @@ const Register = () => {
               <button
                 type="submit"
                 className="button is-block is-info is-large is-fullwidth"
+                disabled={isSavingData}
               >
-                Register
+                {isSavingData ? (
+                  <Spinner as="span" animation="border" />
+                ) : (
+                  "Register"
+                )}
               </button>
             </form>
           </div>
