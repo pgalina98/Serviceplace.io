@@ -13,7 +13,7 @@ import {
   isValidImage,
   isConfirmationPasswordMatched,
 } from "../helpers/validator";
-import { Button, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const Register = () => {
 
   const handleRegisterButtonClicked = (data) => {
     setIsSavingData(true);
+
     api
       .registerUser(data)
       .then(() => {

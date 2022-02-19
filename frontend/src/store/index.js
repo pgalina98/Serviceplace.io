@@ -7,12 +7,14 @@ import {
 } from "../config/dispatch-middlewares";
 
 import serviceReducer from "reducers/service-reducer";
+import authenticationReducer from "reducers/authentication-reducer";
 
 const initializeStore = () => {
   const middlewares = [];
 
   const combinedReducers = combineReducers({
     servicesState: serviceReducer,
+    authenticationState: authenticationReducer,
   });
 
   const store = createStore(

@@ -1,4 +1,8 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { addDoc } from "firebase/firestore";
 
 import { usersCollection } from "../../firestore/collections";
@@ -28,6 +32,16 @@ export const registerUser = async (user) => {
     createUser(newUser);
 
     return newUser;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const loginUser = async (user) => {
+  const { email, password } = user;
+
+  try {
+    return signInWithEmailAndPassword(getAuth(), email, password);
   } catch (error) {
     return Promise.reject(error);
   }

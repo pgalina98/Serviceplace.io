@@ -1,8 +1,41 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
-import React from "react";
+import React, { useState } from "react";
+import { Spinner } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
+import { TOAST_TYPES } from "utils/toast-util";
+
+import { authenticateUser } from "../actions/authentication-actions";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { addToast } = useToasts();
+  const dispatch = useDispatch();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const [isProceedingData, setIsProceedingData] = useState(false);
+
+  const handleLoginButtonClicked = (data) => {
+    setIsProceedingData(true);
+
+    authenticateUser(data)
+      .then(() => {
+        setIsProceedingData(false);
+        navigate("/");
+      })
+      .catch(({ message }) => {
+        setIsProceedingData(false);
+        addToast(message, { appearance: TOAST_TYPES.ERROR });
+      });
+  };
+
   return (
     <div className="auth-page">
       <div className="container has-text-centered">
@@ -16,42 +49,68 @@ const Login = () => {
                 alt="avatar"
               />
             </figure>
-            <form>
+            <form onSubmit={handleSubmit(handleLoginButtonClicked)}>
               <div className="field">
                 <div className="control">
                   <input
+                    {...register("email", {
+                      required: true,
+                      pattern:
+                        /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
+                    })}
+                    name="email"
                     className="input is-large"
                     type="email"
                     placeholder="Your Email"
                     autoFocus=""
                     autoComplete="email"
                   />
-                  <div className="form-error">
-                    <span className="help is-danger">Email is required</span>
-                    <span className="help is-danger">
-                      Email address is not valid
-                    </span>
-                  </div>
+                  {errors.email && (
+                    <div className="form-error">
+                      {errors.email.type === "required" ? (
+                        <span className="help is-danger">
+                          Email is required
+                        </span>
+                      ) : (
+                        <span className="help is-danger">
+                          Email address is not valid
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="field">
                 <div className="control">
                   <input
+                    {...register("password", {
+                      required: true,
+                    })}
+                    name="password"
                     className="input is-large"
                     type="password"
                     placeholder="Your Password"
                     autoComplete="current-password"
                   />
-                  <div className="form-error">
-                    <span className="help is-danger">Password is required</span>
-                  </div>
+                  {errors.email && (
+                    <div className="form-error">
+                      <span className="help is-danger">
+                        Password is required
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
               <button
-                type="button"
+                type="submit"
                 className="button is-block is-info is-large is-fullwidth"
+                disabled={isProceedingData}
               >
-                Sign In
+                {isProceedingData ? (
+                  <Spinner as="span" animation="border" />
+                ) : (
+                  "Sign In"
+                )}
               </button>
             </form>
           </div>
