@@ -1,7 +1,7 @@
 import React from "react";
 
 import { BrowserRouter as Router } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 
 import initializeStore from "./store";
@@ -13,6 +13,8 @@ import Routes from "./router/routes";
 const store = initializeStore();
 
 function App() {
+  // const authenticationState = useSelector((state) => state.authenticationState);
+
   return (
     <Provider store={store}>
       <ToastProvider autoDismiss={true} autoDismissTimeout={4000}>

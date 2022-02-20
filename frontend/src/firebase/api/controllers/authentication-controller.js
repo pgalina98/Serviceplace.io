@@ -3,20 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { addDoc } from "firebase/firestore";
-
-import { usersCollection } from "../../firestore/collections";
-
-const createUser = async (data) => {
-  try {
-    await addDoc(usersCollection, {
-      ...data,
-      services: [],
-    });
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
+import { createNewUser } from "./users-controller";
 
 export const registerUser = async (user) => {
   const { email, password } = user;
@@ -27,9 +14,14 @@ export const registerUser = async (user) => {
       email,
       password
     );
-    const newUser = { uid: response.user.uid, ...user };
+    const newUser = {
+      uid: response.user.uid,
+      fullname: user.fullname,
+      email: user.email,
+      avatar: user.avatar,
+    };
 
-    createUser(newUser);
+    createNewUser(newUser);
 
     return newUser;
   } catch (error) {
@@ -37,7 +29,7 @@ export const registerUser = async (user) => {
   }
 };
 
-export const loginUser = async (user) => {
+export const authenticateUser = async (user) => {
   const { email, password } = user;
 
   try {

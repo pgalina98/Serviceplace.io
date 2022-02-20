@@ -92,19 +92,19 @@ const Register = () => {
               <div className="field">
                 <div className="control">
                   <input
-                    {...register("fullName", {
+                    {...register("fullname", {
                       required: true,
                       minLength: 10,
                     })}
-                    name="fullName"
+                    name="fullname"
                     className="input is-large"
                     type="text"
                     placeholder="Full Name"
                     autoFocus=""
                   />
-                  {errors.fullName && (
+                  {errors.fullname && (
                     <div className="form-error">
-                      {errors.fullName.type === "required" ? (
+                      {errors.fullname.type === "required" ? (
                         <span className="help is-danger">
                           Fullname is required
                         </span>

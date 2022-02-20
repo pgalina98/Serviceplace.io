@@ -7,8 +7,8 @@ const initialState = {
 
 const authenticationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUCCESS(ACTION_TYPES.GET_USER_DATA): {
-      return { ...state, loggedUser: [...action.payload] };
+    case SUCCESS(ACTION_TYPES.SET_USER_DATA): {
+      return { ...state, loggedUser: { ...action.payload } };
     }
 
     default:

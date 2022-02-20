@@ -1,10 +1,17 @@
 import { SUCCESS } from "utils/action-type-util";
-import * as api from "../firebase/api/controllers/authentication-controller";
+import * as api from "../firebase/api/controllers/users-controller";
 
 export const ACTION_TYPES = {
-  GET_USER_DATA: "authenticationState/GET_USER_DATA",
+  SET_USER_DATA: "authenticationState/SET_USER_DATA",
 };
 
-export const authenticateUser = (data) => {
-  return api.loginUser(data);
+export const setAuthenticatedUser = (data) => {
+  return api.getUserById(data.uid).then((response) => {
+    const user = response.docs.map((document) => ({
+      id: document.id,
+      ...document.data(),
+    }));
+
+    return { type: SUCCESS(ACTION_TYPES.SET_USER_DATA), payload: user };
+  });
 };

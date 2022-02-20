@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { TOAST_TYPES } from "utils/toast-util";
 
-import { authenticateUser } from "../actions/authentication-actions";
+import { setAuthenticatedUser } from "../actions/authentication-actions";
+
+import * as api from "../firebase/api/controllers/authentication-controller";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -25,8 +27,10 @@ const Login = () => {
   const handleLoginButtonClicked = (data) => {
     setIsProceedingData(true);
 
-    authenticateUser(data)
-      .then(() => {
+    api
+      .authenticateUser(data)
+      .then(({ user }) => {
+        dispatch(setAuthenticatedUser(user));
         setIsProceedingData(false);
         navigate("/");
       })
