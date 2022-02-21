@@ -4,7 +4,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-const Navbar = ({ id }) => {
+const Navbar = ({ id, loggedUser }) => {
   return (
     <nav
       id={id}
@@ -101,6 +101,11 @@ const Navbar = ({ id }) => {
                 <a className="navbar-item">Dropdown item</a>
               </div>
             </div>
+            {loggedUser.fullname && (
+              <div className="navbar-item is-secondary navbar-username">
+                Hi {loggedUser.fullname}
+              </div>
+            )}
             <Link
               to="/login"
               className="navbar-item is-secondary modal-trigger"

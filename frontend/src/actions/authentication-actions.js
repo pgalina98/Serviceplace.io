@@ -12,6 +12,9 @@ export const setAuthenticatedUser = (data) => {
       ...document.data(),
     }));
 
-    return { type: SUCCESS(ACTION_TYPES.SET_USER_DATA), payload: user };
+    return {
+      type: SUCCESS(ACTION_TYPES.SET_USER_DATA),
+      payload: Object.assign({}, ...user),
+    };
   });
 };
