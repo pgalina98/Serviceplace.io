@@ -4,7 +4,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-const Navbar = ({ id, loggedUser }) => {
+const Navbar = ({ id, loggedUser, isAuthenticated }) => {
   return (
     <nav
       id={id}
@@ -101,7 +101,7 @@ const Navbar = ({ id, loggedUser }) => {
                 <a className="navbar-item">Dropdown item</a>
               </div>
             </div>
-            {loggedUser.fullname && (
+            {isAuthenticated && (
               <div className="navbar-item is-secondary navbar-username">
                 Hi {loggedUser.fullname}
               </div>

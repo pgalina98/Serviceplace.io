@@ -3,12 +3,17 @@ import { SUCCESS } from "../utils/action-type-util";
 
 const initialState = {
   loggedUser: {},
+  isAuthenticated: false,
 };
 
 const authenticationReducer = (state = initialState, action) => {
   switch (action.type) {
     case SUCCESS(ACTION_TYPES.SET_USER_DATA): {
-      return { ...state, loggedUser: { ...action.payload } };
+      return {
+        ...state,
+        loggedUser: { ...action.payload },
+        isAuthenticated: true,
+      };
     }
 
     default:

@@ -7,13 +7,19 @@ import Navbar from "components/navbar/navbar";
 import Routes from "./router/routes";
 import { connect } from "react-redux";
 
-function App({ loggedUser }) {
-  // const authenticationState = useSelector((state) => state.authenticationState);
-
+function App({ loggedUser, isAuthenticated }) {
   return (
     <Router>
-      <Navbar id="navbar" loggedUser={loggedUser} />
-      <Navbar id="navbar-clone" loggedUser={loggedUser} />
+      <Navbar
+        id="navbar"
+        loggedUser={loggedUser}
+        isAuthenticated={isAuthenticated}
+      />
+      <Navbar
+        id="navbar-clone"
+        loggedUser={loggedUser}
+        isAuthenticated={isAuthenticated}
+      />
       <Sidebar />
       <Routes />
     </Router>
@@ -21,6 +27,7 @@ function App({ loggedUser }) {
 }
 
 const mapStateToProps = (state) => ({
+  isAuthenticated: state.authenticationState.isAuthenticated,
   loggedUser: state.authenticationState.loggedUser,
 });
 
