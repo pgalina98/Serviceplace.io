@@ -4,6 +4,7 @@ import { SUCCESS } from "../utils/action-type-util";
 const initialState = {
   loggedUser: {},
   isAuthenticated: false,
+  isAuthenticationResolved: false,
 };
 
 const authenticationReducer = (state = initialState, action) => {
@@ -13,6 +14,7 @@ const authenticationReducer = (state = initialState, action) => {
         ...state,
         loggedUser: { ...action.payload },
         isAuthenticated: true,
+        isAuthenticationResolved: true,
       };
     }
 

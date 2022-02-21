@@ -106,18 +106,28 @@ const Navbar = ({ id, loggedUser, isAuthenticated }) => {
                 Hi {loggedUser.fullname}
               </div>
             )}
-            <Link
-              to="/login"
-              className="navbar-item is-secondary modal-trigger"
-              data-modal="auth-modal"
-            >
-              Log in
-            </Link>
-            <Link to="/register" className="navbar-item">
-              <span className="button signup-button rounded secondary-btn raised">
-                Sign up
-              </span>
-            </Link>
+            {!isAuthenticated ? (
+              <>
+                <Link
+                  to="/login"
+                  className="navbar-item is-secondary modal-trigger"
+                  data-modal="auth-modal"
+                >
+                  Log in
+                </Link>
+                <Link to="/register" className="navbar-item">
+                  <span className="button signup-button rounded secondary-btn raised">
+                    Sign up
+                  </span>
+                </Link>
+              </>
+            ) : (
+              <Link to="/logout" className="navbar-item">
+                <span className="button is-danger signup-button rounded raised">
+                  Logout
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </div>

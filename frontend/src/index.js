@@ -3,9 +3,11 @@ import { Provider } from "react-redux";
 import { ToastProvider } from "react-toast-notifications";
 
 import ReactDOM from "react-dom";
-import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+import "./index.scss";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 import initializeStore from "./store";
 

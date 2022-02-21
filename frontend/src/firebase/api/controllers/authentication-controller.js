@@ -2,7 +2,9 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
+
 import { createNewUser } from "./users-controller";
 
 export const registerUser = async (user) => {
@@ -37,4 +39,8 @@ export const authenticateUser = async (user) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const onAuthStateChange = (callback) => {
+  return onAuthStateChanged(getAuth(), callback);
 };
