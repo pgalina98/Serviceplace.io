@@ -93,24 +93,28 @@ const Navbar = ({ id, loggedUser, isAuthenticated }) => {
           </div>
 
           <div className="navbar-end">
-            <Link to="/services" className="navbar-item is-secondary">
-              Services
-            </Link>
-            <Link to="/profile" className="navbar-item is-secondary">
-              Profile
-            </Link>
-            <Link to="/faq" className="navbar-item is-secondary">
-              FAQ
-            </Link>
-            <div className="navbar-item has-dropdown is-hoverable">
-              <a className="navbar-link">Dropdown</a>
+            {isAuthenticated && (
+              <>
+                <Link to="/services" className="navbar-item is-secondary">
+                  Services
+                </Link>
+                <Link to="/profile" className="navbar-item is-secondary">
+                  Profile
+                </Link>
+                <Link to="/faq" className="navbar-item is-secondary">
+                  FAQ
+                </Link>
+                <div className="navbar-item has-dropdown is-hoverable">
+                  <a className="navbar-link">Dropdown</a>
 
-              <div className="navbar-dropdown">
-                <a className="navbar-item">Dropdown item</a>
-                <a className="navbar-item">Dropdown item</a>
-                <a className="navbar-item">Dropdown item</a>
-              </div>
-            </div>
+                  <div className="navbar-dropdown">
+                    <a className="navbar-item">Dropdown item</a>
+                    <a className="navbar-item">Dropdown item</a>
+                    <a className="navbar-item">Dropdown item</a>
+                  </div>
+                </div>
+              </>
+            )}
             {isAuthenticated && (
               <div className="navbar-item is-secondary navbar-username">
                 Hi {loggedUser.fullname}
