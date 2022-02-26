@@ -1,10 +1,20 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Link } from "react-router-dom";
+import { logoutUser } from "../../actions/authentication-actions";
 
 const Navbar = ({ id, loggedUser, isAuthenticated }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogoutButtonClick = () => {
+    dispatch(logoutUser());
+    navigate("/");
+  };
+
   return (
     <nav
       id={id}
@@ -122,11 +132,11 @@ const Navbar = ({ id, loggedUser, isAuthenticated }) => {
                 </Link>
               </>
             ) : (
-              <Link to="/logout" className="navbar-item">
+              <div className="navbar-item" onClick={handleLogoutButtonClick}>
                 <span className="button is-danger signup-button rounded raised">
                   Logout
                 </span>
-              </Link>
+              </div>
             )}
           </div>
         </div>

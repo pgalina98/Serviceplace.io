@@ -18,6 +18,14 @@ const authenticationReducer = (state = initialState, action) => {
       };
     }
 
+    case SUCCESS(ACTION_TYPES.CLEAR_USER_DATA): {
+      return {
+        loggedUser: {},
+        isAuthenticated: false,
+        isAuthenticationResolved: true,
+      };
+    }
+
     default:
       return state;
   }

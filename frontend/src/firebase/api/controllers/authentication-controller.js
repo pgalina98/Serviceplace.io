@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
 import { createNewUser } from "./users-controller";
@@ -39,6 +40,10 @@ export const authenticateUser = async (user) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const logoutUser = () => {
+  return signOut(getAuth());
 };
 
 export const onAuthStateChange = (callback) => {
