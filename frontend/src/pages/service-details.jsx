@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { useParams } from "react-router";
+import Spinner from "../components/spinner/spinner";
+
+import authenticatedBoundaryRoute from "../router/authenticated-boundary-route/authenticated-boundary-route";
 
 import { getServiceById } from "../actions/service-actions";
-
-import Spinner from "../components/spinner/spinner";
 
 const ServiceDetails = () => {
   const dispatch = useDispatch();
@@ -60,4 +61,6 @@ const mapStateToProps = (state) => ({
   service: state.servicesState.selectedService,
 });
 
-export default connect(mapStateToProps)(ServiceDetails);
+export default connect(mapStateToProps)(
+  authenticatedBoundaryRoute(ServiceDetails)
+);

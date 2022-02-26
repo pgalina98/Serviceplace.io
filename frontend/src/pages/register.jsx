@@ -5,6 +5,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
+import { Spinner } from "react-bootstrap";
+
+import notAuthenticatedBoundaryRoute from "../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
 
 import { TOAST_TYPES } from "../utils/toast-util";
 import * as api from "../firebase/api/controllers/authentication-controller";
@@ -13,7 +16,6 @@ import {
   isValidImage,
   isConfirmationPasswordMatched,
 } from "../helpers/validator";
-import { Spinner } from "react-bootstrap";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -236,4 +238,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default notAuthenticatedBoundaryRoute(Register);
