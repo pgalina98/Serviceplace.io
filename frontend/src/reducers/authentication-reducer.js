@@ -9,7 +9,7 @@ const initialState = {
 
 const authenticationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUCCESS(ACTION_TYPES.SET_USER_DATA): {
+    case SUCCESS(ACTION_TYPES.SET_AUTHENTICATION_STATE): {
       return {
         ...state,
         loggedUser: { ...action.payload },
@@ -18,12 +18,16 @@ const authenticationReducer = (state = initialState, action) => {
       };
     }
 
-    case SUCCESS(ACTION_TYPES.CLEAR_USER_DATA): {
+    case SUCCESS(ACTION_TYPES.CLEAR_AUTHENTICATION_STATE): {
       return {
         loggedUser: {},
         isAuthenticated: false,
         isAuthenticationResolved: true,
       };
+    }
+
+    case SUCCESS(ACTION_TYPES.RESET_AUTHENTICATION_STATE): {
+      return { ...state, isAuthenticationResolved: false };
     }
 
     default:
