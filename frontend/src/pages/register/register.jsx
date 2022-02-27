@@ -2,6 +2,7 @@
 /* eslint no-useless-escape: 0 */
 
 import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
@@ -29,7 +30,7 @@ const Register = () => {
 
   const [isSavingData, setIsSavingData] = useState(false);
 
-  const handleRegisterButtonClicked = (data) => {
+  const handleRegisterButtonClick = (data) => {
     setIsSavingData(true);
 
     api
@@ -60,7 +61,7 @@ const Register = () => {
                 alt="avatar"
               />
             </figure>
-            <form onSubmit={handleSubmit(handleRegisterButtonClicked)}>
+            <form onSubmit={handleSubmit(handleRegisterButtonClick)}>
               <div className="field">
                 <div className="control">
                   <input

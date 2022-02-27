@@ -1,6 +1,7 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React, { useState } from "react";
+
 import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -26,7 +27,7 @@ const Login = () => {
 
   const [isProceedingData, setIsProceedingData] = useState(false);
 
-  const handleLoginButtonClicked = (data) => {
+  const handleLoginButtonClick = (data) => {
     setIsProceedingData(true);
 
     api
@@ -55,7 +56,7 @@ const Login = () => {
                 alt="avatar"
               />
             </figure>
-            <form onSubmit={handleSubmit(handleLoginButtonClicked)}>
+            <form onSubmit={handleSubmit(handleLoginButtonClick)}>
               <div className="field">
                 <div className="control">
                   <input
