@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
+import { Spinner } from "react-bootstrap";
 
 import { isValidImage } from "../../helpers/validator";
 
@@ -13,7 +14,11 @@ const CreateService = () => {
     handleSubmit,
   } = useForm();
 
-  const handleCreateServiceButtonClick = () => {};
+  const [isSavingData, setIsSavingData] = useState(false);
+
+  const handleCreateServiceButtonClick = (data) => {
+    setIsSavingData(true);
+  };
 
   return (
     <div className="create-page">
@@ -132,12 +137,24 @@ const CreateService = () => {
             </div>
             <div className="field is-grouped">
               <div className="control">
-                <button type="submit" className="button is-link">
-                  Create service
+                <button
+                  type="submit"
+                  className="button is-link"
+                  disabled={isSavingData}
+                >
+                  {isSavingData ? (
+                    <Spinner as="span" animation="border" size="sm" />
+                  ) : (
+                    "Create service"
+                  )}
                 </button>
               </div>
               <div className="control">
-                <button type="button" className="button btn-secondary">
+                <button
+                  type="button"
+                  className="button btn-secondary"
+                  disabled={isSavingData}
+                >
                   Cancel
                 </button>
               </div>
