@@ -80,7 +80,9 @@ class Homepage extends React.Component {
             </div>
 
             <div className="content-wrapper">
-              <div className="columns">{this.renderServices(services)}</div>
+              <div className="columns is-multiline">
+                {this.renderServices(services)}
+              </div>
             </div>
           </div>
         </section>
