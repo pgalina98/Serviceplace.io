@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const ServiceCard = ({ data: service }) => {
   return (
-    <div className="column">
+    <div className="column is-one-third">
       <div
         className="feature-card is-bordered has-text-centered revealOnScroll delay-3"
         data-animation="fadeInLeft"
