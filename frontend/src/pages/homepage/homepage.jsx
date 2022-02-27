@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 
 import { getServices } from "actions/service-actions";
 
-import ServiceCard from "../components/service-card/service-card";
-import Spinner from "../components/spinner/spinner";
+import ServiceCard from "../../components/service-card/service-card";
+import Spinner from "../../components/spinner/spinner";
 
 class Homepage extends React.Component {
   state = {

@@ -7,15 +7,15 @@ import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
 
-import notAuthenticatedBoundaryRoute from "../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
+import notAuthenticatedBoundaryRoute from "../../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
 
-import { TOAST_TYPES } from "../utils/toast-util";
-import * as api from "../firebase/api/controllers/authentication-controller";
-import { messages } from "../config/constants";
+import { TOAST_TYPES } from "../../utils/toast-util";
+import * as api from "../../firebase/api/controllers/authentication-controller";
+import { messages } from "../../config/constants";
 import {
   isValidImage,
   isConfirmationPasswordMatched,
-} from "../helpers/validator";
+} from "../../helpers/validator";
 
 const Register = () => {
   const navigate = useNavigate();

@@ -105,12 +105,15 @@ const Navbar = ({ id, loggedUser, isAuthenticated }) => {
                   FAQ
                 </Link>
                 <div className="navbar-item has-dropdown is-hoverable">
-                  <a className="navbar-link">Dropdown</a>
+                  <a className="navbar-link">Services</a>
 
                   <div className="navbar-dropdown">
-                    <a className="navbar-item">Dropdown item</a>
-                    <a className="navbar-item">Dropdown item</a>
-                    <a className="navbar-item">Dropdown item</a>
+                    <a href="/services/new" className="navbar-item">
+                      Create service
+                    </a>
+                    <a href="/services/own" className="navbar-item">
+                      Your services
+                    </a>
                   </div>
                 </div>
               </>

@@ -8,11 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { TOAST_TYPES } from "utils/toast-util";
 
-import notAuthenticatedBoundaryRoute from "../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
+import notAuthenticatedBoundaryRoute from "../../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
 
-import { setAuthenticatedUser } from "../actions/authentication-actions";
+import { setAuthenticatedUser } from "../../actions/authentication-actions";
 
-import * as api from "../firebase/api/controllers/authentication-controller";
+import * as api from "../../firebase/api/controllers/authentication-controller";
 
 const Login = () => {
   const navigate = useNavigate();
