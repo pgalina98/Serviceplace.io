@@ -16,7 +16,7 @@ const ServiceCard = ({ data: service }) => {
         <div className="card-icon">
           <img src={service.image} alt="" />
         </div>
-        <div className="card-text">
+        <div className="card-text card-line-2">
           <p>{service.description}</p>
         </div>
         <div className="card-action">
