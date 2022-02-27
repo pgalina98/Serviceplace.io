@@ -9,8 +9,9 @@ const ServiceCard = ({ data: service }) => {
       <div
         className="feature-card is-bordered has-text-centered revealOnScroll delay-3"
         data-animation="fadeInLeft"
+        style={{ height: "350px" }}
       >
-        <div className="card-title">
+        <div className="card-title card-line-4">
           <h4>{service.title}</h4>
         </div>
         <div className="card-icon">

@@ -1553,3 +1553,9 @@ a {
     }
   }
 }
+
+@include card-line(1);
+@include card-line(2);
+@include card-line(3);
+@include card-line(4);
+@include card-line(5);
