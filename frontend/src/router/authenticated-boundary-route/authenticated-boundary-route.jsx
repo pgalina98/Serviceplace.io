@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 const authenticatedBoundaryRoute = (Component) => {
   const AuthenticatedBoundaryRoute = ({ authenticationState }) => {
     return authenticationState?.isAuthenticated ? (
-      <Component />
+      <Component authenticationState={authenticationState} />
     ) : (
       <Navigate to="/login" />
     );

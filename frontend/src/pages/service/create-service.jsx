@@ -2,12 +2,20 @@ import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { useToasts } from "react-toast-notifications";
 
+import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
 import { isValidImage } from "../../helpers/validator";
+import { messages } from "../../config/constants";
+import { TOAST_TYPES } from "../../utils/toast-util";
+import * as api from "../../firebase/api/controllers/services-controller";
 
 import "./service.scss";
 
-const CreateService = () => {
+const CreateService = ({ authenticationState }) => {
+  const navigate = useNavigate();
+  const { addToast } = useToasts();
   const {
     register,
     formState: { errors },
@@ -18,6 +26,20 @@ const CreateService = () => {
 
   const handleCreateServiceButtonClick = (data) => {
     setIsSavingData(true);
+
+    api
+      .saveService({ ...data, uid: authenticationState.loggedUser.uid })
+      .then(() => {
+        addToast(messages.SERVICE_CREATING_SUCCESS, {
+          appearance: TOAST_TYPES.SUCCESS,
+        });
+        setIsSavingData(false);
+        navigate("/");
+      })
+      .catch(({ message }) => {
+        setIsSavingData(false);
+        addToast(message, { appearance: TOAST_TYPES.ERROR });
+      });
   };
 
   return (
@@ -166,4 +188,4 @@ const CreateService = () => {
   );
 };
 
-export default CreateService;
+export default authenticatedBoundaryRoute(CreateService);
