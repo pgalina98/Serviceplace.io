@@ -111,7 +111,7 @@ const Navbar = ({ id, loggedUser, isAuthenticated }) => {
                     <a href="/services/new" className="navbar-item">
                       Create service
                     </a>
-                    <a href="/services/own" className="navbar-item">
+                    <a href="/services/own-services" className="navbar-item">
                       Your services
                     </a>
                   </div>

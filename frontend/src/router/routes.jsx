@@ -9,6 +9,7 @@ import Login from "../pages/login/login";
 import Register from "../pages/register/register";
 import ServkceDetails from "../pages/service/service-details";
 import CreateService from "../pages/service/create-service";
+import OwnServices from "../pages/services/own-services";
 
 const Routes = () => {
   return (
@@ -18,6 +19,7 @@ const Routes = () => {
       <Route path="/faq" element={<FrequentlyAskedQuestions />} />
       <Route exact path="/services" element={<Servkces />} />
       <Route exact path="/services/new" element={<CreateService />} />
+      <Route exact path="/services/own-services" element={<OwnServices />} />
       <Route exact path="/services/:id" element={<ServkceDetails />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/" element={<Homepage />} />
