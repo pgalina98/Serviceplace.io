@@ -20,10 +20,6 @@ const ServiceDetails = ({ authenticationState }) => {
 
   const [service, setService] = useState();
 
-  const isServiceCreatedByLoggedUser = () => {
-    return service.uid === authenticationState.loggedUser.uid;
-  };
-
   useEffect(() => {
     setIsLoading(true);
 
@@ -36,6 +32,10 @@ const ServiceDetails = ({ authenticationState }) => {
   if (isLoading) {
     return <Spinner />;
   }
+
+  const isServiceCreatedByLoggedUser = () => {
+    return service.uid === authenticationState.loggedUser.uid;
+  };
 
   return (
     <div className="hero-body">
@@ -50,7 +50,10 @@ const ServiceDetails = ({ authenticationState }) => {
             <h1 className="title is-2">{service?.title}</h1>
             <h2 className="subtitle is-4">{service?.description}</h2>
             <br />
-            <OfferModal isOfferButtonHidden={isServiceCreatedByLoggedUser()} />
+            <OfferModal
+              isOfferButtonHidden={isServiceCreatedByLoggedUser()}
+              service={service}
+            />
           </div>
         </div>
       </div>
