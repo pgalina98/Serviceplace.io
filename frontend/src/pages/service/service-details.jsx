@@ -10,13 +10,19 @@ import authenticatedBoundaryRoute from "../../router/authenticated-boundary-rout
 
 import { getServiceById } from "../../actions/service-actions";
 
-const ServiceDetails = () => {
+import OfferModal from "../../components/offer-modal/offer-modal";
+
+const ServiceDetails = ({ authenticationState }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
 
   const [service, setService] = useState();
+
+  const isServiceCreatedByLoggedUser = () => {
+    return service.uid === authenticationState.loggedUser.uid;
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,11 +50,7 @@ const ServiceDetails = () => {
             <h1 className="title is-2">{service?.title}</h1>
             <h2 className="subtitle is-4">{service?.description}</h2>
             <br />
-            <p className="has-text-centered">
-              <button className="button is-medium is-info is-outlined">
-                Get started
-              </button>
-            </p>
+            <OfferModal isOfferButtonHidden={isServiceCreatedByLoggedUser()} />
           </div>
         </div>
       </div>
