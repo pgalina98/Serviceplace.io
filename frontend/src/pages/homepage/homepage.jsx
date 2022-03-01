@@ -1,12 +1,13 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React from "react";
+
 import { connect } from "react-redux";
 
 import { getServices } from "actions/service-actions";
 
-import ServiceCard from "../components/service-card/service-card";
-import Spinner from "../components/spinner/spinner";
+import ServiceCard from "../../components/service-card/service-card";
+import Spinner from "../../components/spinner/spinner";
 
 class Homepage extends React.Component {
   state = {
@@ -79,7 +80,9 @@ class Homepage extends React.Component {
             </div>
 
             <div className="content-wrapper">
-              <div className="columns">{this.renderServices(services)}</div>
+              <div className="columns is-multiline">
+                {this.renderServices(services)}
+              </div>
             </div>
           </div>
         </section>
