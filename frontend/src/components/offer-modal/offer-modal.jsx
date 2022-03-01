@@ -69,7 +69,7 @@ const OfferModal = (props) => {
         className="button is-medium is-info is-outlined"
         data-toggle="modal"
         data-target="#modal"
-        // hidden={props.isOfferButtonHidden}
+        hidden={props.isOfferButtonHidden}
       >
         Make an offer
       </button>
