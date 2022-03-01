@@ -1,13 +1,15 @@
 import React from "react";
 import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
 
-import Homepage from "../pages/homepage";
-import FrequentlyAskedQuestions from "../pages/frequently-asked-questions";
-import Profile from "../pages/profile";
-import Servkces from "../pages/services";
-import Login from "../pages/login";
-import Register from "../pages/register";
-import ServkceDetails from "../pages/service-details";
+import Homepage from "../pages/homepage/homepage";
+import FrequentlyAskedQuestions from "../pages/frequently-asked-questions/frequently-asked-questions";
+import Profile from "../pages/profile/profile";
+import Servkces from "../pages/services/services";
+import Login from "../pages/login/login";
+import Register from "../pages/register/register";
+import ServkceDetails from "../pages/service/service-details";
+import CreateService from "../pages/service/create-service";
+import OwnServices from "../pages/services/own-services";
 
 const Routes = () => {
   return (
@@ -15,8 +17,10 @@ const Routes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/faq" element={<FrequentlyAskedQuestions />} />
-      <Route path="/services" element={<Servkces />} />
-      <Route path="/services/:id" element={<ServkceDetails />} />
+      <Route exact path="/services" element={<Servkces />} />
+      <Route exact path="/services/new" element={<CreateService />} />
+      <Route exact path="/services/own-services" element={<OwnServices />} />
+      <Route exact path="/services/:id" element={<ServkceDetails />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/" element={<Homepage />} />
     </ReactRouterRoutes>

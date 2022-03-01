@@ -1530,3 +1530,32 @@ body #backtotop a {
 a {
   text-decoration: none;
 }
+@mixin card-line($size) {
+  @if $size== "" {
+    .card-line {
+      line-height: 2.5ex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      height: 2.6ex;
+      -webkit-line-clamp: 1;
+    }
+  } @else {
+    .card-line-#{$size} {
+      line-height: 2.5ex;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      height: calc(#{$size} * 2.6ex);
+      -webkit-line-clamp: #{$size};
+    }
+  }
+}
+
+@include card-line(1);
+@include card-line(2);
+@include card-line(3);
+@include card-line(4);
+@include card-line(5);
