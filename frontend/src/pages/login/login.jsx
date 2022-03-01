@@ -1,6 +1,7 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React, { useState } from "react";
+
 import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -8,11 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { TOAST_TYPES } from "utils/toast-util";
 
-import notAuthenticatedBoundaryRoute from "../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
+import notAuthenticatedBoundaryRoute from "../../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
 
-import { setAuthenticatedUser } from "../actions/authentication-actions";
+import { setAuthenticatedUser } from "../../actions/authentication-actions";
 
-import * as api from "../firebase/api/controllers/authentication-controller";
+import * as api from "../../firebase/api/controllers/authentication-controller";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const Login = () => {
 
   const [isProceedingData, setIsProceedingData] = useState(false);
 
-  const handleLoginButtonClicked = (data) => {
+  const handleLoginButtonClick = (data) => {
     setIsProceedingData(true);
 
     api
@@ -55,7 +56,7 @@ const Login = () => {
                 alt="avatar"
               />
             </figure>
-            <form onSubmit={handleSubmit(handleLoginButtonClicked)}>
+            <form onSubmit={handleSubmit(handleLoginButtonClick)}>
               <div className="field">
                 <div className="control">
                   <input
