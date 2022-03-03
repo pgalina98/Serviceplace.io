@@ -28,7 +28,7 @@ const CreateService = ({ authenticationState }) => {
     setIsSavingData(true);
 
     api
-      .saveService({ ...data, uid: authenticationState.loggedUser.uid })
+      .saveService(data, authenticationState.loggedUser.uid)
       .then(() => {
         addToast(messages.SERVICE_CREATING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,

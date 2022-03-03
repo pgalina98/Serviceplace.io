@@ -1,4 +1,4 @@
-import { addDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, doc, getDocs, query, where } from "firebase/firestore";
 
 import { usersCollection } from "../../firestore/collections";
 
@@ -17,4 +17,12 @@ export const getUserById = async (userId) => {
   const queryGetUserById = query(usersCollection, where("uid", "==", userId));
 
   return await getDocs(queryGetUserById);
+};
+
+export const createUserRef = (userId) => {
+  try {
+    return doc(usersCollection, userId);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };

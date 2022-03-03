@@ -1,9 +1,17 @@
-import { addDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 
 import { servicesCollection } from "../../firestore/collections";
 
+import * as api from "./users-controller";
+
 export const fetchServices = async () => {
   return await getDocs(servicesCollection);
+};
+
+export const fetchServiceById = async (serviceId) => {
+  const serviceRef = doc(servicesCollection, serviceId);
+
+  return await getDoc(serviceRef);
 };
 
 export const fetchLoggedUserServices = async (userId) => {
@@ -15,8 +23,9 @@ export const fetchLoggedUserServices = async (userId) => {
   return await getDocs(queryGetServicesByUserId);
 };
 
-export const saveService = async (data) => {
+export const saveService = async (data, userId) => {
   try {
+    data.userRef = api.createUserRef(userId);
     await addDoc(servicesCollection, {
       ...data,
     });

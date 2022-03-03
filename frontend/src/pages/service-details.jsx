@@ -21,6 +21,7 @@ const ServiceDetails = () => {
     setIsLoading(true);
 
     dispatch(getServiceById(id)).then((service) => {
+      console.log("SERVICE PAYLOAD: ", service.payload);
       setService(service.payload);
       setIsLoading(false);
     });

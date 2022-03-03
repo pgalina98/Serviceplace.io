@@ -18,13 +18,8 @@ export const getServices = () => {
 };
 
 export const getServiceById = (id) => {
-  return api.fetchServices().then((response) => {
-    const service = response.docs
-      .map((document) => ({
-        id: document.id,
-        ...document.data(),
-      }))
-      .find((document) => document.id === id);
+  return api.fetchServiceById(id).then(async (response) => {
+    const service = { id: response.id, ...response.data() };
 
     return { type: SUCCESS(ACTION_TYPES.GET_SERVICE_DATA), payload: service };
   });
