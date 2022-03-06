@@ -25,7 +25,9 @@ export const getServiceById = (id) => {
 
     const service = { id: response.id, ...response.data() };
 
-    delete Object.assign(service, { createdBy: user.data() })["userRef"];
+    delete Object.assign(service, {
+      createdBy: { id: user.id, ...user.data() },
+    })["userRef"];
 
     return { type: SUCCESS(ACTION_TYPES.GET_SERVICE_DATA), payload: service };
   });

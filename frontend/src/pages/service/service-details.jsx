@@ -38,7 +38,7 @@ const ServiceDetails = ({ authenticationState }) => {
   }
 
   const isServiceCreatedByLoggedUser = () => {
-    return service.createdBy.uid === authenticationState.loggedUser.uid;
+    return service.createdBy.id === authenticationState.loggedUser.id;
   };
 
   return (

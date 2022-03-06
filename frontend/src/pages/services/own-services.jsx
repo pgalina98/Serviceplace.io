@@ -14,7 +14,7 @@ const OwnServices = ({ authenticationState }) => {
     setIsLoading(true);
 
     api
-      .fetchLoggedUserServices(authenticationState.loggedUser.uid)
+      .fetchLoggedUserServices(authenticationState.loggedUser.id)
       .then((response) => {
         const userServices = response.docs.map((document) => ({
           id: document.id,
@@ -24,7 +24,7 @@ const OwnServices = ({ authenticationState }) => {
         setServices(userServices);
         setIsLoading(false);
       });
-  }, [authenticationState.loggedUser.uid]);
+  }, [authenticationState.loggedUser.id]);
 
   const renderServices = () => {
     return services.map((service) => (

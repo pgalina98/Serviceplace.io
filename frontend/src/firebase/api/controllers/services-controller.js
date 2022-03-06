@@ -15,12 +15,13 @@ export const fetchServiceById = async (serviceId) => {
 };
 
 export const fetchLoggedUserServices = async (userId) => {
-  const queryGetServicesByUserId = query(
+  const userRef = await api.createUserRef(userId);
+  const queryGetServicesByUserRef = query(
     servicesCollection,
-    where("uid", "==", userId)
+    where("userRef", "==", userRef)
   );
 
-  return await getDocs(queryGetServicesByUserId);
+  return await getDocs(queryGetServicesByUserRef);
 };
 
 export const saveService = async (data, userId) => {
