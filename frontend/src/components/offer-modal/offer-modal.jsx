@@ -7,7 +7,8 @@ import { Spinner } from "react-bootstrap";
 import { messages } from "../../config/constants";
 import { TOAST_TYPES } from "../../utils/toast-util";
 import { OFFER_STATUS } from "./offer-status-constants";
-import * as api from "../../firebase/api/controllers/offers-controller";
+
+import { saveOffer } from "actions/offer-actions";
 
 import "./offer-modal.scss";
 
@@ -46,8 +47,7 @@ const OfferModal = (props) => {
       status: OFFER_STATUS.PENDING,
     };
 
-    api
-      .saveOffer(newOffer)
+    saveOffer(newOffer)
       .then(() => {
         changeModalState(false);
         addToast(messages.OFFER_CREATING_SUCCESS, {
