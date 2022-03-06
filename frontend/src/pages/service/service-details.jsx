@@ -10,8 +10,6 @@ import authenticatedBoundaryRoute from "../../router/authenticated-boundary-rout
 import { getServiceById } from "../../actions/service-actions";
 import OfferModal from "../../components/offer-modal/offer-modal";
 
-import * as api from "../../firebase/api/controllers/users-controller";
-
 const ServiceDetails = ({ authenticationState }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
