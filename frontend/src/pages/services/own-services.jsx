@@ -4,7 +4,8 @@ import Spinner from "../../components/spinner/spinner";
 import ServiceCard from "../../components/service-card/service-card";
 
 import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
-import * as api from "../../firebase/api/controllers/services-controller";
+
+import { fetchLoggedUserServices } from "../../actions/service-actions";
 
 const OwnServices = ({ authenticationState }) => {
   const [services, setServices] = useState();
@@ -13,17 +14,12 @@ const OwnServices = ({ authenticationState }) => {
   useEffect(() => {
     setIsLoading(true);
 
-    api
-      .fetchLoggedUserServices(authenticationState.loggedUser.id)
-      .then((response) => {
-        const userServices = response.docs.map((document) => ({
-          id: document.id,
-          ...document.data(),
-        }));
-
-        setServices(userServices);
+    fetchLoggedUserServices(authenticationState.loggedUser.id).then(
+      (response) => {
+        setServices(response);
         setIsLoading(false);
-      });
+      }
+    );
   }, [authenticationState.loggedUser.id]);
 
   const renderServices = () => {

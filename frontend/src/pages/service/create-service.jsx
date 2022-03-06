@@ -9,7 +9,8 @@ import authenticatedBoundaryRoute from "../../router/authenticated-boundary-rout
 import { isValidImage } from "../../helpers/validator";
 import { messages } from "../../config/constants";
 import { TOAST_TYPES } from "../../utils/toast-util";
-import * as api from "../../firebase/api/controllers/services-controller";
+
+import { saveService } from "../../actions/service-actions";
 
 import "./service.scss";
 
@@ -27,8 +28,7 @@ const CreateService = ({ authenticationState }) => {
   const handleCreateServiceButtonClick = (data) => {
     setIsSavingData(true);
 
-    api
-      .saveService(data, authenticationState.loggedUser.id)
+    saveService(data, authenticationState.loggedUser.id)
       .then(() => {
         addToast(messages.SERVICE_CREATING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
