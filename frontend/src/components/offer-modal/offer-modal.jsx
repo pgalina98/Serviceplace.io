@@ -41,8 +41,8 @@ const OfferModal = (props) => {
 
     const newOffer = {
       ...offer,
-      fromUser: props.authenticationState.loggedUser.uid,
-      toUser: props.service.uid,
+      fromUser: props.authenticationState.loggedUser.id,
+      toUser: props.service.createdBy.id,
       status: OFFER_STATUS.PENDING,
     };
 
