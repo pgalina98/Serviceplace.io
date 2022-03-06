@@ -34,3 +34,11 @@ export const saveService = async (data, userId) => {
     return Promise.reject(error);
   }
 };
+
+export const createServiceRef = (serviceId) => {
+  try {
+    return doc(servicesCollection, serviceId);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
