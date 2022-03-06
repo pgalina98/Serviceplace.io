@@ -28,19 +28,6 @@ const ServiceDetails = ({ authenticationState }) => {
     setIsLoading(true);
 
     dispatch(getServiceById(id)).then((service) => {
-      // api.getUserById(service.payload.uid).then((response) => {
-      //   const user = response.docs.map((document) => ({
-      //     id: document.id,
-      //     ...document.data(),
-      //   }));
-
-      //   setService({
-      //     ...service.payload,
-
-      //   });
-
-      // });
-
       setService({
         ...service.payload,
       });
