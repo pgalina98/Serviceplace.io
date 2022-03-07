@@ -95,15 +95,6 @@ const Navbar = ({ id, loggedUser, isAuthenticated }) => {
           <div className="navbar-end">
             {isAuthenticated && (
               <>
-                <Link to="/services" className="navbar-item is-secondary">
-                  Services
-                </Link>
-                <Link to="/profile" className="navbar-item is-secondary">
-                  Profile
-                </Link>
-                <Link to="/faq" className="navbar-item is-secondary">
-                  FAQ
-                </Link>
                 <div className="navbar-item has-dropdown is-hoverable">
                   <a className="navbar-link">Services</a>
 
@@ -113,6 +104,18 @@ const Navbar = ({ id, loggedUser, isAuthenticated }) => {
                     </a>
                     <a href="/services/own-services" className="navbar-item">
                       Your services
+                    </a>
+                  </div>
+                </div>
+                <div className="navbar-item has-dropdown is-hoverable">
+                  <a className="navbar-link">Offers</a>
+
+                  <div className="navbar-dropdown">
+                    <a href="/offers/created-offers" className="navbar-item">
+                      Created offers
+                    </a>
+                    <a href="/offers/received-offers" className="navbar-item">
+                      Received offers
                     </a>
                   </div>
                 </div>

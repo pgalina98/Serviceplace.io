@@ -10,6 +10,8 @@ import Register from "../pages/register/register";
 import ServkceDetails from "../pages/service/service-details";
 import CreateService from "../pages/service/create-service";
 import OwnServices from "../pages/services/own-services";
+import CreatedOffers from "../pages/offers/created-offers";
+import ReceivedOffers from "../pages/offers/received-offers";
 
 const Routes = () => {
   return (
@@ -22,6 +24,8 @@ const Routes = () => {
       <Route exact path="/services/own-services" element={<OwnServices />} />
       <Route exact path="/services/:id" element={<ServkceDetails />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/offers/created-offers" element={<CreatedOffers />} />
+      <Route path="/offers/received-offers" element={<ReceivedOffers />} />
       <Route path="/" element={<Homepage />} />
     </ReactRouterRoutes>
   );
