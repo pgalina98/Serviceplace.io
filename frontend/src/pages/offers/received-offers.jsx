@@ -32,10 +32,10 @@ const ReceivedOffers = ({ authenticationState }) => {
   return (
     <div className="container">
       <div className="content-wrapper">
+        <h1 className="title">Received Offers</h1>
         {!isLoading && offers.length === 0 && (
           <Alert color="primary">You don't have any received offers yet!</Alert>
         )}
-        <h1 className="title">Received Offers</h1>
         <div className="columns">
           <div className="column is-one-third">
             {isLoading ? <Spinner /> : renderOffers()}
