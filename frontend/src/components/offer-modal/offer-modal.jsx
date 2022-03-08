@@ -59,6 +59,8 @@ const OfferModal = (props) => {
         setIsSavingData(false);
         addToast(message, { appearance: TOAST_TYPES.ERROR });
       });
+
+    setOffer({ service: offer.service.id });
   };
 
   return (
@@ -87,13 +89,14 @@ const OfferModal = (props) => {
           <section className="modal-card-body">
             <div className="field">
               <input
+                value={offer.note ?? ""}
+                onChange={onFieldChange}
                 className="input is-large"
                 type="text"
                 name="note"
                 placeholder="Write some catchy note"
                 max="5"
                 min="0"
-                onChange={onFieldChange}
               />
               <p className="help input-label">
                 Note can increase chance of getting the service
@@ -101,13 +104,14 @@ const OfferModal = (props) => {
             </div>
             <div className="field">
               <input
+                value={offer.requestedDuration ?? ""}
+                onChange={onFieldChange}
                 className="input is-large"
                 type="number"
                 name="requestedDuration"
                 placeholder="How long you need service for ?"
                 max="5"
                 min="0"
-                onChange={onFieldChange}
               />
               <p className="help input-label">
                 Enter time in hours (price per hour: ${props.service.price})

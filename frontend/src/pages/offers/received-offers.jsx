@@ -6,13 +6,26 @@ import { connect } from "react-redux";
 
 import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
 
+import { getReceivedOffers } from "../../actions/offer-actions";
+
+import Spinner from "components/spinner/spinner";
 import OfferCard from "components/offer-card/offer-card";
 
 const ReceivedOffers = ({ authenticationState }) => {
   const [offers, setOffers] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const renderOffers = (offers) => {
-    return offers.map((offer) => <OfferCard key={offer.id} data={offer} />);
+  useEffect(() => {
+    setIsLoading(true);
+
+    getReceivedOffers(authenticationState.loggedUser.id).then((response) => {
+      setOffers(response);
+      setIsLoading(false);
+    });
+  }, [authenticationState.loggedUser.id]);
+
+  const renderOffers = () => {
+    // return offers.map((offer) => <OfferCard key={offer.id} data={offer} />);
   };
 
   return (
@@ -20,7 +33,9 @@ const ReceivedOffers = ({ authenticationState }) => {
       <div className="content-wrapper">
         <h1 className="title">Received Offers</h1>
         <div className="columns">
-          <div className="column is-one-third">{renderOffers(offers)}</div>
+          <div className="column is-one-third">
+            {isLoading ? <Spinner /> : renderOffers()}
+          </div>
         </div>
       </div>
     </div>
