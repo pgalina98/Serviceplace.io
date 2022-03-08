@@ -37,7 +37,7 @@ export const saveService = async (service, userId) => {
   return await api.saveService(service, userId);
 };
 
-export const fetchLoggedUserServices = async (userId) => {
+export const getLoggedUserServices = async (userId) => {
   return await api.fetchLoggedUserServices(userId).then((response) => {
     const userServices = response.docs.map((document) => ({
       id: document.id,

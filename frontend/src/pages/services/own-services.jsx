@@ -5,7 +5,7 @@ import ServiceCard from "../../components/service-card/service-card";
 
 import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
 
-import { fetchLoggedUserServices } from "../../actions/service-actions";
+import { getLoggedUserServices } from "../../actions/service-actions";
 
 const OwnServices = ({ authenticationState }) => {
   const [services, setServices] = useState();
@@ -14,7 +14,7 @@ const OwnServices = ({ authenticationState }) => {
   useEffect(() => {
     setIsLoading(true);
 
-    fetchLoggedUserServices(authenticationState.loggedUser.id).then(
+    getLoggedUserServices(authenticationState.loggedUser.id).then(
       (response) => {
         setServices(response);
         setIsLoading(false);
