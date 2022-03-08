@@ -1,0 +1,104 @@
+$trashColor1: #95afc0;
+$trashColor2: #535c68;
+$trashColor3: #dff9fb;
+$transition: all 0.2s ease-in-out;
+
+.trash-box {
+  width: 23px;
+  height: 23px;
+  position: absolute;
+  right: -2px;
+  top: -2px;
+  cursor: pointer;
+
+  &:hover .trash-top {
+    transform: translate(-50%, -15%) rotate(-20deg);
+  }
+
+  &:hover .trash-btm {
+    transform: translate(-50%, -100%) rotate(5deg);
+  }
+
+  &:hover .trash {
+    top: 50%;
+    transform: translate(-42%, -50%) rotate(35deg);
+  }
+
+  .trash-top {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    width: 80%;
+    height: 15%;
+    background: $trashColor1;
+    border-radius: 5px;
+    transform-origin: left bottom;
+    transition: $transition;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 95%;
+      left: 50%;
+      transform: translate(-50%);
+      width: 30%;
+      height: 80%;
+      background: inherit;
+      border-radius: 5px 5px 0 0;
+    }
+  }
+
+  .trash-btm {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: 70%;
+    height: 65%;
+    background: $trashColor1;
+    border-radius: 5px;
+    transform-origin: left 70%;
+    transition: $transition;
+
+    .trash-lines {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      height: 80%;
+      display: flex;
+      justify-content: space-around;
+
+      .trash-line {
+        width: 20%;
+        height: 100%;
+        background: darken($trashColor1, 10%);
+        border-radius: 3px;
+      }
+    }
+  }
+
+  .trash {
+    position: absolute;
+    top: 80%;
+    left: 38%;
+    transform: translate(-38%, -80%) rotate(35deg);
+    width: 40%;
+    height: 40%;
+    background: $trashColor3;
+    border-radius: 2px;
+    transition: $transition;
+
+    &::before {
+      content: "";
+      position: absolute;
+      transform: translate(30%, -20%) rotate(25deg);
+      width: 100%;
+      height: 100%;
+      background: darken($trashColor3, 10%);
+      border-radius: 2px;
+    }
+  }
+}

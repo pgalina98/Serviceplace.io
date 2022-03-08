@@ -3,9 +3,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import TrashboxIcon from "../../components/trashbox-icon/trashbox-icon";
+
 const ServiceCard = ({ data: service }) => {
   return (
-    <div className="column is-one-third">
+    <div className="column is-one-third position-relative">
+      <TrashboxIcon />
       <div
         className="feature-card is-bordered has-text-centered revealOnScroll delay-3"
         data-animation="fadeInLeft"
