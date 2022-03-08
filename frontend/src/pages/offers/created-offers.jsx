@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import { connect } from "react-redux";
+import { Alert } from "reactstrap";
 
 import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
 
@@ -32,6 +33,9 @@ const CreatedOffers = ({ authenticationState }) => {
     <div className="container">
       <div className="content-wrapper">
         <h1 className="title">Created Offers</h1>
+        {!isLoading && offers.length === 0 && (
+          <Alert color="primary">You don't have any created offers yet!</Alert>
+        )}
         <div className="columns">
           <div className="column is-one-third">
             {isLoading ? <Spinner /> : renderOffers()}

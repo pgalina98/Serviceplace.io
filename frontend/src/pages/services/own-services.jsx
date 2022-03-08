@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { Alert } from "reactstrap";
+
 import Spinner from "../../components/spinner/spinner";
 import ServiceCard from "../../components/service-card/service-card";
 
@@ -32,6 +34,11 @@ const OwnServices = ({ authenticationState }) => {
     <div className="container">
       <div className="content-wrapper">
         <h1 className="title">My Services</h1>
+        {!isLoading && services.length === 0 && (
+          <Alert color="primary">
+            You don't have any created services yet!
+          </Alert>
+        )}
         <div className="columns is-multiline">
           {isLoading ? <Spinner /> : renderServices()}
         </div>
