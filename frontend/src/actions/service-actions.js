@@ -49,3 +49,7 @@ export const getLoggedUserServices = async (userId) => {
     return userServices;
   });
 };
+
+export const deleteServiceById = async (serviceId) => {
+  return await api.deleteServiceById(serviceId);
+};

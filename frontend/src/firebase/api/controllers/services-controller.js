@@ -1,4 +1,12 @@
-import { addDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 import { servicesCollection } from "../../firestore/collections";
 
@@ -30,6 +38,15 @@ export const saveService = async (data, userId) => {
     await addDoc(servicesCollection, {
       ...data,
     });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const deleteServiceById = async (serviceId) => {
+  try {
+    const serviceRef = await createServiceRef(serviceId);
+    await deleteDoc(serviceRef);
   } catch (error) {
     return Promise.reject(error);
   }

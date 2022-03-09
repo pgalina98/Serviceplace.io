@@ -14,6 +14,11 @@ const OwnServices = ({ authenticationState }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    fetchLoggedUserServices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authenticationState.loggedUser.id]);
+
+  const fetchLoggedUserServices = () => {
     setIsLoading(true);
 
     getLoggedUserServices(authenticationState.loggedUser.id).then(
@@ -22,11 +27,16 @@ const OwnServices = ({ authenticationState }) => {
         setIsLoading(false);
       }
     );
-  }, [authenticationState.loggedUser.id]);
+  };
 
   const renderServices = () => {
     return services.map((service) => (
-      <ServiceCard key={service.id} data={service} />
+      <ServiceCard
+        key={service.id}
+        data={service}
+        fetchLoggedUserServices={fetchLoggedUserServices}
+        isDeleteIconShown={true}
+      />
     ));
   };
 

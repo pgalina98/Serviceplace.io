@@ -2,9 +2,9 @@ import React from "react";
 
 import "./trashbox-icon.scss";
 
-const TrashboxIcon = () => {
+const TrashboxIcon = ({ onDeleteButtonClick }) => {
   return (
-    <div className="trash-box">
+    <div className="trash-box" onClick={onDeleteButtonClick}>
       <div className="trash"></div>
       <div className="trash-top"></div>
       <div className="trash-btm">
