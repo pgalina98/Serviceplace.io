@@ -69,3 +69,11 @@ export const getReceivedOffers = (userId) => {
     );
   });
 };
+
+export const acceptOffer = (offer) => {
+  return api.changeOfferStatus(offer);
+};
+
+export const rejectOffer = (offer) => {
+  return api.changeOfferStatus(offer);
+};

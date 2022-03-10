@@ -1,24 +1,75 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
-import React from "react";
+import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
+import { useToasts } from "react-toast-notifications";
+import { Spinner } from "react-bootstrap";
 
 import {
   OFFER_STATUS,
   mapIdToStatus,
 } from "components/offer-modal/offer-status-constants";
 
-const OfferCard = ({ data: offer, showControlButtons = false }) => {
+import { TOAST_TYPES } from "utils/toast-util";
+import { messages } from "config/constants";
+
+import { acceptOffer, rejectOffer } from "../../actions/offer-actions";
+
+const ACTIONS = {
+  ACCEPTING: 1,
+  REJECTING: 0,
+};
+
+const OfferCard = ({ data, showControlButtons = false }) => {
+  const { addToast } = useToasts();
+
   const { loggedUser } = useSelector((state) => state.authenticationState);
+
+  const [offer, setOffer] = useState(data);
+  const [savingState, setSavingState] = useState({
+    isSaving: false,
+  });
 
   const isOfferCreatedByLoggedUser = () => {
     return offer.fromUser.uid === loggedUser.uid;
   };
 
-  const onAcceptButtonClick = () => {};
+  const onAcceptButtonClick = () => {
+    setSavingState({ action: ACTIONS.ACCEPTING, isSaving: true });
+    const updatedOffer = { ...offer, status: OFFER_STATUS.ACCEPTED };
 
-  const onRejectButtonClick = () => {};
+    acceptOffer(updatedOffer)
+      .then(() => {
+        setSavingState({ action: ACTIONS.ACCEPTING, isSaving: false });
+        addToast(messages.OFFER_ACCEPTING_SUCCESS, {
+          appearance: TOAST_TYPES.SUCCESS,
+        });
+        setOffer(updatedOffer);
+      })
+      .catch(({ message }) => {
+        setSavingState({ action: ACTIONS.ACCEPTING, isSaving: false });
+        addToast(message, { appearance: TOAST_TYPES.ERROR });
+      });
+  };
+
+  const onRejectButtonClick = () => {
+    setSavingState({ action: ACTIONS.REJECTING, isSaving: true });
+    const updatedOffer = { ...offer, status: OFFER_STATUS.REJECTED };
+
+    rejectOffer(updatedOffer)
+      .then(() => {
+        setSavingState({ action: ACTIONS.REJECTING, isSaving: false });
+        addToast(messages.OFFER_REJECTING_SUCCESS, {
+          appearance: TOAST_TYPES.SUCCESS,
+        });
+        setOffer(updatedOffer);
+      })
+      .catch(({ message }) => {
+        setSavingState({ action: ACTIONS.REJECTING, isSaving: false });
+        addToast(message, { appearance: TOAST_TYPES.ERROR });
+      });
+  };
 
   return (
     <div className="column is-one-third offer-card">
@@ -41,7 +92,7 @@ const OfferCard = ({ data: offer, showControlButtons = false }) => {
             OFFER_STATUS.ACCEPTED === offer.status
               ? "is-success"
               : OFFER_STATUS.REJECTED === offer.status
-              ? "is-warning"
+              ? "is-danger"
               : "is-dark"
           }`}
         >
@@ -73,16 +124,28 @@ const OfferCard = ({ data: offer, showControlButtons = false }) => {
                 <button
                   onClick={() => onAcceptButtonClick()}
                   type="button"
-                  class="btn btn-success"
+                  className="btn btn-success"
+                  disabled={savingState.isSaving}
                 >
-                  Accept
+                  {ACTIONS.ACCEPTING === savingState.action &&
+                  savingState.isSaving ? (
+                    <Spinner as="span" animation="border" size="sm" />
+                  ) : (
+                    "Accept"
+                  )}
                 </button>
                 <button
                   onClick={() => onRejectButtonClick()}
                   type="button"
-                  class="btn btn-danger"
+                  className="btn btn-danger"
+                  disabled={savingState.isSaving}
                 >
-                  Reject
+                  {ACTIONS.REJECTING === savingState.action &&
+                  savingState.isSaving ? (
+                    <Spinner as="span" animation="border" size="sm" />
+                  ) : (
+                    "Reject"
+                  )}
                 </button>
               </div>
             </>

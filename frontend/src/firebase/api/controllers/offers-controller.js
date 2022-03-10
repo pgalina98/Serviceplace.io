@@ -1,4 +1,11 @@
-import { addDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 
 import { offersCollection } from "../../firestore/collections";
 
@@ -49,4 +56,22 @@ export const fetchReceivedOffers = async (userId) => {
   );
 
   return await getDocs(queryGetOffersByToUser);
+};
+
+export const changeOfferStatus = async (data) => {
+  const offerRef = await createOfferRef(data.id);
+
+  try {
+    return await updateDoc(offerRef, { status: data.status });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const createOfferRef = (offerId) => {
+  try {
+    return doc(offersCollection, offerId);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
