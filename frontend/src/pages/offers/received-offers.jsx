@@ -26,7 +26,7 @@ const ReceivedOffers = ({ authenticationState }) => {
   }, [authenticationState.loggedUser.id]);
 
   const renderOffers = () => {
-    // return offers.map((offer) => <OfferCard key={offer.id} data={offer} />);
+    return offers.map((offer) => <OfferCard key={offer.id} data={offer} />);
   };
 
   return (
