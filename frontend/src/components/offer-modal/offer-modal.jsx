@@ -6,7 +6,7 @@ import { Spinner } from "react-bootstrap";
 
 import { messages } from "../../config/constants";
 import { TOAST_TYPES } from "../../utils/toast-util";
-import { OFFER_STATUS } from "./offer-status-constants";
+import { OFFER_STATUS } from "utils/offer-status-constants";
 
 import { saveOffer } from "actions/offer-actions";
 

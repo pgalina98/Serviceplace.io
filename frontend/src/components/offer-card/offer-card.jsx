@@ -6,10 +6,7 @@ import { useSelector } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
 
-import {
-  OFFER_STATUS,
-  mapIdToStatus,
-} from "components/offer-modal/offer-status-constants";
+import { OFFER_STATUS, mapIdToStatus } from "utils/offer-status-constants";
 
 import { TOAST_TYPES } from "utils/toast-util";
 import { messages } from "config/constants";
@@ -17,8 +14,9 @@ import { messages } from "config/constants";
 import { acceptOffer, rejectOffer } from "../../actions/offer-actions";
 
 const ACTIONS = {
-  ACCEPTING: 1,
-  REJECTING: 0,
+  OFFER_REJECTING: 0,
+  OFFER_ACCEPTING: 1,
+  COLLABORATION_REQUEST_CREATING: 2,
 };
 
 const OfferCard = ({ data, showControlButtons = false }) => {
@@ -36,40 +34,42 @@ const OfferCard = ({ data, showControlButtons = false }) => {
   };
 
   const onAcceptButtonClick = () => {
-    setSavingState({ action: ACTIONS.ACCEPTING, isSaving: true });
+    setSavingState({ action: ACTIONS.OFFER_ACCEPTING, isSaving: true });
     const updatedOffer = { ...offer, status: OFFER_STATUS.ACCEPTED };
 
     acceptOffer(updatedOffer)
       .then(() => {
-        setSavingState({ action: ACTIONS.ACCEPTING, isSaving: false });
+        setSavingState({ action: ACTIONS.OFFER_ACCEPTING, isSaving: false });
         addToast(messages.OFFER_ACCEPTING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
         setOffer(updatedOffer);
       })
       .catch(({ message }) => {
-        setSavingState({ action: ACTIONS.ACCEPTING, isSaving: false });
+        setSavingState({ action: ACTIONS.OFFER_ACCEPTING, isSaving: false });
         addToast(message, { appearance: TOAST_TYPES.ERROR });
       });
   };
 
   const onRejectButtonClick = () => {
-    setSavingState({ action: ACTIONS.REJECTING, isSaving: true });
+    setSavingState({ action: ACTIONS.OFFER_REJECTING, isSaving: true });
     const updatedOffer = { ...offer, status: OFFER_STATUS.REJECTED };
 
     rejectOffer(updatedOffer)
       .then(() => {
-        setSavingState({ action: ACTIONS.REJECTING, isSaving: false });
+        setSavingState({ action: ACTIONS.OFFER_REJECTING, isSaving: false });
         addToast(messages.OFFER_REJECTING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
         setOffer(updatedOffer);
       })
       .catch(({ message }) => {
-        setSavingState({ action: ACTIONS.REJECTING, isSaving: false });
+        setSavingState({ action: ACTIONS.OFFER_REJECTING, isSaving: false });
         addToast(message, { appearance: TOAST_TYPES.ERROR });
       });
   };
+
+  const onCreateCollaborationRequestButtonClick = () => {};
 
   return (
     <div className="column is-one-third offer-card">
@@ -117,7 +117,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
           <div className="card-line-2 mb-2">
             <span className="label">Time:</span> {offer.requestedDuration} hours
           </div>
-          {showControlButtons && offer.status === OFFER_STATUS.PENDING && (
+          {showControlButtons && offer.status === OFFER_STATUS.PENDING ? (
             <>
               <hr />
               <div className="d-flex justify-content-evenly">
@@ -127,7 +127,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
                   className="btn btn-success"
                   disabled={savingState.isSaving}
                 >
-                  {ACTIONS.ACCEPTING === savingState.action &&
+                  {ACTIONS.OFFER_ACCEPTING === savingState.action &&
                   savingState.isSaving ? (
                     <Spinner as="span" animation="border" size="sm" />
                   ) : (
@@ -140,7 +140,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
                   className="btn btn-danger"
                   disabled={savingState.isSaving}
                 >
-                  {ACTIONS.REJECTING === savingState.action &&
+                  {ACTIONS.OFFER_REJECTING === savingState.action &&
                   savingState.isSaving ? (
                     <Spinner as="span" animation="border" size="sm" />
                   ) : (
@@ -149,6 +149,27 @@ const OfferCard = ({ data, showControlButtons = false }) => {
                 </button>
               </div>
             </>
+          ) : (
+            !showControlButtons &&
+            offer.status === OFFER_STATUS.ACCEPTED && (
+              <>
+                <hr />
+                <div className="d-flex justify-content-center"></div>
+                <button
+                  onClick={() => onCreateCollaborationRequestButtonClick()}
+                  type="button"
+                  className="btn btn-info"
+                  disabled={savingState.isSaving}
+                >
+                  {ACTIONS.COLLABORATION_REQUEST_CREATING ===
+                    savingState.action && savingState.isSaving ? (
+                    <Spinner as="span" animation="border" size="sm" />
+                  ) : (
+                    "Create collaboration request"
+                  )}
+                </button>
+              </>
+            )
           )}
         </div>
       </div>
