@@ -1,3 +1,4 @@
 export const MESSAGE_TYPES = {
   INVITATION: 1,
+  COLLABORATION_MESSAGE: 2,
 };

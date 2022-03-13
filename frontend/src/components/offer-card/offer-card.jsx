@@ -12,6 +12,11 @@ import { TOAST_TYPES } from "utils/toast-util";
 import { messages } from "config/constants";
 
 import { acceptOffer, rejectOffer } from "../../actions/offer-actions";
+import { createNewCollaboration } from "../../actions/collaboration-actions";
+import {
+  createCollaborationInvitationMessage,
+  sendMessage,
+} from "../../actions/messages-actions";
 
 const ACTIONS = {
   OFFER_REJECTING: 0,
@@ -69,7 +74,56 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       });
   };
 
-  const onCreateCollaborationRequestButtonClick = () => {};
+  const onCreateCollaborationRequestButtonClick = () => {
+    setSavingState({
+      action: ACTIONS.COLLABORATION_REQUEST_CREATING,
+      isSaving: true,
+    });
+    const updatedOffer = {
+      ...offer,
+      status: OFFER_STATUS.COLLABORATION_REQUEST_CREATED,
+    };
+
+    createNewCollaboration(updatedOffer)
+      .then((collaborationId) => {
+        addToast(messages.COLLABORATION_REQUEST_CREATING_SUCCESS, {
+          appearance: TOAST_TYPES.SUCCESS,
+        });
+
+        updatedOffer.collaborationId = collaborationId;
+
+        sendMessage(createCollaborationInvitationMessage(updatedOffer))
+          .then(() => {
+            addToast(
+              messages.COLLABORATION_INVITATION_MESSAGE_CREATING_SUCCESS,
+              {
+                appearance: TOAST_TYPES.SUCCESS,
+              }
+            );
+
+            setSavingState({
+              action: ACTIONS.COLLABORATION_REQUEST_CREATING,
+              isSaving: false,
+            });
+          })
+          .catch(({ message }) => {
+            setSavingState({
+              action: ACTIONS.COLLABORATION_REQUEST_CREATING,
+              isSaving: false,
+            });
+            addToast(message, { appearance: TOAST_TYPES.ERROR });
+          });
+
+        setOffer(updatedOffer);
+      })
+      .catch(({ message }) => {
+        setSavingState({
+          action: ACTIONS.COLLABORATION_REQUEST_CREATING,
+          isSaving: false,
+        });
+        addToast(message, { appearance: TOAST_TYPES.ERROR });
+      });
+  };
 
   return (
     <div className="column is-one-third offer-card">
@@ -89,7 +143,8 @@ const OfferCard = ({ data, showControlButtons = false }) => {
         </div>
         <div
           className={`tag is-large ${
-            OFFER_STATUS.ACCEPTED === offer.status
+            OFFER_STATUS.ACCEPTED === offer.status ||
+            OFFER_STATUS.COLLABORATION_REQUEST_CREATED === offer.status
               ? "is-success"
               : OFFER_STATUS.REJECTED === offer.status
               ? "is-danger"
