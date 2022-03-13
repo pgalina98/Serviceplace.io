@@ -81,7 +81,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
     });
     const updatedOffer = {
       ...offer,
-      status: OFFER_STATUS.IN_COLABORATION,
+      status: OFFER_STATUS.IN_COLLABORATION,
     };
 
     createNewCollaboration(updatedOffer)
