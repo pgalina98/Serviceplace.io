@@ -20,6 +20,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
 
   const [unsubscribe, setUnsubscribe] = useState();
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     api.onAuthStateChange((user) => {
@@ -28,6 +29,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
       if (user) {
         subscribe(user.uid, (response) => {
+          setMessages(response.messages);
           setUnsubscribe(response.unsubscribe);
         });
       }
@@ -49,11 +51,13 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
             id="navbar"
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
+            messages={messages}
           />
           <Navbar
             id="navbar-clone"
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
+            messages={messages}
           />
           <Sidebar />
           <Routes />
