@@ -13,10 +13,10 @@ export const createNewUser = async (data) => {
   }
 };
 
-export const getUserById = async (userId) => {
-  const queryGetUserById = query(usersCollection, where("uid", "==", userId));
+export const getUserByUid = async (userId) => {
+  const queryGetUserByUid = query(usersCollection, where("uid", "==", userId));
 
-  return await getDocs(queryGetUserById);
+  return await getDocs(queryGetUserByUid);
 };
 
 export const createUserRef = (userId) => {

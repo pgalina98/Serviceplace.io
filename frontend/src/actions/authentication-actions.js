@@ -1,5 +1,5 @@
 import { SUCCESS } from "utils/action-type-util";
-import { getUserById } from "../firebase/api/controllers/users-controller";
+import { getUserByUid } from "../firebase/api/controllers/users-controller";
 import { logoutUser as logoutCurrentUser } from "../firebase/api/controllers/authentication-controller";
 
 export const ACTION_TYPES = {
@@ -14,7 +14,7 @@ export const resetAuthenticationState = () => ({
 
 export const setAuthenticatedUser = (data) => {
   if (data?.uid) {
-    return getUserById(data.uid).then((response) => {
+    return getUserByUid(data.uid).then((response) => {
       const user = response.docs.map((document) => ({
         id: document.id,
         ...document.data(),

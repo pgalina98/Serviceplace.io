@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { BrowserRouter as Router } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
@@ -12,17 +12,32 @@ import {
   setAuthenticatedUser,
   resetAuthenticationState,
 } from "actions/authentication-actions";
+import { subscribe } from "actions/messages-actions";
+
 import * as api from "./firebase/api/controllers/authentication-controller";
 
 function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
 
+  const [unsubscribe, setUnsubscribe] = useState();
+
   useEffect(() => {
     api.onAuthStateChange((user) => {
       dispatch(resetAuthenticationState());
       dispatch(setAuthenticatedUser(user));
+
+      if (user) {
+        subscribe(user.uid, (response) => {
+          setUnsubscribe(response.unsubscribe);
+        });
+      }
     });
-  }, [dispatch]);
+
+    return () => {
+      unsubscribe();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Router>
