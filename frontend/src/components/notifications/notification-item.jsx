@@ -1,8 +1,9 @@
-import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time.-formats";
 import React from "react";
 
-import { formatDate } from "utils/date-time-util";
 import { format } from "timeago.js";
+
+import { formatDate } from "utils/date-time-util";
+import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time.-formats";
 
 const NotificationItem = ({ notification }) => {
   return (
@@ -16,7 +17,7 @@ const NotificationItem = ({ notification }) => {
         <div>
           <div className="txt">{notification.text}</div>
           <div className="txt sub">
-            {format(notification.createdAt.seconds * 1000)}
+            {format(new Date(notification.createdAt.seconds * 1000))}
             {" | "}
             {formatDate(
               notification.createdAt.seconds,

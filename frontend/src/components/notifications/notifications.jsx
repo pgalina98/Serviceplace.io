@@ -4,7 +4,7 @@ import NotificationItem from "./notification-item";
 
 const Notifications = ({ notifications }) => {
   return (
-    <div className="box">
+    <div className="notification-box">
       <div className="display">
         {notifications?.length === 0 ? (
           <div className="nothing">

@@ -20,7 +20,10 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
 
   const [unsubscribe, setUnsubscribe] = useState();
-  const [messages, setMessages] = useState();
+  const [messages, setMessages] = useState({
+    data: [],
+    isFetching: true,
+  });
 
   useEffect(() => {
     api.onAuthStateChange((user) => {
@@ -29,7 +32,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
       if (user) {
         subscribe(user.uid, (response) => {
-          setMessages(response.messages);
+          setMessages({ data: response.messages, isFetching: false });
           setUnsubscribe(response.unsubscribe);
         });
       }
@@ -43,7 +46,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
   return (
     <Router>
-      {!isAuthenticationResolved || !messages ? (
+      {!isAuthenticationResolved || messages.isFetching ? (
         <Spinner />
       ) : (
         <>
@@ -51,13 +54,13 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
             id="navbar"
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
-            messages={messages}
+            messages={messages.data}
           />
           <Navbar
             id="navbar-clone"
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
-            messages={messages}
+            messages={messages.data}
           />
           <Sidebar />
           <Routes />
