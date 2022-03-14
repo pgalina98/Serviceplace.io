@@ -11,7 +11,7 @@ const NotificationItem = () => {
         />
         <div>
           <div className="txt">
-            Annita liked your post: "Pure css notification box"
+            Annita liked your post: "Pure css notification"
           </div>
           <div className="txt sub">11/7 - 2:13 pm</div>
         </div>
