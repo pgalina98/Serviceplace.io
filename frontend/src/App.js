@@ -20,7 +20,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
 
   const [unsubscribe, setUnsubscribe] = useState();
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState();
 
   useEffect(() => {
     api.onAuthStateChange((user) => {
@@ -43,7 +43,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
   return (
     <Router>
-      {!isAuthenticationResolved ? (
+      {!isAuthenticationResolved || !messages ? (
         <Spinner />
       ) : (
         <>

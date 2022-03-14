@@ -12,12 +12,12 @@ const Notifications = ({ notifications }) => {
             <div className="cent">No notifications yet!</div>
           </div>
         ) : (
-          <div className="cont">
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-            <NotificationItem />
-          </div>
+          notifications?.map((notification) => (
+            <NotificationItem
+              key={notification.id}
+              notification={notification}
+            />
+          ))
         )}
       </div>
     </div>
