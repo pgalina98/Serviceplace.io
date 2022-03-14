@@ -5,12 +5,6 @@ import { formatDate } from "utils/date-time-util";
 import { format } from "timeago.js";
 
 const NotificationItem = ({ notification }) => {
-  console.log("NOTIFICATION: ", notification);
-
-  console.log("DATE: ", new Date(notification.createdAt.seconds * 1000));
-
-  console.log("TIME AGO: ");
-
   return (
     <div className="sec new">
       <div className="d-flex align-items-center">
