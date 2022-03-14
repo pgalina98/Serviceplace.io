@@ -1632,7 +1632,7 @@ a {
 }
 
 .notBtn:hover > .box {
-  height: 60vh;
+  height: 350px;
 }
 
 .content {
@@ -1680,21 +1680,14 @@ a {
   transition: 0.5s;
 }
 
-.profCont {
-  padding-left: 15px;
-  display: flex;
-  align-items: center;
-}
-
-.profile {
-  border: 50%;
-  height: 75px;
+.profile-image {
+  border-radius: 50%;
+  margin-right: 25px;
+  margin-left: 15px;
 }
 
 .txt {
-  vertical-align: top;
-  font-size: 1.25rem;
-  padding: 5px 10px 0px 115px;
+  font-size: 1.15rem;
 }
 
 .sub {
