@@ -3,10 +3,7 @@ import { serverTimestamp } from "firebase/firestore";
 import { MESSAGE_TYPES } from "utils/message-type-constants";
 
 import { createCollaborationRef } from "../firebase/api/controllers/collaborations-controller";
-import {
-  createUserRef,
-  getUserByUid,
-} from "../firebase/api/controllers/users-controller";
+import { createUserRef } from "../firebase/api/controllers/users-controller";
 
 import * as api from "../firebase/api/controllers/messages-controller";
 
@@ -23,18 +20,6 @@ export const sendMessage = (message) => {
   return api.saveMessage(message);
 };
 
-export const subscribe = (userUid, callback) => {
-  getUserByUid(userUid).then((response) => {
-    const user = Object.assign(
-      {},
-      ...response.docs.map((document) => ({
-        id: document.id,
-        ...document.data(),
-      }))
-    );
-
-    api.subscribe(user.id, (messages, unsubscribe) => {
-      callback({ messages, unsubscribe });
-    });
-  });
+export const subscribe = (userId, callback) => {
+  api.subscribe(userId, (messages) => callback(messages));
 };

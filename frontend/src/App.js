@@ -19,7 +19,6 @@ import * as api from "./firebase/api/controllers/authentication-controller";
 function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
 
-  const [unsubscribe, setUnsubscribe] = useState();
   const [messages, setMessages] = useState({
     data: [],
     isFetching: true,
@@ -29,20 +28,20 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
     api.onAuthStateChange((user) => {
       dispatch(resetAuthenticationState());
       dispatch(setAuthenticatedUser(user));
-
-      if (user) {
-        subscribe(user.uid, (response) => {
-          setMessages({ data: response.messages, isFetching: false });
-          setUnsubscribe(response.unsubscribe);
-        });
-      }
     });
 
-    return () => {
-      unsubscribe();
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticationResolved) {
+      subscribe(loggedUser.id, (messages) => {
+        setMessages({ data: messages, isFetching: false });
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticationResolved, loggedUser]);
 
   return (
     <Router>

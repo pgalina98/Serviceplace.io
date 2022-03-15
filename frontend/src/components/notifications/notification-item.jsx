@@ -10,12 +10,8 @@ const NotificationItem = ({ notification }) => {
     <div className="sec new">
       <div className="d-flex align-items-center">
         <div className="d-flex flex-wrap justify-content-center border-right">
-          <img
-            className="profile-image"
-            src={notification.fromUser.avatar}
-            alt="profile-img"
-          />
-          <div className="txt sub">{notification.fromUser.fullname}</div>
+          <img className="profile-image" src={""} alt="profile-img" />
+          <div className="txt sub">John Doe</div>
         </div>
         <div>
           <div className="txt ml-3">{notification.text}</div>
