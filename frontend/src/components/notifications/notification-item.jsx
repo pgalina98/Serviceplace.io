@@ -9,14 +9,17 @@ const NotificationItem = ({ notification }) => {
   return (
     <div className="sec new">
       <div className="d-flex align-items-center">
-        <img
-          className="profile-image"
-          src="https://obamawhitehouse.archives.gov/sites/obamawhitehouse.archives.gov/files/styles/person_medium_photo/public/person-photo/amanda_lucidon22.jpg?itok=JFPi8OFJ"
-          alt="profile-img"
-        />
+        <div className="d-flex flex-wrap justify-content-center border-right">
+          <img
+            className="profile-image"
+            src={notification.fromUser.avatar}
+            alt="profile-img"
+          />
+          <div className="txt sub">{notification.fromUser.fullname}</div>
+        </div>
         <div>
-          <div className="txt">{notification.text}</div>
-          <div className="txt sub">
+          <div className="txt ml-3">{notification.text}</div>
+          <div className="txt sub ml-3">
             {format(new Date(notification.createdAt.seconds * 1000))}
             {" | "}
             {formatDate(
