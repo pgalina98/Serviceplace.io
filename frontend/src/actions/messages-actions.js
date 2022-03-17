@@ -20,6 +20,10 @@ export const sendMessage = (message) => {
   return api.saveMessage(message);
 };
 
+export const acceptCollaborationInvitation = (notification) => {
+  return api.updateMessage(notification);
+};
+
 export const subscribe = (userId, callback) => {
   api.subscribe(userId, (messages) => callback(messages));
 };
