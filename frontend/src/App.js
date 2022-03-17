@@ -21,7 +21,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
   const [messages, setMessages] = useState({
     data: [],
-    isFetching: true,
+    isFetching: isAuthenticationResolved && isAuthenticated,
   });
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   }, []);
 
   useEffect(() => {
-    if (isAuthenticationResolved) {
+    if (isAuthenticationResolved && isAuthenticated) {
       subscribe(loggedUser.id, (messages) => {
         setMessages({ data: messages, isFetching: false });
       });
