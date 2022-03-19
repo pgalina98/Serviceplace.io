@@ -14,8 +14,9 @@ import { messages } from "config/constants";
 import { acceptOffer, rejectOffer } from "../../actions/offer-actions";
 import { createNewCollaboration } from "../../actions/collaboration-actions";
 import {
-  createCollaborationInvitatioNotification,
   saveNotification,
+  createOfferAcceptedNotification,
+  createCollaborationInvitatioNotification,
 } from "../../actions/notification-actions";
 
 const ACTIONS = {
@@ -48,6 +49,12 @@ const OfferCard = ({ data, showControlButtons = false }) => {
         addToast(messages.OFFER_ACCEPTING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
+        console.log("OFFER: ", updatedOffer);
+        console.log(
+          "NEW NOTIFICATION: ",
+          createOfferAcceptedNotification(updatedOffer)
+        );
+        saveNotification(createOfferAcceptedNotification(updatedOffer));
         setOffer(updatedOffer);
       })
       .catch(({ message }) => {

@@ -11,6 +11,7 @@ import { acceptCollaborationInvitation } from "actions/notification-actions";
 import { messages } from "config/constants";
 
 import * as api from "../../firebase/api/controllers/users-controller";
+import { NOTIFICATION_TYPES } from "utils/notification-type-constants";
 
 const NotificationItem = ({ notification }) => {
   const { addToast } = useToasts();
@@ -85,7 +86,11 @@ const NotificationItem = ({ notification }) => {
           type="button"
           className="btn btn-success ml-3 col-2"
           disabled={isSaving}
-          hidden={notificationState?.invitationAccepted ?? false}
+          hidden={
+            (notificationState?.invitationAccepted ?? false) ||
+            notificationState?.type !==
+              NOTIFICATION_TYPES.COLLABORATION_INVITATION
+          }
         >
           {isSaving ? (
             <Spinner as="span" animation="border" size="sm" />
