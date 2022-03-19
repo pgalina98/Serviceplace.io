@@ -12,7 +12,7 @@ import {
   setAuthenticatedUser,
   resetAuthenticationState,
 } from "actions/authentication-actions";
-import { subscribe } from "actions/messages-actions";
+import { subscribe } from "actions/notification-actions";
 
 import * as api from "./firebase/api/controllers/authentication-controller";
 

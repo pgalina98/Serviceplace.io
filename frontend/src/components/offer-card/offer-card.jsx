@@ -14,9 +14,9 @@ import { messages } from "config/constants";
 import { acceptOffer, rejectOffer } from "../../actions/offer-actions";
 import { createNewCollaboration } from "../../actions/collaboration-actions";
 import {
-  createCollaborationInvitationMessage,
-  sendMessage,
-} from "../../actions/messages-actions";
+  createCollaborationInvitatioNotification,
+  saveNotification,
+} from "../../actions/notification-actions";
 
 const ACTIONS = {
   OFFER_REJECTING: 0,
@@ -92,10 +92,10 @@ const OfferCard = ({ data, showControlButtons = false }) => {
 
         updatedOffer.collaborationId = collaborationId;
 
-        sendMessage(createCollaborationInvitationMessage(updatedOffer))
+        saveNotification(createCollaborationInvitatioNotification(updatedOffer))
           .then(() => {
             addToast(
-              messages.COLLABORATION_INVITATION_MESSAGE_CREATING_SUCCESS,
+              messages.COLLABORATION_INVITATION_NOTIFICATION_CREATING_SUCCESS,
               {
                 appearance: TOAST_TYPES.SUCCESS,
               }
