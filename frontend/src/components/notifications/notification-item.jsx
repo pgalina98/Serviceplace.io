@@ -85,7 +85,7 @@ const NotificationItem = ({ notification }) => {
           type="button"
           className="btn btn-success ml-3 col-2"
           disabled={isSaving}
-          hidden={notificationState.invitationAccepted ?? false}
+          hidden={notificationState?.invitationAccepted ?? false}
         >
           {isSaving ? (
             <Spinner as="span" animation="border" size="sm" />
