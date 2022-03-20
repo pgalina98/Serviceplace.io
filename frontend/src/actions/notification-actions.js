@@ -14,6 +14,7 @@ export const createCollaborationInvitatioNotification = (offer) => ({
   createdAt: serverTimestamp(),
   fromUserRef: createUserRef(offer.fromUser.id),
   toUserRef: createUserRef(offer.toUser.id),
+  isRemoved: false,
 });
 
 export const createOfferAcceptedNotification = (offer) => ({
