@@ -17,15 +17,20 @@ export const createCollaborationInvitatioNotification = (offer) => ({
 });
 
 export const createOfferAcceptedNotification = (offer) => ({
-  type: NOTIFICATION_TYPES.OFFER_ACCEPTED,
+  type: NOTIFICATION_TYPES.STANDARD,
   text: `${offer.toUser.fullname} accepted your offer for ${offer.service.title}! :)`,
   createdAt: serverTimestamp(),
   fromUserRef: createUserRef(offer.toUser.id),
   toUserRef: createUserRef(offer.fromUser.id),
+  isRemoved: false,
 });
 
 export const saveNotification = (notification) => {
   return api.saveNotification(notification);
+};
+
+export const removeNotification = (notificationId) => {
+  return api.removeNotification(notificationId);
 };
 
 export const acceptCollaborationInvitation = (notification) => {
@@ -33,5 +38,5 @@ export const acceptCollaborationInvitation = (notification) => {
 };
 
 export const subscribe = (userId, callback) => {
-  api.subscribe(userId, (messages) => callback(messages));
+  api.subscribe(userId, (notifications) => callback(notifications));
 };

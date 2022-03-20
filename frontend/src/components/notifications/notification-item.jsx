@@ -7,7 +7,10 @@ import { Spinner } from "react-bootstrap";
 import { TOAST_TYPES } from "utils/toast-util";
 import { formatDate } from "utils/date-time-util";
 import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time.-formats";
-import { acceptCollaborationInvitation } from "actions/notification-actions";
+import {
+  removeNotification,
+  acceptCollaborationInvitation,
+} from "actions/notification-actions";
 import { messages } from "config/constants";
 
 import * as api from "../../firebase/api/controllers/users-controller";
@@ -53,8 +56,18 @@ const NotificationItem = ({ notification }) => {
       });
   };
 
+  const onRemoveNotificationButtonClick = (notificationId) => {
+    removeNotification(notificationId);
+  };
+
   return (
     <div className="sec new">
+      {notificationState?.type === NOTIFICATION_TYPES.STANDARD && (
+        <i
+          className="bi bi-x position-absolute top-0 remove-notification-icon"
+          onClick={() => onRemoveNotificationButtonClick(notificationState.id)}
+        />
+      )}
       <div className="d-flex align-items-center">
         <div className="d-flex flex-wrap justify-content-center border-right col-3">
           <img

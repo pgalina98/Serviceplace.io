@@ -33,12 +33,25 @@ export const updateNotification = async (data) => {
   }
 };
 
+export const removeNotification = async (notificationId) => {
+  const notificationRef = await createNotificationRef(notificationId);
+
+  try {
+    return await updateDoc(notificationRef, {
+      isRemoved: true,
+    });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 export const subscribe = (userId, callback) => {
   const userRef = createUserRef(userId);
 
   const queryGetNotificationsByUserId = query(
     notificationsCollection,
-    where("toUserRef", "==", userRef)
+    where("toUserRef", "==", userRef),
+    where("isRemoved", "==", false)
   );
 
   onSnapshot(queryGetNotificationsByUserId, (response) => {
