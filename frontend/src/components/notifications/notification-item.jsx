@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import { format } from "timeago.js";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import { TOAST_TYPES } from "utils/toast-util";
 import { formatDate } from "utils/date-time-util";
-import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time.-formats";
+import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time-formats";
 import {
   removeNotification,
   acceptCollaborationInvitation,
@@ -17,6 +18,7 @@ import * as api from "../../firebase/api/controllers/users-controller";
 import { NOTIFICATION_TYPES } from "utils/notification-type-constants";
 
 const NotificationItem = ({ notification }) => {
+  const navigate = useNavigate();
   const { addToast } = useToasts();
 
   const [notificationState, setNotificationState] = useState();
@@ -49,6 +51,7 @@ const NotificationItem = ({ notification }) => {
           appearance: TOAST_TYPES.SUCCESS,
         });
         setNotificationState(updatedNotification);
+        navigate(`/collaborations/${updatedNotification.collaborationRef.id}`);
       })
       .catch(({ message }) => {
         setIsSaving(false);
@@ -56,8 +59,8 @@ const NotificationItem = ({ notification }) => {
       });
   };
 
-  const onRemoveNotificationButtonClick = (notificationId) => {
-    removeNotification(notificationId);
+  const onRemoveNotificationButtonClick = (notification) => {
+    removeNotification(notification);
   };
 
   return (
@@ -65,7 +68,7 @@ const NotificationItem = ({ notification }) => {
       {notificationState?.type === NOTIFICATION_TYPES.STANDARD && (
         <i
           className="bi bi-x position-absolute top-0 remove-notification-icon"
-          onClick={() => onRemoveNotificationButtonClick(notificationState.id)}
+          onClick={() => onRemoveNotificationButtonClick(notificationState)}
         />
       )}
       <div className="d-flex align-items-center">

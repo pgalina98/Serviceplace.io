@@ -30,8 +30,8 @@ export const saveNotification = (notification) => {
   return api.saveNotification(notification);
 };
 
-export const removeNotification = (notificationId) => {
-  return api.removeNotification(notificationId);
+export const removeNotification = (notification) => {
+  return api.updateNotification(notification);
 };
 
 export const acceptCollaborationInvitation = (notification) => {

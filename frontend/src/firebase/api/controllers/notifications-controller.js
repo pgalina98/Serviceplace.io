@@ -24,22 +24,17 @@ export const saveNotification = async (data) => {
 export const updateNotification = async (data) => {
   const notificationRef = await createNotificationRef(data.id);
 
-  try {
-    return await updateDoc(notificationRef, {
-      invitationAccepted: data.invitationAccepted,
-    });
-  } catch (error) {
-    return Promise.reject(error);
+  const updatedDoc = {
+    invitationAccepted: data.invitationAccepted,
+    isRemoved: true,
+  };
+
+  if (!!data.invitationAccepted === false) {
+    delete Object.assign(updatedDoc)["invitationAccepted"];
   }
-};
-
-export const removeNotification = async (notificationId) => {
-  const notificationRef = await createNotificationRef(notificationId);
 
   try {
-    return await updateDoc(notificationRef, {
-      isRemoved: true,
-    });
+    return await updateDoc(notificationRef, updatedDoc);
   } catch (error) {
     return Promise.reject(error);
   }
