@@ -8,7 +8,7 @@ import Notifications from "components/notifications/notifications";
 
 import { logoutUser } from "../../actions/authentication-actions";
 
-const Navbar = ({ id, loggedUser, isAuthenticated, messages }) => {
+const Navbar = ({ id, loggedUser, isAuthenticated, notifications }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -130,10 +130,21 @@ const Navbar = ({ id, loggedUser, isAuthenticated, messages }) => {
                 </div>
                 <div className="navbar-item has-dropdown is-hoverable">
                   <div className="notification">
-                    <div className="notBtn" href="#">
-                      <div className="badge">{messages.length}</div>
-                      <i className="bi bi-bell"></i>
-                      <Notifications notifications={messages} />
+                    <div className="notBtn">
+                      <div className="badge">{notifications.length}</div>
+                      <i className="bi bi-bell" />
+                      <Notifications notifications={notifications} />
+                    </div>
+                  </div>
+                </div>
+                <div className="navbar-item has-dropdown is-hoverable">
+                  <div className="message">
+                    <div
+                      className="notBtn"
+                      onClick={() => navigate("/collaborations")}
+                    >
+                      <div className="badge">0</div>
+                      <i className="bi bi-chat-text" />
                     </div>
                   </div>
                 </div>

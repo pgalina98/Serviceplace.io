@@ -19,7 +19,7 @@ import * as api from "./firebase/api/controllers/authentication-controller";
 function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
 
-  const [messages, setMessages] = useState({
+  const [notifications, setNotifications] = useState({
     data: [],
     isFetching: isAuthenticationResolved && isAuthenticated,
   });
@@ -35,8 +35,8 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
   useEffect(() => {
     if (isAuthenticationResolved && isAuthenticated) {
-      subscribe(loggedUser.id, (messages) => {
-        setMessages({ data: messages, isFetching: false });
+      subscribe(loggedUser.id, (notifications) => {
+        setNotifications({ data: notifications, isFetching: false });
       });
     }
 
@@ -45,7 +45,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
   return (
     <Router>
-      {!isAuthenticationResolved || messages.isFetching ? (
+      {!isAuthenticationResolved || notifications.isFetching ? (
         <Spinner />
       ) : (
         <>
@@ -53,13 +53,13 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
             id="navbar"
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
-            messages={messages.data}
+            notifications={notifications.data}
           />
           <Navbar
             id="navbar-clone"
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
-            messages={messages.data}
+            notifications={notifications.data}
           />
           <Sidebar />
           <Routes />

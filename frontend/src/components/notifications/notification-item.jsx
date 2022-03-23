@@ -59,21 +59,27 @@ const NotificationItem = ({ notification }) => {
       });
   };
 
+  const isRemoveNotificationButtonShown = () => {
+    return (
+      notificationState?.type === NOTIFICATION_TYPES.STANDARD ||
+      (notificationState?.type ===
+        NOTIFICATION_TYPES.COLLABORATION_INVITATION &&
+        notificationState?.invitationAccepted)
+    );
+  };
+
   const onRemoveNotificationButtonClick = (notification) => {
     removeNotification(notification);
   };
 
   return (
     <div className="sec new">
-      {notificationState?.type === NOTIFICATION_TYPES.STANDARD ||
-        (notificationState?.type ===
-          NOTIFICATION_TYPES.COLLABORATION_INVITATION &&
-          notificationState.invitationAccepted && (
-            <i
-              className="bi bi-x position-absolute top-0 remove-notification-icon"
-              onClick={() => onRemoveNotificationButtonClick(notificationState)}
-            />
-          ))}
+      {isRemoveNotificationButtonShown() && (
+        <i
+          className="bi bi-x position-absolute top-0 remove-notification-icon"
+          onClick={() => onRemoveNotificationButtonClick(notificationState)}
+        />
+      )}
       <div className="d-flex align-items-center">
         <div className="d-flex flex-wrap justify-content-center border-right col-3">
           <img

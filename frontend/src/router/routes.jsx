@@ -12,7 +12,7 @@ import CreateService from "../pages/service/create-service";
 import OwnServices from "../pages/services/own-services";
 import CreatedOffers from "../pages/offers/created-offers";
 import ReceivedOffers from "../pages/offers/received-offers";
-import Collaboration from "pages/collaboration/collaboration";
+import Collaborations from "pages/collaborations/collaborations";
 
 const Routes = () => {
   return (
@@ -27,7 +27,7 @@ const Routes = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/offers/created-offers" element={<CreatedOffers />} />
       <Route path="/offers/received-offers" element={<ReceivedOffers />} />
-      <Route path="/collaborations/:id" element={<Collaboration />} />
+      <Route path="/collaborations" element={<Collaborations />} />
       <Route path="/" element={<Homepage />} />
     </ReactRouterRoutes>
   );

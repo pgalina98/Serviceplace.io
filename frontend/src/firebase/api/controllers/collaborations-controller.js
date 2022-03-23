@@ -1,4 +1,13 @@
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  doc,
+  getDocs,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
+
+import { COLLABORATION_STATUS } from "utils/collaboration-status-constants";
 
 import { createOfferRef, changeOfferStatus } from "./offers-controller";
 import { createUserRef } from "./users-controller";
@@ -14,6 +23,7 @@ export const saveCollaboration = async (data) => {
         { userRef: createUserRef(data.toUser.id), joined: false },
       ],
       createdAt: serverTimestamp(),
+      status: COLLABORATION_STATUS.PENDING,
     };
 
     changeOfferStatus(data);
@@ -26,6 +36,20 @@ export const saveCollaboration = async (data) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const fetchLoggedUserCollaborations = async (userId) => {
+  const userRef = createUserRef(userId);
+  const queryGetCollaborationsByUserRef = query(
+    collaborationsCollection,
+    where("collaborators", "array-contains-any", [
+      { joined: false, userRef },
+      { joined: true, userRef },
+    ]),
+    where("status", "==", COLLABORATION_STATUS.PENDING)
+  );
+
+  return await getDocs(queryGetCollaborationsByUserRef);
 };
 
 export const createNewCollaborationRef = () => {
