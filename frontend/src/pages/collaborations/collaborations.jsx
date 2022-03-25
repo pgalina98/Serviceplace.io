@@ -10,6 +10,7 @@ import { getLoggedUserCollaborations } from "actions/collaboration-actions";
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
 import "./collaborations.scss";
+import Message from "components/message/message";
 
 const Collaborations = ({ authenticationState }) => {
   const [collaborations, setCollaborations] = useState();
@@ -73,32 +74,8 @@ const Collaborations = ({ authenticationState }) => {
                 <span className="text-header-chat-board">Filip Jerga</span>
               </div>
               <div className="view-list-content-chat">
-                <div className="view-wrap-item-left">
-                  <div className="view-wrap-item-left-wrapper">
-                    <img
-                      src="https://i.imgur.com/cVDadwb.png"
-                      alt="avatar"
-                      className="peer-avatar-left"
-                    />
-                    <div className="view-item-left">
-                      <span className="text-content-item">hey</span>
-                    </div>
-                  </div>
-                  <span className="text-time-left">Oct 31, 2019</span>
-                </div>
-                <div className="view-wrap-item-right">
-                  <div className="view-wrap-item-right-wrapper">
-                    <div className="view-item-right">
-                      <span className="text-content-item">hey</span>
-                    </div>
-                    <img
-                      src="https://i.imgur.com/cVDadwb.png"
-                      alt="avatar"
-                      className="peer-avatar-right"
-                    />
-                  </div>
-                  <span className="text-time-right">Oct 31, 2019</span>
-                </div>
+                <Message side="left" />
+                <Message side="right" />
                 <div style={{ float: "left", clear: "both" }}></div>
               </div>
               <div className="view-bottom">
