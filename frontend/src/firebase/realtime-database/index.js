@@ -12,6 +12,9 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(
+  firebaseConfig,
+  `APP_${process.env.REACT_APP_PROJECT_ID}_REALTIME_DATABASE`
+);
 
 export default getDatabase(app);
