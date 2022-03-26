@@ -2,6 +2,8 @@ import { SUCCESS } from "utils/action-type-util";
 import { getUserByUid } from "../firebase/api/controllers/users-controller";
 import { logoutUser as logoutCurrentUser } from "../firebase/api/controllers/authentication-controller";
 
+import * as api from "../firebase/api/controllers/authentication-controller";
+
 export const ACTION_TYPES = {
   SET_AUTHENTICATION_STATE: "authenticationState/SET_AUTHENTICATION_STATE",
   CLEAR_AUTHENTICATION_STATE: "authenticationState/CLEAR_AUTHENTICATION_STATE",
@@ -38,4 +40,8 @@ export const logoutUser = () => {
       type: SUCCESS(ACTION_TYPES.CLEAR_AUTHENTICATION_STATE),
     };
   });
+};
+
+export const onAuthStateChange = (callback) => {
+  return api.onAuthStateChange(callback);
 };

@@ -1,6 +1,10 @@
 import { addDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 
+import database from "../../realtime-database/index";
+
 import { usersCollection } from "../../firestore-database/collections";
+
+import { ref, onValue } from "firebase/database";
 
 export const createNewUser = async (data) => {
   try {
@@ -27,6 +31,14 @@ export const getUserById = async (userId) => {
 
 export const getUserByRef = async (userRef) => {
   return await getDoc(userRef);
+};
+
+export const onConnectionStateChange = (callback) => {
+  const connectedRef = ref(database, ".info/connected");
+
+  onValue(connectedRef, (snapshot) => {
+    callback(snapshot.val());
+  });
 };
 
 export const createUserRef = (userId) => {

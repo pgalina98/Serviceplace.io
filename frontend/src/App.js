@@ -11,10 +11,11 @@ import Routes from "./router/routes";
 import {
   setAuthenticatedUser,
   resetAuthenticationState,
+  onAuthStateChange,
 } from "actions/authentication-actions";
 import { subscribe } from "actions/notification-actions";
 
-import * as api from "./firebase/api/controllers/authentication-controller";
+import { onConnectionStateChange } from "actions/user-actions";
 
 function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
@@ -25,11 +26,13 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   });
 
   useEffect(() => {
-    api.onAuthStateChange((user) => {
+    onAuthStateChange((user) => {
       dispatch(resetAuthenticationState());
       dispatch(setAuthenticatedUser(user));
     });
-
+    onConnectionStateChange((isConnected) => {
+      console.log("CONNECTED? ", isConnected);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,7 +42,6 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
         setNotifications({ data: notifications, isFetching: false });
       });
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticationResolved, loggedUser]);
 

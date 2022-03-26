@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  databaseURL: `https://${process.env.REACT_APP_PROJECT_ID}.firebaseio.com`,
+  databaseURL: process.env.REACT_APP_FIRESTORE_DATABASE_URL,
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_PROJECT_ID,
