@@ -1,5 +1,5 @@
 import * as api from "../firebase/api/controllers/users-controller";
 
-export const onConnectionStateChange = (callback) => {
-  return api.onConnectionStateChange(callback);
+export const onConnectionStateChange = (userId) => {
+  return api.onConnectionStateChange(userId);
 };

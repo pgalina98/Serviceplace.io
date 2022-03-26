@@ -4,7 +4,17 @@ import database from "../../realtime-database/index";
 
 import { usersCollection } from "../../firestore-database/collections";
 
-import { ref, onValue } from "firebase/database";
+import {
+  ref,
+  onValue,
+  push,
+  onDisconnect,
+  set,
+  serverTimestamp,
+} from "firebase/database";
+
+import { v4 as uuid } from "uuid";
+import { CONNECTION_STATUS_ONLINE } from "utils/connection-status-constants";
 
 export const createNewUser = async (data) => {
   try {
@@ -33,11 +43,25 @@ export const getUserByRef = async (userRef) => {
   return await getDoc(userRef);
 };
 
-export const onConnectionStateChange = (callback) => {
+export const onConnectionStateChange = (userId) => {
+  const loggedUserConnectionRef = ref(database, `users/${userId}/connections`);
+  const lastConnectionRef = ref(database, `users/${userId}/lastConnection`);
+
   const connectedRef = ref(database, ".info/connected");
 
   onValue(connectedRef, (snapshot) => {
-    callback(snapshot.val());
+    if (snapshot.val()) {
+      const connection = push(loggedUserConnectionRef);
+
+      onDisconnect(connection).remove();
+
+      set(connection, {
+        id: uuid(),
+        status: CONNECTION_STATUS_ONLINE,
+      });
+
+      onDisconnect(lastConnectionRef).set(serverTimestamp());
+    }
   });
 };
 

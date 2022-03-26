@@ -30,9 +30,6 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
       dispatch(resetAuthenticationState());
       dispatch(setAuthenticatedUser(user));
     });
-    onConnectionStateChange((isConnected) => {
-      console.log("CONNECTED? ", isConnected);
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -41,6 +38,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
       subscribe(loggedUser.id, (notifications) => {
         setNotifications({ data: notifications, isFetching: false });
       });
+      onConnectionStateChange(loggedUser.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticationResolved, loggedUser]);
