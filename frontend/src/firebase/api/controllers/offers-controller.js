@@ -7,7 +7,7 @@ import {
   where,
 } from "firebase/firestore";
 
-import { offersCollection } from "../../firestore/collections";
+import { offersCollection } from "../../firestore-database/collections";
 
 import { createUserRef } from "./users-controller";
 import { createServiceRef } from "./services-controller";

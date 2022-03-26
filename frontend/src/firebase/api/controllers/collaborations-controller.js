@@ -12,7 +12,7 @@ import { COLLABORATION_STATUS } from "utils/collaboration-status-constants";
 import { createOfferRef, changeOfferStatus } from "./offers-controller";
 import { createUserRef } from "./users-controller";
 
-import { collaborationsCollection } from "../../firestore/collections";
+import { collaborationsCollection } from "../../firestore-database/collections";
 
 export const saveCollaboration = async (data) => {
   try {

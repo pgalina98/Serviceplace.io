@@ -9,7 +9,7 @@ import {
 
 import { createUserRef } from "./users-controller";
 
-import { notificationsCollection } from "../../firestore/collections";
+import { notificationsCollection } from "../../firestore-database/collections";
 
 export const saveNotification = async (data) => {
   try {

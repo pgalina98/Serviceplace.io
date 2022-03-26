@@ -1,6 +1,6 @@
 import { addDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 
-import { usersCollection } from "../../firestore/collections";
+import { usersCollection } from "../../firestore-database/collections";
 
 export const createNewUser = async (data) => {
   try {

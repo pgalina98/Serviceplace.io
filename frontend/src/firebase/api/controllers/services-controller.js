@@ -8,7 +8,7 @@ import {
   where,
 } from "firebase/firestore";
 
-import { servicesCollection } from "../../firestore/collections";
+import { servicesCollection } from "../../firestore-database/collections";
 
 import { createUserRef } from "./users-controller";
 
