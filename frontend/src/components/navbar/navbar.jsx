@@ -13,7 +13,7 @@ const Navbar = ({ id, loggedUser, isAuthenticated, notifications }) => {
   const navigate = useNavigate();
 
   const handleLogoutButtonClick = () => {
-    dispatch(logoutUser());
+    dispatch(logoutUser(loggedUser.id));
     navigate("/");
   };
 

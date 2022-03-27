@@ -8,7 +8,7 @@ import {
 
 import { app } from "../../firestore-database/index";
 
-import { createNewUser } from "./users-controller";
+import { createNewUser, updateUserActivity } from "./users-controller";
 
 export const registerUser = async (user) => {
   const { email, password } = user;
@@ -44,7 +44,8 @@ export const authenticateUser = async (user) => {
   }
 };
 
-export const logoutUser = () => {
+export const logoutUser = (userId) => {
+  updateUserActivity(userId, false);
   return signOut(getAuth(app));
 };
 

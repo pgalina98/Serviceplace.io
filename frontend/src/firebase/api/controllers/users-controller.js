@@ -1,4 +1,12 @@
-import { addDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  addDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 
 import database from "../../realtime-database/index";
 
@@ -14,7 +22,10 @@ import {
 } from "firebase/database";
 
 import { v4 as uuid } from "uuid";
-import { CONNECTION_STATUS_ONLINE } from "utils/connection-status-constants";
+import {
+  CONNECTION_STATUS,
+  CONNECTION_STATUS_ONLINE,
+} from "utils/connection-status-constants";
 
 export const createNewUser = async (data) => {
   try {
@@ -43,14 +54,24 @@ export const getUserByRef = async (userRef) => {
   return await getDoc(userRef);
 };
 
-export const onConnectionStateChange = (userId) => {
+export const updateUserActivity = async (userId, isConnected) => {
+  const userRef = await createUserRef(userId);
+
+  const activityStatus = isConnected
+    ? CONNECTION_STATUS.ONLINE
+    : CONNECTION_STATUS.OFFLINE;
+
+  return await updateDoc(userRef, { activityStatus });
+};
+
+export const onConnectionStateChange = (userId, callback) => {
   const loggedUserConnectionRef = ref(database, `users/${userId}/connections`);
   const lastConnectionRef = ref(database, `users/${userId}/lastConnection`);
 
   const connectedRef = ref(database, ".info/connected");
 
   onValue(connectedRef, (snapshot) => {
-    if (snapshot.val()) {
+    if (snapshot.val() === true) {
       const connection = push(loggedUserConnectionRef);
 
       onDisconnect(connection).remove();
@@ -62,6 +83,8 @@ export const onConnectionStateChange = (userId) => {
 
       onDisconnect(lastConnectionRef).set(serverTimestamp());
     }
+
+    callback(snapshot.val());
   });
 };
 

@@ -34,8 +34,8 @@ export const setAuthenticatedUser = (data) => {
   };
 };
 
-export const logoutUser = () => {
-  return logoutCurrentUser().then(() => {
+export const logoutUser = (userId) => {
+  return logoutCurrentUser(userId).then(() => {
     return {
       type: SUCCESS(ACTION_TYPES.CLEAR_AUTHENTICATION_STATE),
     };
