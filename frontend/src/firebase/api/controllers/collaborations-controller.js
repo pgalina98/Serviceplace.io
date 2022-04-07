@@ -47,8 +47,7 @@ export const fetchLoggedUserCollaborations = async (userId) => {
     where("collaborators", "array-contains-any", [
       { joined: false, userRef },
       { joined: true, userRef },
-    ]),
-    where("status", "==", COLLABORATION_STATUS.PENDING)
+    ])
   );
 
   return await getDocs(queryGetCollaborationsByUserRef);

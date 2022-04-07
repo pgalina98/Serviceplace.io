@@ -1,18 +1,10 @@
+import { getDoc } from "firebase/firestore";
+import { mapIdToStatus } from "utils/collaboration-status-constants";
+
 import * as api from "../firebase/api/controllers/collaborations-controller";
 
 export const createNewCollaboration = (collaboration) => {
   return api.saveCollaboration(collaboration);
-};
-
-export const getLoggedUserCollaborations = async (userId) => {
-  return await api.fetchLoggedUserCollaborations(userId).then((response) => {
-    const userCollaborations = response.docs.map((document) => ({
-      id: document.id,
-      ...document.data(),
-    }));
-
-    return userCollaborations;
-  });
 };
 
 export const updateCollaboratorStatus = async (
@@ -37,4 +29,27 @@ export const updateCollaboratorStatus = async (
 
       return await api.updateCollaboration(collaboration);
     });
+};
+
+export const getLoggedUserCollaborations = async (userId) => {
+  return api.fetchLoggedUserCollaborations(userId).then(async (response) => {
+    return await Promise.all(
+      response.docs.map(async (document) => {
+        const collaborators = await Promise.all(
+          document.data()["collaborators"].map(async (collaborator) => {
+            const user = await getDoc(collaborator.userRef);
+
+            return { id: user.id, ...user.data() };
+          })
+        );
+
+        return {
+          id: document.id,
+          ...document.data(),
+          collaborators,
+          status: mapIdToStatus(document.data()["status"]),
+        };
+      })
+    );
+  });
 };
