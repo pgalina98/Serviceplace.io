@@ -4,6 +4,7 @@ import { format } from "timeago.js";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { TOAST_TYPES } from "utils/toast-util";
 import { formatDate } from "utils/date-time-util";
@@ -13,13 +14,16 @@ import {
   acceptCollaborationInvitation,
 } from "actions/notification-actions";
 import { messages } from "config/constants";
+import { NOTIFICATION_TYPES } from "utils/notification-type-constants";
+import { updateCollaboratorStatus } from "actions/collaboration-actions";
 
 import * as api from "../../firebase/api/controllers/users-controller";
-import { NOTIFICATION_TYPES } from "utils/notification-type-constants";
 
 const NotificationItem = ({ notification }) => {
   const navigate = useNavigate();
   const { addToast } = useToasts();
+
+  const { loggedUser } = useSelector((state) => state.authenticationState);
 
   const [notificationState, setNotificationState] = useState();
   const [isSaving, setIsSaving] = useState(false);
@@ -51,6 +55,11 @@ const NotificationItem = ({ notification }) => {
           appearance: TOAST_TYPES.SUCCESS,
         });
         setNotificationState(updatedNotification);
+        updateCollaboratorStatus(
+          updatedNotification.collaborationRef.id,
+          loggedUser.id,
+          true
+        );
         navigate(`/collaborations/${updatedNotification.collaborationRef.id}`);
       })
       .catch(({ message }) => {

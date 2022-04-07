@@ -14,3 +14,27 @@ export const getLoggedUserCollaborations = async (userId) => {
     return userCollaborations;
   });
 };
+
+export const updateCollaboratorStatus = async (
+  collaborationId,
+  userId,
+  joined
+) => {
+  return await api
+    .getCollaborationById(collaborationId)
+    .then(async (document) => {
+      const collaboration = { id: document.id, ...document.data() };
+
+      collaboration.collaborators = collaboration.collaborators.map(
+        (collaborator) => {
+          if (collaborator.userRef.id === userId) {
+            collaborator.joined = joined;
+          }
+
+          return collaborator;
+        }
+      );
+
+      return await api.updateCollaboration(collaboration);
+    });
+};

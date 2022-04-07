@@ -1,9 +1,11 @@
 import {
   doc,
+  getDoc,
   getDocs,
   query,
   serverTimestamp,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -50,6 +52,26 @@ export const fetchLoggedUserCollaborations = async (userId) => {
   );
 
   return await getDocs(queryGetCollaborationsByUserRef);
+};
+
+export const getCollaborationById = async (collaborationId) => {
+  const collaborationRef = createCollaborationRef(collaborationId);
+
+  return await getCollaborationByRef(collaborationRef);
+};
+
+export const getCollaborationByRef = async (collaborationRef) => {
+  return await getDoc(collaborationRef);
+};
+
+export const updateCollaboration = async (updatedDoc) => {
+  const collaborationRef = createCollaborationRef(updatedDoc.id);
+
+  try {
+    return await updateDoc(collaborationRef, updatedDoc);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 export const createNewCollaborationRef = () => {
