@@ -9,6 +9,10 @@ import { TOAST_TYPES } from "../../utils/toast-util";
 import { OFFER_STATUS } from "utils/offer-status-constants";
 
 import { saveOffer } from "actions/offer-actions";
+import {
+  createNewOfferReceivedNotification,
+  saveNotification,
+} from "actions/notification-actions";
 
 import "./offer-modal.scss";
 
@@ -53,6 +57,14 @@ const OfferModal = (props) => {
         addToast(messages.OFFER_CREATING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
+        saveNotification(
+          createNewOfferReceivedNotification({
+            ...newOffer,
+            fromUser: props.authenticationState.loggedUser,
+            toUser: props.service.createdBy,
+            service: props.service,
+          })
+        );
         setIsSavingData(false);
       })
       .catch(({ message }) => {

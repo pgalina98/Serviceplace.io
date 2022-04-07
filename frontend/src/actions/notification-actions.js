@@ -17,6 +17,15 @@ export const createCollaborationInvitatioNotification = (offer) => ({
   isRemoved: false,
 });
 
+export const createNewOfferReceivedNotification = (offer) => ({
+  type: NOTIFICATION_TYPES.STANDARD,
+  text: `New offer for ${offer.service.title} received! :)`,
+  createdAt: serverTimestamp(),
+  fromUserRef: createUserRef(offer.fromUser.id),
+  toUserRef: createUserRef(offer.toUser.id),
+  isRemoved: false,
+});
+
 export const createOfferAcceptedNotification = (offer) => ({
   type: NOTIFICATION_TYPES.STANDARD,
   text: `${offer.toUser.fullname} accepted your offer for ${offer.service.title}! :)`,

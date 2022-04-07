@@ -49,11 +49,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
         addToast(messages.OFFER_ACCEPTING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
-        console.log("OFFER: ", updatedOffer);
-        console.log(
-          "NEW NOTIFICATION: ",
-          createOfferAcceptedNotification(updatedOffer)
-        );
+
         saveNotification(createOfferAcceptedNotification(updatedOffer));
         setOffer(updatedOffer);
       })
