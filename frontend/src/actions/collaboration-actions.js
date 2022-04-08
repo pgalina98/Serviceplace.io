@@ -32,24 +32,30 @@ export const updateCollaboratorStatus = async (
 };
 
 export const getLoggedUserCollaborations = async (userId) => {
-  return api.fetchLoggedUserCollaborations(userId).then(async (response) => {
-    return await Promise.all(
-      response.docs.map(async (document) => {
-        const collaborators = await Promise.all(
-          document.data()["collaborators"].map(async (collaborator) => {
-            const user = await getDoc(collaborator.userRef);
+  return api
+    .fetchJoinedLoggedUserCollaborations(userId)
+    .then(async (response) => {
+      return await Promise.all(
+        response.docs.map(async (document) => {
+          const collaborators = await Promise.all(
+            document.data()["collaborators"].map(async (collaborator) => {
+              const document = await getDoc(collaborator.userRef);
 
-            return { id: user.id, ...user.data() };
-          })
-        );
+              return {
+                id: document.id,
+                ...document.data(),
+                joined: collaborator.joined,
+              };
+            })
+          );
 
-        return {
-          id: document.id,
-          ...document.data(),
-          collaborators,
-          status: mapIdToStatus(document.data()["status"]),
-        };
-      })
-    );
-  });
+          return {
+            id: document.id,
+            ...document.data(),
+            collaborators,
+            status: mapIdToStatus(document.data()["status"]),
+          };
+        })
+      );
+    });
 };

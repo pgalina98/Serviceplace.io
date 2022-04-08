@@ -40,14 +40,11 @@ export const saveCollaboration = async (data) => {
   }
 };
 
-export const fetchLoggedUserCollaborations = async (userId) => {
+export const fetchJoinedLoggedUserCollaborations = async (userId) => {
   const userRef = createUserRef(userId);
   const queryGetCollaborationsByUserRef = query(
     collaborationsCollection,
-    where("collaborators", "array-contains-any", [
-      { joined: false, userRef },
-      { joined: true, userRef },
-    ])
+    where("collaborators", "array-contains", { joined: true, userRef })
   );
 
   return await getDocs(queryGetCollaborationsByUserRef);

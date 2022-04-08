@@ -125,7 +125,7 @@
 .view-list-user {
   overflow-y: scroll;
   max-height: 90vh;
-  padding: 20px 20px 10px 20px;
+  padding-top: 10px;
 }
 
 .view-list-user::-webkit-scrollbar-track {
@@ -501,4 +501,14 @@ input::placeholder {
   -moz-transform: translateX(-50%) translateY(-50%);
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+}
+
+.collaboration {
+  cursor: pointer;
+  padding: 15px 20px 15px 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.collaboration:hover {
+  background-color: #eeeeee;
 }

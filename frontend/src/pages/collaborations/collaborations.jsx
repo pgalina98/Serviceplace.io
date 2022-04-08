@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
 import { Alert } from "reactstrap";
 
 import Spinner from "components/spinner/spinner";
+import Collaboration from "components/collaboration/collaboration";
+import Message from "components/message/message";
 
 import { getLoggedUserCollaborations } from "actions/collaboration-actions";
 
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
 import "./collaborations.scss";
-import Message from "components/message/message";
 
 const Collaborations = ({ authenticationState }) => {
   const [collaborations, setCollaborations] = useState();
@@ -32,7 +32,20 @@ const Collaborations = ({ authenticationState }) => {
     );
   };
 
-  const renderCollaborations = (collaborations) => {};
+  const getCollaborator = (collaboration) => {
+    return collaboration.collaborators.find(
+      (collaborator) => collaborator.id !== authenticationState.loggedUser.id
+    );
+  };
+
+  const renderCollaborations = (collaborations) => {
+    return collaborations.map((collaboration) => (
+      <Collaboration
+        key={collaboration.id}
+        collaborator={getCollaborator(collaboration)}
+      />
+    ));
+  };
 
   if (!isLoading && collaborations.length === 0) {
     return (
@@ -51,17 +64,7 @@ const Collaborations = ({ authenticationState }) => {
       ) : (
         <div className="body">
           <div className="view-list-user">
-            <div className="view-wrap-item">
-              <img
-                className="view-avatar-item"
-                src="https://i.imgur.com/cVDadwb.png"
-                alt="icon avatar"
-              />
-              <div className="view-wrap-content-item">
-                <span className="text-item">Nickname: Filip Jerga</span>
-                <span className="text-item">online</span>
-              </div>
-            </div>
+            {renderCollaborations(collaborations)}
           </div>
           <div className="view-board">
             <div className="view-chat-board">
