@@ -13,8 +13,20 @@ import authenticatedBoundaryRoute from "router/authenticated-boundary-route/auth
 
 import "./collaborations.scss";
 
+const useIsMounted = () => {
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => (isMounted.current = false);
+  }, []);
+
+  return isMounted;
+};
+
 const Collaborations = ({ authenticationState }) => {
   const firstRenderRef = useRef(true);
+  const isMounted = useIsMounted();
 
   const [collaborations, setCollaborations] = useState();
   const [users, setUsers] = useState();
@@ -53,7 +65,9 @@ const Collaborations = ({ authenticationState }) => {
       })),
     }));
 
-    setCollaborations(updatedCollaborations);
+    if (isMounted.current) {
+      setCollaborations(updatedCollaborations);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
