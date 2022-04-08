@@ -59,3 +59,31 @@ export const getLoggedUserCollaborations = async (userId) => {
       );
     });
 };
+
+export const subscribe = (userId, callback) => {
+  api.subscribe(userId, async (collaborations) => {
+    const data = await Promise.all(
+      collaborations.map(async (collaboration) => {
+        const collaborators = await Promise.all(
+          collaboration["collaborators"].map(async (collaborator) => {
+            const document = await getDoc(collaborator.userRef);
+
+            return {
+              id: document.id,
+              ...document.data(),
+              joined: collaborator.joined,
+            };
+          })
+        );
+
+        return {
+          ...collaboration,
+          collaborators,
+          status: mapIdToStatus(collaboration["status"]),
+        };
+      })
+    );
+
+    callback(data);
+  });
+};

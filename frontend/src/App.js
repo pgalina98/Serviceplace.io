@@ -13,7 +13,7 @@ import {
   resetAuthenticationState,
   onAuthStateChange,
 } from "actions/authentication-actions";
-import { subscribe } from "actions/notification-actions";
+import { subscribe as subscribeToNotifications } from "actions/notification-actions";
 
 import { onConnectionStateChange } from "actions/user-actions";
 
@@ -35,7 +35,7 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
 
   useEffect(() => {
     if (isAuthenticationResolved && isAuthenticated) {
-      subscribe(loggedUser.id, (notifications) => {
+      subscribeToNotifications(loggedUser.id, (notifications) => {
         setNotifications({ data: notifications, isFetching: false });
       });
       onConnectionStateChange(loggedUser.id);

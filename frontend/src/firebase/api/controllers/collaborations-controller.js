@@ -7,6 +7,7 @@ import {
   setDoc,
   updateDoc,
   where,
+  onSnapshot,
 } from "firebase/firestore";
 
 import { COLLABORATION_STATUS } from "utils/collaboration-status-constants";
@@ -68,6 +69,24 @@ export const updateCollaboration = async (updatedDoc) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const subscribe = (userId, callback) => {
+  const userRef = createUserRef(userId);
+
+  const queryGetCollaborationsByUserId = query(
+    collaborationsCollection,
+    where("collaborators", "array-contains", { joined: true, userRef })
+  );
+
+  onSnapshot(queryGetCollaborationsByUserId, (response) => {
+    const collaborations = response.docs.map((document) => ({
+      id: document.id,
+      ...document.data(),
+    }));
+
+    callback(collaborations);
+  });
 };
 
 export const createNewCollaborationRef = () => {

@@ -3,6 +3,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
   query,
   updateDoc,
   where,
@@ -85,6 +86,17 @@ export const onConnectionStateChange = (userId, callback) => {
     }
 
     callback(snapshot.val());
+  });
+};
+
+export const subscribe = (callback) => {
+  onSnapshot(usersCollection, (response) => {
+    const users = response.docs.map((document) => ({
+      id: document.id,
+      ...document.data(),
+    }));
+
+    callback(users);
   });
 };
 

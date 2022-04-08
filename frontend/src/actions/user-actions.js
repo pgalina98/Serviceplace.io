@@ -5,3 +5,7 @@ export const onConnectionStateChange = (userId) => {
     api.updateUserActivity(userId, isConnected);
   });
 };
+
+export const subscribe = (callback) => {
+  api.subscribe((users) => callback(users));
+};
