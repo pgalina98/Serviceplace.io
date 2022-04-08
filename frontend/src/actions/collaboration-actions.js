@@ -13,7 +13,7 @@ export const updateCollaboratorStatus = async (
   joined
 ) => {
   return await api
-    .getCollaborationById(collaborationId)
+    .fetchCollaborationById(collaborationId)
     .then(async (document) => {
       const collaboration = { id: document.id, ...document.data() };
 

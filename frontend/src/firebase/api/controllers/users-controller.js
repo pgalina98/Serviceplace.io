@@ -39,19 +39,19 @@ export const createNewUser = async (data) => {
   }
 };
 
-export const getUserByUid = async (userUid) => {
+export const fetchUserByUid = async (userUid) => {
   const queryGetUserByUid = query(usersCollection, where("uid", "==", userUid));
 
   return await getDocs(queryGetUserByUid);
 };
 
-export const getUserById = async (userId) => {
+export const fetchUserById = async (userId) => {
   const userRef = createUserRef(userId);
 
-  return await getUserByRef(userRef);
+  return await fetchUserByRef(userRef);
 };
 
-export const getUserByRef = async (userRef) => {
+export const fetchUserByRef = async (userRef) => {
   return await getDoc(userRef);
 };
 

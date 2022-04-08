@@ -29,7 +29,7 @@ const NotificationItem = ({ notification }) => {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    api.getUserByRef(notification.fromUserRef).then((response) => {
+    api.fetchUserByRef(notification.fromUserRef).then((response) => {
       delete Object.assign(notification, {
         fromUser: { id: response.id, ...response.data() },
       })["fromUserRef"];

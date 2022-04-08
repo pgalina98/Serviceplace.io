@@ -51,13 +51,13 @@ export const fetchJoinedLoggedUserCollaborations = async (userId) => {
   return await getDocs(queryGetCollaborationsByUserRef);
 };
 
-export const getCollaborationById = async (collaborationId) => {
+export const fetchCollaborationById = async (collaborationId) => {
   const collaborationRef = createCollaborationRef(collaborationId);
 
-  return await getCollaborationByRef(collaborationRef);
+  return await fetchCollaborationByRef(collaborationRef);
 };
 
-export const getCollaborationByRef = async (collaborationRef) => {
+export const fetchCollaborationByRef = async (collaborationRef) => {
   return await getDoc(collaborationRef);
 };
 
