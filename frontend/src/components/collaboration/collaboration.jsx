@@ -1,11 +1,13 @@
 import React from "react";
-import { mapIdToStatus } from "utils/connection-status-constants";
+
+import {
+  CONNECTION_STATUS,
+  mapIdToStatus,
+} from "utils/connection-status-constants";
 
 import "../../pages/collaborations/collaborations.scss";
 
 const Collaboration = ({ collaborator }) => {
-  console.log("collaborator: ", collaborator);
-
   return (
     <div className="view-wrap-item collaboration">
       <img
@@ -15,9 +17,15 @@ const Collaboration = ({ collaborator }) => {
       />
       <div className="view-wrap-content-item">
         <span className="text-item">{collaborator.fullname}</span>
-        <span className="text-item">
+        <div
+          className={`badge status-badge ${
+            collaborator.activityStatus === CONNECTION_STATUS.ONLINE
+              ? "status-badge-online"
+              : "status-badge-offline"
+          }`}
+        >
           {mapIdToStatus(collaborator.activityStatus)}
-        </span>
+        </div>
       </div>
     </div>
   );
