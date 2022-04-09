@@ -47,8 +47,7 @@ class Homepage extends React.Component {
                     Learn, Collaborate.
                   </h1>
                   <h2 className="subtitle is-5 is-muted">
-                    Lorem ipsum sit dolor amet is a dummy text used by
-                    typography industry{" "}
+                    Alone we can do so little, together we can do so much...
                   </h2>
                   <p>
                     <a className="button cta rounded primary-btn raised">

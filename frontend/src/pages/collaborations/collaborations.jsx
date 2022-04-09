@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { Alert } from "reactstrap";
+import {
+  Alert,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  Col,
+} from "reactstrap";
+import classnames from "classnames";
 
 import Spinner from "components/spinner/spinner";
 import Collaboration from "components/collaboration/collaboration";
@@ -12,6 +22,11 @@ import { subscribe as subscribeToUsers } from "actions/user-actions";
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
 import "./collaborations.scss";
+import { COLLABORATION_TAB } from "constants/collaboration-tab-constants";
+import {
+  COLLABORATION_STATUS,
+  mapIdToStatus,
+} from "constants/collaboration-status-constants";
 
 const useIsMounted = () => {
   const isMounted = useRef(false);
@@ -28,6 +43,7 @@ const Collaborations = ({ authenticationState }) => {
   const firstRenderRef = useRef(true);
   const isMounted = useIsMounted();
 
+  const [activeTab, setActiveTab] = useState(COLLABORATION_TAB.JOINED);
   const [collaborations, setCollaborations] = useState();
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -71,19 +87,66 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
+  const filterCollabrations = (collaborations, status) => {
+    return collaborations.filter(
+      (collaboration) => collaboration.status === mapIdToStatus(status)
+    );
+  };
+
   const getCollaborator = (collaboration) => {
     return collaboration.collaborators.find(
       (collaborator) => collaborator.id !== authenticationState.loggedUser.id
     );
   };
 
-  const renderCollaborations = (collaborations) => {
-    return collaborations.map((collaboration) => (
+  const renderCollaborations = (collaborations, status) => {
+    return filterCollabrations(collaborations, status).map((collaboration) => (
       <Collaboration
         key={collaboration.id}
         collaborator={getCollaborator(collaboration)}
       />
     ));
+  };
+
+  const renderPageContent = (activeTab) => {
+    return (
+      <div className="body">
+        <div className="view-list-user">
+          {renderCollaborations(
+            collaborations,
+            activeTab === COLLABORATION_TAB.JOINED
+              ? COLLABORATION_STATUS.JOINED
+              : COLLABORATION_STATUS.PENDING
+          )}
+        </div>
+        <div className="view-board">
+          <div className="view-chat-board">
+            <div className="header-chat-board">
+              <img
+                className="view-avatar-item"
+                src="https://i.imgur.com/cVDadwb.png"
+                alt="icon avatar"
+              />
+              <span className="text-header-chat-board">Filip Jerga</span>
+            </div>
+            <div className="view-list-content-chat">
+              <Message side="left" />
+              <Message side="right" />
+              <div style={{ float: "left", clear: "both" }}></div>
+            </div>
+            <div className="view-bottom">
+              <input
+                className="view-input"
+                placeholder="Type your message..."
+              />
+              <div className="send-icon">
+                <i className="bi bi-send icon" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   if (!isLoading && collaborations.length === 0) {
@@ -97,42 +160,64 @@ const Collaborations = ({ authenticationState }) => {
   }
 
   return (
-    <div className="root">
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <div className="body">
-          <div className="view-list-user">
-            {renderCollaborations(collaborations)}
-          </div>
-          <div className="view-board">
-            <div className="view-chat-board">
-              <div className="header-chat-board">
-                <img
-                  className="view-avatar-item"
-                  src="https://i.imgur.com/cVDadwb.png"
-                  alt="icon avatar"
-                />
-                <span className="text-header-chat-board">Filip Jerga</span>
-              </div>
-              <div className="view-list-content-chat">
-                <Message side="left" />
-                <Message side="right" />
-                <div style={{ float: "left", clear: "both" }}></div>
-              </div>
-              <div className="view-bottom">
-                <input
-                  className="view-input"
-                  placeholder="Type your message..."
-                />
-                <div className="send-icon">
-                  <i className="bi bi-send icon" />
+    <div className="p-3 pt-0">
+      <Nav tabs>
+        <NavItem>
+          <NavLink
+            className={classnames({
+              active: activeTab === COLLABORATION_TAB.JOINED,
+            })}
+            onClick={() => {
+              setActiveTab(COLLABORATION_TAB.JOINED);
+            }}
+          >
+            Joined
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink
+            className={classnames({
+              active: activeTab === COLLABORATION_TAB.REQUESTS,
+            })}
+            onClick={() => {
+              setActiveTab(COLLABORATION_TAB.REQUESTS);
+            }}
+          >
+            Requests
+          </NavLink>
+        </NavItem>
+      </Nav>
+      <TabContent activeTab={activeTab}>
+        {activeTab === COLLABORATION_TAB.JOINED ? (
+          <TabPane tabId={COLLABORATION_TAB.JOINED}>
+            <Row>
+              <Col sm="12">
+                <div className="root">
+                  {isLoading ? (
+                    <Spinner />
+                  ) : (
+                    renderPageContent(COLLABORATION_TAB.JOINED)
+                  )}
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+              </Col>
+            </Row>
+          </TabPane>
+        ) : (
+          <TabPane tabId={COLLABORATION_TAB.REQUESTS}>
+            <Row>
+              <Col sm="12">
+                <div className="root">
+                  {isLoading ? (
+                    <Spinner />
+                  ) : (
+                    renderPageContent(COLLABORATION_TAB.REQUESTS)
+                  )}
+                </div>
+              </Col>
+            </Row>
+          </TabPane>
+        )}
+      </TabContent>
     </div>
   );
 };

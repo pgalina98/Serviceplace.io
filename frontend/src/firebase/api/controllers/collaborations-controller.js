@@ -76,7 +76,10 @@ export const subscribe = (userId, callback) => {
 
   const queryGetCollaborationsByUserId = query(
     collaborationsCollection,
-    where("collaborators", "array-contains", { joined: true, userRef })
+    where("collaborators", "array-contains-any", [
+      { joined: false, userRef },
+      { joined: true, userRef },
+    ])
   );
 
   onSnapshot(queryGetCollaborationsByUserId, (response) => {
