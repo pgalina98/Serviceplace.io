@@ -1,5 +1,8 @@
 import { getDoc } from "firebase/firestore";
-import { mapIdToStatus } from "constants/collaboration-status-constants";
+import {
+  COLLABORATION_STATUS,
+  mapIdToStatus,
+} from "constants/collaboration-status-constants";
 
 import * as api from "../firebase/api/controllers/collaborations-controller";
 
@@ -26,6 +29,10 @@ export const updateCollaboratorStatus = async (
           return collaborator;
         }
       );
+
+      if (allCollaboratorsJoinedCollaboration(collaboration)) {
+        collaboration.status = COLLABORATION_STATUS.JOINED;
+      }
 
       return await api.updateCollaboration(collaboration);
     });
@@ -86,4 +93,10 @@ export const subscribe = (userId, callback) => {
 
     callback(data);
   });
+};
+
+const allCollaboratorsJoinedCollaboration = (collaboration) => {
+  return collaboration.collaborators.every(
+    (collaborator) => collaborator.joined
+  );
 };
