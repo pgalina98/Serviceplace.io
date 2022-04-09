@@ -89,6 +89,8 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
+  const onJoinButtonClick = (collaboration) => {};
+
   const onCollaborationItemClick = (collaboration) => {
     setSelectedCollaboration(collaboration);
   };
@@ -110,6 +112,7 @@ const Collaborations = ({ authenticationState }) => {
       <CollaborationItem
         key={collaboration.id}
         collaborator={getCollaborator(collaboration)}
+        onJoinButtonClick={() => onJoinButtonClick(collaboration)}
         onCollaborationItemClick={() => onCollaborationItemClick(collaboration)}
       />
     ));
@@ -131,7 +134,7 @@ const Collaborations = ({ authenticationState }) => {
                   activeTab === COLLABORATION_TAB.JOINED
                     ? COLLABORATION_STATUS.JOINED
                     : COLLABORATION_STATUS.PENDING
-                )} collaborations yet!`}
+                ).toLocaleLowerCase()} collaborations yet!`}
               </Alert>
             </div>
           </div>
