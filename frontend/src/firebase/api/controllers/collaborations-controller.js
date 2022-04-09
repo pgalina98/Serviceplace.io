@@ -22,7 +22,7 @@ export const saveCollaboration = async (data) => {
     const collaboration = {
       offerRef: createOfferRef(data.id),
       collaborators: [
-        { userRef: createUserRef(data.fromUser.id), joined: false },
+        { userRef: createUserRef(data.fromUser.id), joined: true },
         { userRef: createUserRef(data.toUser.id), joined: false },
       ],
       createdAt: serverTimestamp(),
