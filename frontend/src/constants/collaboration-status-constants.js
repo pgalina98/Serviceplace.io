@@ -17,3 +17,15 @@ export const mapIdToStatus = (statusId) => {
       return null;
   }
 };
+
+export const mapStatusToId = (status) => {
+  switch (status) {
+    case COLLABORATION_STATUS_PENDING:
+      return COLLABORATION_STATUS.PENDING;
+    case COLLABORATION_STATUS_JOINED:
+      return COLLABORATION_STATUS.JOINED;
+
+    default:
+      return null;
+  }
+};

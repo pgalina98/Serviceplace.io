@@ -16,7 +16,10 @@ import Spinner from "components/spinner/spinner";
 import CollaborationItem from "components/collaboration/collaboration-item";
 import Message from "components/message/message";
 
-import { subscribe as subscribeToCollaborations } from "actions/collaboration-actions";
+import {
+  subscribe as subscribeToCollaborations,
+  updateCollaboratorStatus,
+} from "actions/collaboration-actions";
 import { subscribe as subscribeToUsers } from "actions/user-actions";
 
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
@@ -49,6 +52,7 @@ const Collaborations = ({ authenticationState }) => {
   const [selectedCollaboration, setSelectedCollaboration] = useState();
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     subscribeToUsers((users) => {
@@ -89,7 +93,17 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
-  const onJoinButtonClick = (collaboration) => {};
+  const onJoinButtonClick = (collaboration) => {
+    setIsSaving(true);
+
+    updateCollaboratorStatus(
+      collaboration.id,
+      authenticationState.loggedUser.id,
+      true
+    ).then(() => {
+      setIsSaving(false);
+    });
+  };
 
   const onCollaborationItemClick = (collaboration) => {
     setSelectedCollaboration(collaboration);
@@ -111,9 +125,11 @@ const Collaborations = ({ authenticationState }) => {
     return filterCollabrations(collaborations, status).map((collaboration) => (
       <CollaborationItem
         key={collaboration.id}
+        collaboration={collaboration}
         collaborator={getCollaborator(collaboration)}
         onJoinButtonClick={() => onJoinButtonClick(collaboration)}
         onCollaborationItemClick={() => onCollaborationItemClick(collaboration)}
+        isSaving={isSaving}
       />
     ));
   };
@@ -130,11 +146,11 @@ const Collaborations = ({ authenticationState }) => {
           <div className="container">
             <div className="content-wrapper pt-3">
               <Alert color="primary">
-                {`You don't have any ${mapIdToStatus(
+                {`You don't have any collaborations in status ${mapIdToStatus(
                   activeTab === COLLABORATION_TAB.JOINED
                     ? COLLABORATION_STATUS.JOINED
                     : COLLABORATION_STATUS.PENDING
-                ).toLocaleLowerCase()} collaborations yet!`}
+                ).toLocaleLowerCase()} yet!`}
               </Alert>
             </div>
           </div>

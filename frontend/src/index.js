@@ -14,13 +14,11 @@ import initializeStore from "./store";
 const store = initializeStore();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ToastProvider autoDismiss={true} autoDismissTimeout={4000}>
-        <App />
-      </ToastProvider>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ToastProvider autoDismiss={true} autoDismissTimeout={4000}>
+      <App />
+    </ToastProvider>
+  </Provider>,
   document.getElementById("root")
 );
 
