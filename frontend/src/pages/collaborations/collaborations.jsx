@@ -111,53 +111,64 @@ const Collaborations = ({ authenticationState }) => {
   const renderPageContent = (activeTab) => {
     return (
       <div className="body">
-        <div className="view-list-user">
-          {renderCollaborations(
-            collaborations,
-            activeTab === COLLABORATION_TAB.JOINED
-              ? COLLABORATION_STATUS.JOINED
-              : COLLABORATION_STATUS.PENDING
-          )}
-        </div>
-        <div className="view-board">
-          <div className="view-chat-board">
-            <div className="header-chat-board">
-              <img
-                className="view-avatar-item"
-                src="https://i.imgur.com/cVDadwb.png"
-                alt="icon avatar"
-              />
-              <span className="text-header-chat-board">Filip Jerga</span>
-            </div>
-            <div className="view-list-content-chat">
-              <Message side="left" />
-              <Message side="right" />
-              <div style={{ float: "left", clear: "both" }}></div>
-            </div>
-            <div className="view-bottom">
-              <input
-                className="view-input"
-                placeholder="Type your message..."
-              />
-              <div className="send-icon">
-                <i className="bi bi-send icon" />
-              </div>
+        {filterCollabrations(
+          collaborations,
+          activeTab === COLLABORATION_TAB.JOINED
+            ? COLLABORATION_STATUS.JOINED
+            : COLLABORATION_STATUS.PENDING
+        ).length === 0 ? (
+          <div className="container">
+            <div className="content-wrapper pt-3">
+              <Alert color="primary">
+                {`You don't have any ${mapIdToStatus(
+                  activeTab === COLLABORATION_TAB.JOINED
+                    ? COLLABORATION_STATUS.JOINED
+                    : COLLABORATION_STATUS.PENDING
+                )} collaborations yet!`}
+              </Alert>
             </div>
           </div>
-        </div>
+        ) : (
+          <>
+            <div className="view-list-user">
+              {renderCollaborations(
+                collaborations,
+                activeTab === COLLABORATION_TAB.JOINED
+                  ? COLLABORATION_STATUS.JOINED
+                  : COLLABORATION_STATUS.PENDING
+              )}
+            </div>
+            <div className="view-board">
+              <div className="view-chat-board">
+                <div className="header-chat-board">
+                  <img
+                    className="view-avatar-item"
+                    src="https://i.imgur.com/cVDadwb.png"
+                    alt="icon avatar"
+                  />
+                  <span className="text-header-chat-board">Filip Jerga</span>
+                </div>
+                <div className="view-list-content-chat">
+                  <Message side="left" />
+                  <Message side="right" />
+                  <div style={{ float: "left", clear: "both" }}></div>
+                </div>
+                <div className="view-bottom">
+                  <input
+                    className="view-input"
+                    placeholder="Type your message..."
+                  />
+                  <div className="send-icon">
+                    <i className="bi bi-send icon" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     );
   };
-
-  if (!isLoading && collaborations.length === 0) {
-    return (
-      <div className="container">
-        <div className="content-wrapper">
-          <Alert color="primary">You don't have any collaborations yet!</Alert>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="p-3 pt-0">
