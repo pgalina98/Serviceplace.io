@@ -13,7 +13,7 @@ import {
 import classnames from "classnames";
 
 import Spinner from "components/spinner/spinner";
-import Collaboration from "components/collaboration/collaboration";
+import CollaborationItem from "components/collaboration/collaboration-item";
 import Message from "components/message/message";
 
 import { subscribe as subscribeToCollaborations } from "actions/collaboration-actions";
@@ -21,12 +21,13 @@ import { subscribe as subscribeToUsers } from "actions/user-actions";
 
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
-import "./collaborations.scss";
 import { COLLABORATION_TAB } from "constants/collaboration-tab-constants";
 import {
   COLLABORATION_STATUS,
   mapIdToStatus,
 } from "constants/collaboration-status-constants";
+
+import "./collaborations.scss";
 
 const useIsMounted = () => {
   const isMounted = useRef(false);
@@ -45,6 +46,7 @@ const Collaborations = ({ authenticationState }) => {
 
   const [activeTab, setActiveTab] = useState(COLLABORATION_TAB.JOINED);
   const [collaborations, setCollaborations] = useState();
+  const [selectedCollaboration, setSelectedCollaboration] = useState();
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -87,6 +89,10 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
+  const onCollaborationItemClick = (collaboration) => {
+    setSelectedCollaboration(collaboration);
+  };
+
   const filterCollabrations = (collaborations, status) => {
     return collaborations.filter(
       (collaboration) => collaboration.status === mapIdToStatus(status)
@@ -101,9 +107,10 @@ const Collaborations = ({ authenticationState }) => {
 
   const renderCollaborations = (collaborations, status) => {
     return filterCollabrations(collaborations, status).map((collaboration) => (
-      <Collaboration
+      <CollaborationItem
         key={collaboration.id}
         collaborator={getCollaborator(collaboration)}
+        onCollaborationItemClick={() => onCollaborationItemClick(collaboration)}
       />
     ));
   };

@@ -7,9 +7,12 @@ import {
 
 import "../../pages/collaborations/collaborations.scss";
 
-const Collaboration = ({ collaborator }) => {
+const CollaborationItem = ({ collaborator, onCollaborationItemClick }) => {
   return (
-    <div className="view-wrap-item collaboration">
+    <div
+      className="view-wrap-item collaboration"
+      onClick={onCollaborationItemClick}
+    >
       <img
         className="view-avatar-item"
         src="https://i.imgur.com/cVDadwb.png"
@@ -31,4 +34,4 @@ const Collaboration = ({ collaborator }) => {
   );
 };
 
-export default Collaboration;
+export default CollaborationItem;
