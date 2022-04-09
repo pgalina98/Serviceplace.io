@@ -31,6 +31,7 @@ export const updateCollaboratorStatus = async (
       );
 
       if (allCollaboratorsJoinedCollaboration(collaboration)) {
+        collaboration.messages = [];
         collaboration.status = COLLABORATION_STATUS.JOINED;
       }
 
