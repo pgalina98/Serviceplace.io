@@ -3,7 +3,7 @@ import React from "react";
 import {
   CONNECTION_STATUS,
   mapIdToStatus,
-} from "utils/connection-status-constants";
+} from "constants/connection-status-constants";
 
 import "../../pages/collaborations/collaborations.scss";
 

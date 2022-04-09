@@ -1,5 +1,5 @@
 import { getDoc } from "firebase/firestore";
-import { mapIdToStatus } from "utils/collaboration-status-constants";
+import { mapIdToStatus } from "constants/collaboration-status-constants";
 
 import * as api from "../firebase/api/controllers/collaborations-controller";
 

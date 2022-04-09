@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
 
-import { OFFER_STATUS, mapIdToStatus } from "utils/offer-status-constants";
+import { OFFER_STATUS, mapIdToStatus } from "constants/offer-status-constants";
 
 import { TOAST_TYPES } from "utils/toast-util";
 import { messages } from "config/constants";

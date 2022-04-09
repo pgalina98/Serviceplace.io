@@ -26,7 +26,7 @@ import { v4 as uuid } from "uuid";
 import {
   CONNECTION_STATUS,
   CONNECTION_STATUS_ONLINE,
-} from "utils/connection-status-constants";
+} from "constants/connection-status-constants";
 
 export const createNewUser = async (data) => {
   try {

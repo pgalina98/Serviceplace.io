@@ -10,7 +10,7 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
-import { COLLABORATION_STATUS } from "utils/collaboration-status-constants";
+import { COLLABORATION_STATUS } from "constants/collaboration-status-constants";
 
 import { createOfferRef, changeOfferStatus } from "./offers-controller";
 import { createUserRef } from "./users-controller";

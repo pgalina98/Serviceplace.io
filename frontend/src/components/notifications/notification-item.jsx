@@ -14,7 +14,7 @@ import {
   acceptCollaborationInvitation,
 } from "actions/notification-actions";
 import { messages } from "config/constants";
-import { NOTIFICATION_TYPES } from "utils/notification-type-constants";
+import { NOTIFICATION_TYPES } from "constants/notification-type-constants";
 import { updateCollaboratorStatus } from "actions/collaboration-actions";
 
 import * as api from "../../firebase/api/controllers/users-controller";

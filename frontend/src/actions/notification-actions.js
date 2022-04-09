@@ -1,6 +1,6 @@
 import { serverTimestamp } from "firebase/firestore";
 
-import { NOTIFICATION_TYPES } from "utils/notification-type-constants";
+import { NOTIFICATION_TYPES } from "constants/notification-type-constants";
 
 import { createCollaborationRef } from "../firebase/api/controllers/collaborations-controller";
 import { createUserRef } from "../firebase/api/controllers/users-controller";
