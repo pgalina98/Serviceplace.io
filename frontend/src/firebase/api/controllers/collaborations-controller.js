@@ -71,6 +71,27 @@ export const updateCollaboration = async (updatedDoc) => {
   }
 };
 
+export const saveMessage = async (collaborationId, message) => {
+  const collaborationRef = createCollaborationRef(collaborationId);
+  const document = await getDoc(collaborationRef);
+
+  console.log("document: ", document);
+
+  const updatedDoc = {
+    id: document.id,
+    ...document.data(),
+    messages: [...document.data()["messages"], message],
+  };
+
+  console.log("updatedDoc: ", updatedDoc);
+
+  try {
+    return await updateDoc(collaborationRef, updatedDoc);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 export const subscribe = (userId, callback) => {
   const userRef = createUserRef(userId);
 

@@ -31,6 +31,7 @@ import {
 } from "constants/collaboration-status-constants";
 
 import "./collaborations.scss";
+import { sendNewMessage } from "../../actions/message-actions";
 
 const useIsMounted = () => {
   const isMounted = useRef(false);
@@ -51,6 +52,7 @@ const Collaborations = ({ authenticationState }) => {
   const [collaborations, setCollaborations] = useState();
   const [selectedCollaboration, setSelectedCollaboration] = useState();
   const [users, setUsers] = useState();
+  const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -107,6 +109,26 @@ const Collaborations = ({ authenticationState }) => {
 
   const onCollaborationItemClick = (collaboration) => {
     setSelectedCollaboration(collaboration);
+  };
+
+  const isSendMessageButtonDisabled = () => {
+    return message?.length === 0;
+  };
+
+  const onMessageTextChange = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const onSendMessageButtonClick = () => {
+    setMessage("");
+
+    const newMessage = {
+      fromUser: authenticationState.loggedUser.id,
+      toUser: getCollaborator(selectedCollaboration).id,
+      text: message,
+    };
+
+    sendNewMessage(selectedCollaboration.id, newMessage);
   };
 
   const isCollaborationItemSelected = (collaboration) => {
@@ -179,8 +201,20 @@ const Collaborations = ({ authenticationState }) => {
           )}
         </div>
         <div className="view-bottom">
-          <input className="view-input" placeholder="Type your message..." />
-          <div className="send-icon">
+          <input
+            className="view-input"
+            placeholder="Type your message..."
+            value={message}
+            onChange={onMessageTextChange}
+          />
+          <div
+            className="send-icon-button"
+            onClick={(event) => {
+              isSendMessageButtonDisabled()
+                ? event.preventDefault()
+                : onSendMessageButtonClick();
+            }}
+          >
             <i className="bi bi-send icon" />
           </div>
         </div>
