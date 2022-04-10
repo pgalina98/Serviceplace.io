@@ -106,7 +106,6 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const onCollaborationItemClick = (collaboration) => {
-    console.log("collaboration: ", collaboration);
     setSelectedCollaboration(collaboration);
   };
 
@@ -165,12 +164,13 @@ const Collaborations = ({ authenticationState }) => {
             </>
           ) : (
             <div className="container">
-              <div className="content-wrapper pt-3">
+              <div className="content-wrapper pt-3 pb-0">
                 <Alert color="primary">
                   This conversation has no messages yet! Be first who will send
                   message inside this conversation :)
                 </Alert>
                 <img
+                  className="collaboration-illustration"
                   src="https://img.freepik.com/free-vector/texting-concept-illustration_114360-2744.jpg?t=st=1649577613~exp=1649578213~hmac=611eb0500f1e2fdd8435804c68e1aa8d0e5b4d5d329d5364ad1578772c503f43&w=1380"
                   alt="messaging-illustration"
                 />
