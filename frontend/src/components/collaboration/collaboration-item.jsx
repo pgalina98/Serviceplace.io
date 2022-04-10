@@ -17,8 +17,9 @@ import "../../pages/collaborations/collaborations.scss";
 const CollaborationItem = ({
   collaboration,
   collaborator,
-  onCollaborationItemClick,
   onJoinButtonClick,
+  onCollaborationItemClick,
+  isCollaborationItemSelected,
   isSaving,
 }) => {
   const { loggedUser } = useSelector((state) => state.authenticationState);
@@ -31,12 +32,14 @@ const CollaborationItem = ({
 
   return (
     <div
-      className="view-wrap-item collaboration"
+      className={`view-wrap-item collaboration ${
+        isCollaborationItemSelected && "collaboration-item-selected"
+      }`}
       onClick={onCollaborationItemClick}
     >
       <img
         className="view-avatar-item"
-        src="https://i.imgur.com/cVDadwb.png"
+        src={collaborator.avatar}
         alt="icon avatar"
       />
       <div className="view-wrap-content-item d-flex align-items-center">

@@ -106,7 +106,14 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const onCollaborationItemClick = (collaboration) => {
+    console.log("collaboration: ", collaboration);
     setSelectedCollaboration(collaboration);
+  };
+
+  const isCollaborationItemSelected = (collaboration) => {
+    return selectedCollaboration
+      ? selectedCollaboration.id === collaboration.id
+      : false;
   };
 
   const filterCollabrations = (collaborations, status) => {
@@ -129,9 +136,56 @@ const Collaborations = ({ authenticationState }) => {
         collaborator={getCollaborator(collaboration)}
         onJoinButtonClick={() => onJoinButtonClick(collaboration)}
         onCollaborationItemClick={() => onCollaborationItemClick(collaboration)}
+        isCollaborationItemSelected={isCollaborationItemSelected(collaboration)}
         isSaving={isSaving}
       />
     ));
+  };
+
+  const renderSelectedCollaborationMessages = () => {
+    return (
+      <div className="view-chat-board">
+        <div className="header-chat-board">
+          <img
+            className="view-avatar-item"
+            src={getCollaborator(selectedCollaboration).avatar}
+            alt="icon avatar"
+          />
+          <span className="text-header-chat-board">
+            {`${getCollaborator(selectedCollaboration).fullname} |
+              ${selectedCollaboration.offer.service.title}`}
+          </span>
+        </div>
+        <div className="view-list-content-chat">
+          {selectedCollaboration.messages.length > 0 ? (
+            <>
+              <Message side="left" />
+              <Message side="right" />
+              <div style={{ float: "left", clear: "both" }}></div>
+            </>
+          ) : (
+            <div className="container">
+              <div className="content-wrapper pt-3">
+                <Alert color="primary">
+                  This conversation has no messages yet! Be first who will send
+                  message inside this conversation :)
+                </Alert>
+                <img
+                  src="https://img.freepik.com/free-vector/texting-concept-illustration_114360-2744.jpg?t=st=1649577613~exp=1649578213~hmac=611eb0500f1e2fdd8435804c68e1aa8d0e5b4d5d329d5364ad1578772c503f43&w=1380"
+                  alt="messaging-illustration"
+                />
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="view-bottom">
+          <input className="view-input" placeholder="Type your message..." />
+          <div className="send-icon">
+            <i className="bi bi-send icon" />
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const renderPageContent = (activeTab) => {
@@ -165,30 +219,17 @@ const Collaborations = ({ authenticationState }) => {
               )}
             </div>
             <div className="view-board">
-              <div className="view-chat-board">
-                <div className="header-chat-board">
-                  <img
-                    className="view-avatar-item"
-                    src="https://i.imgur.com/cVDadwb.png"
-                    alt="icon avatar"
-                  />
-                  <span className="text-header-chat-board">Filip Jerga</span>
-                </div>
-                <div className="view-list-content-chat">
-                  <Message side="left" />
-                  <Message side="right" />
-                  <div style={{ float: "left", clear: "both" }}></div>
-                </div>
-                <div className="view-bottom">
-                  <input
-                    className="view-input"
-                    placeholder="Type your message..."
-                  />
-                  <div className="send-icon">
-                    <i className="bi bi-send icon" />
+              {!selectedCollaboration ? (
+                <div className="container">
+                  <div className="content-wrapper pt-3">
+                    <Alert color="primary">
+                      Select collaboration and start conversation! :)
+                    </Alert>
                   </div>
                 </div>
-              </div>
+              ) : (
+                renderSelectedCollaborationMessages()
+              )}
             </div>
           </>
         )}

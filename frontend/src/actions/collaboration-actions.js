@@ -84,9 +84,20 @@ export const subscribe = (userId, callback) => {
           })
         );
 
+        const offerDocument = await getDoc(collaboration.offerRef);
+        const serviceDocument = await getDoc(offerDocument.data().serviceRef);
+
         return {
           ...collaboration,
           collaborators,
+          offer: {
+            id: offerDocument.id,
+            ...offerDocument.data(),
+            service: {
+              id: serviceDocument.id,
+              ...serviceDocument.data(),
+            },
+          },
           status: mapIdToStatus(collaboration["status"]),
         };
       })
