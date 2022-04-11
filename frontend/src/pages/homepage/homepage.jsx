@@ -42,7 +42,7 @@ class Homepage extends React.Component {
           <div className="hero-body">
             <div className="container">
               <div className="columns is-vcentered">
-                <div className="column is-5 is-offset-1 landing-caption">
+                <div className="column is-5 is-offset-1 landing-caption typewriter">
                   <h1 className="title is-1 is-bold is-spaced">
                     Learn, Collaborate.
                   </h1>
