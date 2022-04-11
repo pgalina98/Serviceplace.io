@@ -66,14 +66,18 @@ const Collaborations = ({ authenticationState }) => {
     subscribeToCollaborations(
       authenticationState.loggedUser.id,
       (collaborations) => {
-        setCollaborations(collaborations);
-        if (selectedCollaboration) {
-          const currentlySelectedCollaborationData = collaborations.find(
-            (collaboration) => collaboration.id === selectedCollaboration.id
-          );
+        if (isMounted.current) {
+          setCollaborations(collaborations);
 
-          setSelectedCollaboration(currentlySelectedCollaborationData);
+          if (selectedCollaboration) {
+            const currentlySelectedCollaborationData = collaborations.find(
+              (collaboration) => collaboration.id === selectedCollaboration.id
+            );
+
+            setSelectedCollaboration(currentlySelectedCollaborationData);
+          }
         }
+
         setIsLoading(false);
       }
     );
