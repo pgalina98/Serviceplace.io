@@ -86,21 +86,25 @@ export const subscribe = (userId, callback) => {
 
         const messages = await Promise.all(
           collaboration["messages"].map(async (messageRef) => {
-            const document = await getDoc(messageRef);
+            const messageDocument = await getDoc(messageRef);
+            const fromUserDocument = await getDoc(
+              messageDocument.data()["fromUserRef"]
+            );
+            const toUserDocument = await getDoc(
+              messageDocument.data()["toUserRef"]
+            );
 
             const message = {
-              id: document.id,
-              ...document.data(),
-              fromUser: document.data()["fromUserRef"].id,
-              toUser: document.data()["toUserRef"].id,
+              id: messageDocument.id,
+              ...messageDocument.data(),
             };
 
             delete Object.assign(message, {
-              fromUser: message.fromUserRef.id,
+              fromUser: { id: fromUserDocument.id, ...fromUserDocument.data() },
             })["fromUserRef"];
 
             delete Object.assign(message, {
-              toUser: message.toUserRef.id,
+              toUser: { id: toUserDocument.id, ...toUserDocument.data() },
             })["toUserRef"];
 
             return message;

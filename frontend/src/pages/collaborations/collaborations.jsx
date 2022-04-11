@@ -102,6 +102,10 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
 
+  const isMessageSentByLoggedUser = (message) => {
+    return message.fromUser === authenticationState.loggedUser.id;
+  };
+
   const onJoinButtonClick = (collaboration) => {
     setIsSaving(true);
 
@@ -115,7 +119,6 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const onCollaborationItemClick = (collaboration) => {
-    console.log("SELECTAM COLLABORATION: ", collaboration);
     setSelectedCollaboration(collaboration);
   };
 
@@ -189,7 +192,11 @@ const Collaborations = ({ authenticationState }) => {
           {selectedCollaboration.messages.length > 0 ? (
             <>
               {selectedCollaboration.messages.map((message) => (
-                <Message key={message.id} side="left" message={message} />
+                <Message
+                  key={message.id}
+                  side={isMessageSentByLoggedUser(message) ? "right" : "left"}
+                  message={message}
+                />
               ))}
               <div style={{ float: "left", clear: "both" }}></div>
             </>
