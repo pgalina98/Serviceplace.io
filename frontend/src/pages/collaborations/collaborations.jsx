@@ -103,7 +103,7 @@ const Collaborations = ({ authenticationState }) => {
   }, [users]);
 
   const isMessageSentByLoggedUser = (message) => {
-    return message.fromUser === authenticationState.loggedUser.id;
+    return message.fromUser.id === authenticationState.loggedUser.id;
   };
 
   const onJoinButtonClick = (collaboration) => {
@@ -195,7 +195,7 @@ const Collaborations = ({ authenticationState }) => {
                 <Message
                   key={message.id}
                   side={isMessageSentByLoggedUser(message) ? "right" : "left"}
-                  message={message}
+                  data={message}
                 />
               ))}
               <div style={{ float: "left", clear: "both" }}></div>
