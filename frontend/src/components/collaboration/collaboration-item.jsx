@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "react-bootstrap";
 
 import {
@@ -11,6 +11,7 @@ import {
   COLLABORATION_STATUS,
   mapStatusToId,
 } from "constants/collaboration-status-constants";
+import { setSelectedCollaboration } from "../../actions/collaboration-actions";
 
 import "../../pages/collaborations/collaborations.scss";
 
@@ -18,16 +19,20 @@ const CollaborationItem = ({
   collaboration,
   collaborator,
   onJoinButtonClick,
-  onCollaborationItemClick,
   isCollaborationItemSelected,
   isSaving,
 }) => {
+  const dispatch = useDispatch();
   const { loggedUser } = useSelector((state) => state.authenticationState);
 
   const isJoinButtonShown = () => {
     return !collaboration.collaborators.find(
       (collaborator) => collaborator.id === loggedUser.id
     ).joined;
+  };
+
+  const onCollaborationItemClick = () => {
+    dispatch(setSelectedCollaboration(collaboration));
   };
 
   return (

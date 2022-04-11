@@ -4,7 +4,13 @@ import {
   mapIdToStatus,
 } from "constants/collaboration-status-constants";
 
+import { SUCCESS } from "utils/action-type-util";
+
 import * as api from "../firebase/api/controllers/collaborations-controller";
+
+export const ACTION_TYPES = {
+  SET_COLLABORATION_DATA: "collaborationState/SET_COLLABORATION_DATA",
+};
 
 export const createNewCollaboration = (collaboration) => {
   return api.saveCollaboration(collaboration);
@@ -134,6 +140,11 @@ export const subscribe = (userId, callback) => {
     callback(data);
   });
 };
+
+export const setSelectedCollaboration = (collaboration) => ({
+  type: SUCCESS(ACTION_TYPES.SET_COLLABORATION_DATA),
+  payload: collaboration,
+});
 
 const allCollaboratorsJoinedCollaboration = (collaboration) => {
   return collaboration.collaborators.every(

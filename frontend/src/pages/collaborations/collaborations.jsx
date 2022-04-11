@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
 import {
   Alert,
   TabContent,
@@ -17,6 +18,7 @@ import CollaborationItem from "components/collaboration/collaboration-item";
 import Message from "components/message/message";
 
 import {
+  setSelectedCollaboration,
   subscribe as subscribeToCollaborations,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
@@ -47,10 +49,14 @@ const useIsMounted = () => {
 const Collaborations = ({ authenticationState }) => {
   const firstRenderRef = useRef(true);
   const isMounted = useIsMounted();
+  const dispatch = useDispatch();
+
+  const { selectedCollaboration } = useSelector(
+    (state) => state.collaborationState
+  );
 
   const [activeTab, setActiveTab] = useState(COLLABORATION_TAB.JOINED);
   const [collaborations, setCollaborations] = useState();
-  const [selectedCollaboration, setSelectedCollaboration] = useState();
   const [users, setUsers] = useState();
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -74,7 +80,9 @@ const Collaborations = ({ authenticationState }) => {
               (collaboration) => collaboration.id === selectedCollaboration.id
             );
 
-            setSelectedCollaboration(currentlySelectedCollaborationData);
+            dispatch(
+              setSelectedCollaboration(currentlySelectedCollaborationData)
+            );
           }
         }
 
@@ -122,10 +130,6 @@ const Collaborations = ({ authenticationState }) => {
     });
   };
 
-  const onCollaborationItemClick = (collaboration) => {
-    setSelectedCollaboration(collaboration);
-  };
-
   const isSendMessageButtonDisabled = () => {
     return message?.length === 0;
   };
@@ -171,7 +175,6 @@ const Collaborations = ({ authenticationState }) => {
         collaboration={collaboration}
         collaborator={getCollaborator(collaboration)}
         onJoinButtonClick={() => onJoinButtonClick(collaboration)}
-        onCollaborationItemClick={() => onCollaborationItemClick(collaboration)}
         isCollaborationItemSelected={isCollaborationItemSelected(collaboration)}
         isSaving={isSaving}
       />

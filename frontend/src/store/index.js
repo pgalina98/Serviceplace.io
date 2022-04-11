@@ -8,6 +8,7 @@ import {
 
 import serviceReducer from "reducers/service-reducer";
 import authenticationReducer from "reducers/authentication-reducer";
+import collaborationReducer from "reducers/collaboration-reducer";
 
 const initializeStore = () => {
   const middlewares = [];
@@ -15,6 +16,7 @@ const initializeStore = () => {
   const combinedReducers = combineReducers({
     servicesState: serviceReducer,
     authenticationState: authenticationReducer,
+    collaborationState: collaborationReducer,
   });
 
   const store = createStore(
