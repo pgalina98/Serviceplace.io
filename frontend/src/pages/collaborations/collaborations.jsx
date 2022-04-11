@@ -74,16 +74,6 @@ const Collaborations = ({ authenticationState }) => {
       (collaborations) => {
         if (isMounted.current) {
           setCollaborations(collaborations);
-
-          if (selectedCollaboration) {
-            const currentlySelectedCollaborationData = collaborations.find(
-              (collaboration) => collaboration.id === selectedCollaboration.id
-            );
-
-            dispatch(
-              setSelectedCollaboration(currentlySelectedCollaborationData)
-            );
-          }
         }
 
         setIsLoading(false);
@@ -113,6 +103,19 @@ const Collaborations = ({ authenticationState }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users]);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      if (selectedCollaboration) {
+        const currentlySelectedCollaborationData = collaborations.find(
+          (collaboration) => collaboration.id === selectedCollaboration.id
+        );
+
+        dispatch(setSelectedCollaboration(currentlySelectedCollaborationData));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [collaborations]);
 
   const isMessageSentByLoggedUser = (message) => {
     return message.fromUser.id === authenticationState.loggedUser.id;
