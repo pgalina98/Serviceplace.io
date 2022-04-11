@@ -84,12 +84,36 @@ export const subscribe = (userId, callback) => {
           })
         );
 
+        const messages = await Promise.all(
+          collaboration["messages"].map(async (messageRef) => {
+            const document = await getDoc(messageRef);
+
+            const message = {
+              id: document.id,
+              ...document.data(),
+              fromUser: document.data()["fromUserRef"].id,
+              toUser: document.data()["toUserRef"].id,
+            };
+
+            delete Object.assign(message, {
+              fromUser: message.fromUserRef.id,
+            })["fromUserRef"];
+
+            delete Object.assign(message, {
+              toUser: message.toUserRef.id,
+            })["toUserRef"];
+
+            return message;
+          })
+        );
+
         const offerDocument = await getDoc(collaboration.offerRef);
         const serviceDocument = await getDoc(offerDocument.data().serviceRef);
 
         return {
           ...collaboration,
           collaborators,
+          messages,
           offer: {
             id: offerDocument.id,
             ...offerDocument.data(),

@@ -67,6 +67,13 @@ const Collaborations = ({ authenticationState }) => {
       authenticationState.loggedUser.id,
       (collaborations) => {
         setCollaborations(collaborations);
+        if (selectedCollaboration) {
+          const currentlySelectedCollaborationData = collaborations.find(
+            (collaboration) => collaboration.id === selectedCollaboration.id
+          );
+
+          setSelectedCollaboration(currentlySelectedCollaborationData);
+        }
         setIsLoading(false);
       }
     );
@@ -108,6 +115,7 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const onCollaborationItemClick = (collaboration) => {
+    console.log("SELECTAM COLLABORATION: ", collaboration);
     setSelectedCollaboration(collaboration);
   };
 
@@ -180,8 +188,9 @@ const Collaborations = ({ authenticationState }) => {
         <div className="view-list-content-chat">
           {selectedCollaboration.messages.length > 0 ? (
             <>
-              <Message side="left" />
-              <Message side="right" />
+              {selectedCollaboration.messages.map((message) => (
+                <Message key={message.id} side="left" message={message} />
+              ))}
               <div style={{ float: "left", clear: "both" }}></div>
             </>
           ) : (

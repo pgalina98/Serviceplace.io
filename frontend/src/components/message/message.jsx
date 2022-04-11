@@ -4,7 +4,7 @@ import "../../pages/collaborations/collaborations.scss";
 
 const Message = ({ side }) => {
   return (
-    <div className={`view-wrap-item-${side}`}>
+    <div className={`view-wrap-item-${side} mb-2`}>
       <div className={`view-wrap-item-${side}-wrapper`}>
         <img
           src="https://i.imgur.com/cVDadwb.png"
