@@ -16,6 +16,7 @@ import classnames from "classnames";
 import Spinner from "components/spinner/spinner";
 import CollaborationItem from "components/collaboration/collaboration-item";
 import Message from "components/message/message";
+import TypingIndicator from "components/typing-indicator/typing-indicator";
 
 import {
   setSelectedCollaboration,
@@ -31,9 +32,9 @@ import {
   COLLABORATION_STATUS,
   mapIdToStatus,
 } from "constants/collaboration-status-constants";
+import { sendNewMessage } from "../../actions/message-actions";
 
 import "./collaborations.scss";
-import { sendNewMessage } from "../../actions/message-actions";
 
 const useIsMounted = () => {
   const isMounted = useRef(false);
@@ -208,6 +209,7 @@ const Collaborations = ({ authenticationState }) => {
                   data={message}
                 />
               ))}
+              <TypingIndicator />
               <div style={{ float: "left", clear: "both" }}></div>
             </>
           ) : (
