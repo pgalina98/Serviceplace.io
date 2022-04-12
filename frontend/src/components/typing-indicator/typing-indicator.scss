@@ -11,6 +11,7 @@
   animation: 2s bulge infinite ease-out;
   margin-left: 10px;
   margin-bottom: 20px;
+  order: 2;
   &::before,
   &::after {
     content: "";

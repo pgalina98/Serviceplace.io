@@ -89,6 +89,36 @@ export const onConnectionStateChange = (userId, callback) => {
   });
 };
 
+export const setCollaboratorIsTypingStatus = async (
+  collaborationId,
+  userId,
+  status
+) => {
+  const loggedUserCollaborationRef = ref(
+    database,
+    `users/${userId}/collaborations/${collaborationId}/isTyping`
+  );
+
+  set(loggedUserCollaborationRef, status);
+
+  onDisconnect(loggedUserCollaborationRef).remove();
+};
+
+export const onCollaboratorIsTypingStatusChange = (
+  collaborationId,
+  userId,
+  callback
+) => {
+  const loggedUserCollaborationRef = ref(
+    database,
+    `users/${userId}/collaborations/${collaborationId}/isTyping`
+  );
+
+  onValue(loggedUserCollaborationRef, (snapshot) => {
+    callback(snapshot.val());
+  });
+};
+
 export const subscribe = (callback) => {
   onSnapshot(usersCollection, (response) => {
     const users = response.docs.map((document) => ({

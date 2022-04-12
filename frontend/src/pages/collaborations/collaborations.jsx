@@ -23,7 +23,10 @@ import {
   subscribe as subscribeToCollaborations,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
-import { subscribe as subscribeToUsers } from "actions/user-actions";
+import {
+  setCollaboratorIsTypingStatus,
+  subscribe as subscribeToUsers,
+} from "actions/user-actions";
 
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
@@ -33,6 +36,7 @@ import {
   mapIdToStatus,
 } from "constants/collaboration-status-constants";
 import { sendNewMessage } from "../../actions/message-actions";
+import { onCollaboratorIsTypingStatusChange } from "../../firebase/api/controllers/users-controller";
 
 import "./collaborations.scss";
 
@@ -55,6 +59,7 @@ const Collaborations = ({ authenticationState }) => {
   const { selectedCollaboration } = useSelector(
     (state) => state.collaborationState
   );
+  const [isCollaboratorTyping, setIsCollaboratorTyping] = useState(false);
 
   const [activeTab, setActiveTab] = useState(COLLABORATION_TAB.JOINED);
   const [collaborations, setCollaborations] = useState();
@@ -117,6 +122,30 @@ const Collaborations = ({ authenticationState }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [collaborations]);
+
+  useEffect(() => {
+    if (selectedCollaboration) {
+      onCollaboratorIsTypingStatusChange(
+        selectedCollaboration.id,
+        getCollaborator(selectedCollaboration).id,
+        (isTyping) => {
+          setIsCollaboratorTyping(isTyping);
+        }
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCollaboration]);
+
+  useEffect(() => {
+    if (selectedCollaboration) {
+      setCollaboratorIsTypingStatus(
+        selectedCollaboration.id,
+        authenticationState.loggedUser.id,
+        message.length > 0
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCollaboration, message]);
 
   const isMessageSentByLoggedUser = (message) => {
     return message.fromUser.id === authenticationState.loggedUser.id;
@@ -209,7 +238,10 @@ const Collaborations = ({ authenticationState }) => {
                   data={message}
                 />
               ))}
-              <TypingIndicator />
+              <TypingIndicator
+                collaborator={getCollaborator(selectedCollaboration)}
+                hidden={!isCollaboratorTyping}
+              />
               <div style={{ float: "left", clear: "both" }}></div>
             </>
           ) : (

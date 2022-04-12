@@ -2,20 +2,20 @@ import React from "react";
 
 import "./typing-indicator.scss";
 
-const TypingIndicator = () => {
+const TypingIndicator = ({ collaborator, hidden }) => {
   return (
-    <div className={`view-wrap-item-right mb-2`}>
-      <div className={`view-wrap-item-right-wrapper`}>
-        <img
-          src="https://icon-library.com/images/avatar-icon-images/avatar-icon-images-4.jpg"
-          alt="avatar"
-          className={`peer-avatar-right`}
-        />
-        <div className="typing-indicator-right">
+    <div className={`view-wrap-item-left mb-2 ${hidden && "d-none"}`}>
+      <div className="view-wrap-item-left-wrapper">
+        <div className="typing-indicator-left">
           <span></span>
           <span></span>
           <span></span>
         </div>
+        <img
+          src={collaborator.avatar}
+          alt="avatar"
+          className="peer-avatar-left"
+        />
       </div>
     </div>
   );
