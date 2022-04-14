@@ -12,6 +12,7 @@ import {
   Col,
 } from "reactstrap";
 import classnames from "classnames";
+import { v4 as uuid } from "uuid";
 
 import Spinner from "components/spinner/spinner";
 import CollaborationItem from "components/collaboration/collaboration-item";
@@ -122,15 +123,19 @@ const Collaborations = ({ authenticationState }) => {
         }
       );
 
-      onCollaborationMessagesChange(
-        selectedCollaboration.id,
-        (collaboration) => {
-          console.log("NEW MESSAGE IN COLLABORATION!!! :)", collaboration);
+      onCollaborationMessagesChange(selectedCollaboration.id, (message) => {
+        if (message) {
+          dispatch(
+            setSelectedCollaboration({
+              ...selectedCollaboration,
+              messages: [...selectedCollaboration.messages, message],
+            })
+          );
         }
-      );
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCollaboration]);
+  }, [selectedCollaboration?.id]);
 
   useEffect(() => {
     if (selectedCollaboration) {
@@ -241,7 +246,7 @@ const Collaborations = ({ authenticationState }) => {
             <>
               {selectedCollaboration.messages.map((message) => (
                 <Message
-                  key={message.id}
+                  key={uuid()}
                   side={isMessageSentByLoggedUser(message) ? "right" : "left"}
                   data={message}
                 />
