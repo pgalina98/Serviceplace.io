@@ -6,8 +6,6 @@ import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time-format
 import "../../pages/collaborations/collaborations.scss";
 
 const Message = ({ side, data }) => {
-  console.log("test: ", data?.createdAt.seconds ? "IMA" : "NEMA");
-
   return (
     <div className={`view-wrap-item-${side} mb-2`}>
       <div className={`view-wrap-item-${side}-wrapper`}>
