@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import { serverTimestamp } from "firebase/firestore";
 
 import { NOTIFICATION_TYPES } from "constants/notification-type-constants";
 
@@ -11,7 +11,7 @@ export const createCollaborationInvitatioNotification = (offer) => ({
   collaborationRef: createCollaborationRef(offer.collaborationId),
   type: NOTIFICATION_TYPES.COLLABORATION_INVITATION,
   text: `Hello ${offer.toUser.fullname}, please join this collaboration! :)`,
-  createdAt: dayjs(),
+  createdAt: serverTimestamp(),
   fromUserRef: createUserRef(offer.fromUser.id),
   toUserRef: createUserRef(offer.toUser.id),
   isRemoved: false,
@@ -20,7 +20,7 @@ export const createCollaborationInvitatioNotification = (offer) => ({
 export const createNewOfferReceivedNotification = (offer) => ({
   type: NOTIFICATION_TYPES.STANDARD,
   text: `New offer for ${offer.service.title} received! :)`,
-  createdAt: dayjs(),
+  createdAt: serverTimestamp(),
   fromUserRef: createUserRef(offer.fromUser.id),
   toUserRef: createUserRef(offer.toUser.id),
   isRemoved: false,
@@ -29,8 +29,8 @@ export const createNewOfferReceivedNotification = (offer) => ({
 export const createOfferAcceptedNotification = (offer) => ({
   type: NOTIFICATION_TYPES.STANDARD,
   text: `${offer.toUser.fullname} accepted your offer for ${offer.service.title}! :)`,
-  createdAt: dayjs(),
-  fromUserRef: createUserRef(offer.toUser.id),
+  createdAt: serverTimestamp(),
+  fromUserRef: serverTimestamp(offer.toUser.id),
   toUserRef: createUserRef(offer.fromUser.id),
   isRemoved: false,
 });

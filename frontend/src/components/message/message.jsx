@@ -19,10 +19,7 @@ const Message = ({ side, data }) => {
         </div>
       </div>
       <span className={`text-time-${side}`}>
-        {formatDate(
-          data?.createdAt.seconds,
-          APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT
-        )}
+        {formatDate(data?.createdAt, APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT)}
       </span>
     </div>
   );

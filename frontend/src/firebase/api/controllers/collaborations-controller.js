@@ -7,11 +7,10 @@ import {
   updateDoc,
   where,
   onSnapshot,
+  serverTimestamp,
 } from "firebase/firestore";
 
 import { ref, onValue } from "firebase/database";
-
-import dayjs from "dayjs";
 
 import database from "../../realtime-database/index";
 
@@ -30,7 +29,7 @@ export const saveCollaboration = async (data) => {
         { userRef: createUserRef(data.fromUser.id), joined: true },
         { userRef: createUserRef(data.toUser.id), joined: false },
       ],
-      createdAt: dayjs(),
+      createdAt: serverTimestamp(),
       status: COLLABORATION_STATUS.PENDING,
     };
 

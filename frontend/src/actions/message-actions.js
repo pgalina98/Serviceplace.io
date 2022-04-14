@@ -1,15 +1,13 @@
-import { ref, onDisconnect, set } from "firebase/database";
+import { ref, onDisconnect, set, serverTimestamp } from "firebase/database";
 
 import database from "../firebase/realtime-database/index";
-
-import dayjs from "dayjs";
 
 import * as api from "../firebase/api/controllers/messages-controller";
 
 export const sendNewMessage = (collaboratioId, message) => {
   const newMessage = {
     ...message,
-    createdAt: dayjs(),
+    createdAt: serverTimestamp(),
   };
 
   const collaborationRef = ref(
