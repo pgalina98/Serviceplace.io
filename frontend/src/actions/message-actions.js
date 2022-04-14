@@ -1,4 +1,4 @@
-import { ref, onDisconnect, set, onValue } from "firebase/database";
+import { ref, onDisconnect, set } from "firebase/database";
 
 import database from "../firebase/realtime-database/index";
 
@@ -19,19 +19,7 @@ export const sendNewMessage = (collaboratioId, message) => {
     `collaborations/${collaboratioId}/messages`
   );
 
-  onValue(
-    collaborationRef,
-    (snapshot) => {
-      if (snapshot.val()) {
-        set(collaborationRef, [...snapshot.val(), newMessage]);
-      } else {
-        set(collaborationRef, [newMessage]);
-      }
-    },
-    {
-      onlyOnce: true,
-    }
-  );
+  set(collaborationRef, newMessage);
 
   onDisconnect(collaborationRef).remove();
 
