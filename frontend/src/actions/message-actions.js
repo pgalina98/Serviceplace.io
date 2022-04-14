@@ -16,7 +16,7 @@ export const sendNewMessage = (collaboratioId, message) => {
 
   const collaborationRef = ref(
     database,
-    `colaborations/${collaboratioId}/messages`
+    `collaborations/${collaboratioId}/messages`
   );
 
   onValue(
