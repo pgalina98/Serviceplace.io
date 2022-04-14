@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 import {
   createCollaborationRef,
@@ -15,7 +15,7 @@ export const sendMessage = async (collaborationId, message) => {
       fromUserRef: await createUserRef(message.fromUser),
       toUserRef: await createUserRef(message.toUser),
       text: message.text,
-      createdAt: message.createdAt,
+      createdAt: serverTimestamp(),
     };
 
     const newMessageRef = createNewMessageRef();
