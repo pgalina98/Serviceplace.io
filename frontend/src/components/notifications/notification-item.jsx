@@ -94,14 +94,9 @@ const NotificationItem = ({ notification }) => {
             {isResolved() && notificationState?.text}
           </div>
           <div className="txt sub ml-3">
-            {isResolved() &&
-              format(new Date(notificationState?.createdAt.seconds * 1000))}
+            {isResolved() && format(new Date(notificationState?.createdAt))}
             {" | "}
-            {isResolved() &&
-              formatDate(
-                notificationState?.createdAt.seconds,
-                APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT
-              )}
+            {isResolved() && notificationState?.createdAt}
           </div>
         </div>
         <button

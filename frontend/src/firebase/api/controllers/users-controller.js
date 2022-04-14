@@ -13,16 +13,11 @@ import database from "../../realtime-database/index";
 
 import { usersCollection } from "../../firestore-database/collections";
 
-import {
-  ref,
-  onValue,
-  push,
-  onDisconnect,
-  set,
-  serverTimestamp,
-} from "firebase/database";
+import { ref, onValue, push, onDisconnect, set } from "firebase/database";
 
 import { v4 as uuid } from "uuid";
+import dayjs from "dayjs";
+
 import {
   CONNECTION_STATUS,
   CONNECTION_STATUS_ONLINE,
@@ -82,7 +77,7 @@ export const onConnectionStateChange = (userId, callback) => {
         status: CONNECTION_STATUS_ONLINE,
       });
 
-      onDisconnect(lastConnectionRef).set(serverTimestamp());
+      onDisconnect(lastConnectionRef).set(dayjs());
     }
 
     callback(snapshot.val());

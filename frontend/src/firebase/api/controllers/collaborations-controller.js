@@ -3,7 +3,6 @@ import {
   getDoc,
   getDocs,
   query,
-  serverTimestamp,
   setDoc,
   updateDoc,
   where,
@@ -11,6 +10,8 @@ import {
 } from "firebase/firestore";
 
 import { ref, onValue } from "firebase/database";
+
+import dayjs from "dayjs";
 
 import database from "../../realtime-database/index";
 
@@ -29,7 +30,7 @@ export const saveCollaboration = async (data) => {
         { userRef: createUserRef(data.fromUser.id), joined: true },
         { userRef: createUserRef(data.toUser.id), joined: false },
       ],
-      createdAt: serverTimestamp(),
+      createdAt: dayjs(),
       status: COLLABORATION_STATUS.PENDING,
     };
 
@@ -98,8 +99,23 @@ export const onCollaborationMessagesChange = (collaborationId, callback) => {
     `collaborations/${collaborationId}/messages`
   );
 
-  onValue(collaborationRef, (snapshot) => {
-    callback(snapshot.val() || []);
+  onValue(collaborationRef, async (snapshot) => {
+    const message = snapshot.val();
+
+    if (message) {
+      const fromUserDocument = await getDoc(createUserRef(message["fromUser"]));
+      const toUserDocument = await getDoc(createUserRef(message["toUser"]));
+
+      Object.assign(message, {
+        fromUser: { id: fromUserDocument.id, ...fromUserDocument.data() },
+      });
+
+      Object.assign(message, {
+        toUser: { id: toUserDocument.id, ...toUserDocument.data() },
+      });
+    }
+
+    callback(message);
   });
 };
 
