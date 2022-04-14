@@ -1,12 +1,4 @@
-import {
-  ref,
-  push,
-  onDisconnect,
-  set,
-  get,
-  child,
-  onValue,
-} from "firebase/database";
+import { ref, onDisconnect, set, onValue } from "firebase/database";
 
 import database from "../firebase/realtime-database/index";
 

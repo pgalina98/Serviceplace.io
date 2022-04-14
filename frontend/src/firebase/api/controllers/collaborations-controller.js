@@ -10,6 +10,10 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
+import { ref, onValue } from "firebase/database";
+
+import database from "../../realtime-database/index";
+
 import { COLLABORATION_STATUS } from "constants/collaboration-status-constants";
 
 import { createOfferRef, changeOfferStatus } from "./offers-controller";
@@ -86,6 +90,17 @@ export const saveMessage = async (collaborationId, message) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const onCollaborationMessagesChange = (collaborationId, callback) => {
+  const collaborationRef = ref(
+    database,
+    `collaborations/${collaborationId}/messages`
+  );
+
+  onValue(collaborationRef, (snapshot) => {
+    callback(snapshot.val() || []);
+  });
 };
 
 export const subscribe = (userId, callback) => {

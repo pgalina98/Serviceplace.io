@@ -19,8 +19,8 @@ import Message from "components/message/message";
 import TypingIndicator from "components/typing-indicator/typing-indicator";
 
 import {
+  getLoggedUserCollaborations,
   setSelectedCollaboration,
-  subscribe as subscribeToCollaborations,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
 import {
@@ -37,6 +37,7 @@ import {
 } from "constants/collaboration-status-constants";
 import { sendNewMessage } from "../../actions/message-actions";
 import { onCollaboratorIsTypingStatusChange } from "../../firebase/api/controllers/users-controller";
+import { onCollaborationMessagesChange } from "../../firebase/api/controllers/collaborations-controller";
 
 import "./collaborations.scss";
 
@@ -72,21 +73,9 @@ const Collaborations = ({ authenticationState }) => {
     subscribeToUsers((users) => {
       setUsers(users);
     });
-  }, []);
-
-  useEffect(() => {
-    subscribeToCollaborations(
-      authenticationState.loggedUser.id,
-      (collaborations) => {
-        if (isMounted.current) {
-          setCollaborations(collaborations);
-        }
-
-        setIsLoading(false);
-      }
-    );
+    fetchLoggedUserCollaborations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticationState.loggedUser.id]);
+  }, []);
 
   useEffect(() => {
     if (firstRenderRef.current) {
@@ -132,6 +121,13 @@ const Collaborations = ({ authenticationState }) => {
           setIsCollaboratorTyping(isTyping);
         }
       );
+
+      onCollaborationMessagesChange(
+        selectedCollaboration.id,
+        (collaboration) => {
+          console.log("NEW MESSAGE IN COLLABORATION!!! :)", collaboration);
+        }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollaboration]);
@@ -146,6 +142,18 @@ const Collaborations = ({ authenticationState }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollaboration, message]);
+
+  const fetchLoggedUserCollaborations = () => {
+    setIsLoading(true);
+
+    getLoggedUserCollaborations(authenticationState.loggedUser.id)
+      .then((collaborations) => {
+        setCollaborations(collaborations);
+      })
+      .then(() => {
+        setIsLoading(false);
+      });
+  };
 
   const isMessageSentByLoggedUser = (message) => {
     return message.fromUser.id === authenticationState.loggedUser.id;

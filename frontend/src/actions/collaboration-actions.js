@@ -63,12 +63,60 @@ export const getLoggedUserCollaborations = async (userId) => {
             })
           );
 
-          return {
+          const messages = await Promise.all(
+            document.data()["messages"].map(async (messageRef) => {
+              const messageDocument = await getDoc(messageRef);
+              const fromUserDocument = await getDoc(
+                messageDocument.data()["fromUserRef"]
+              );
+              const toUserDocument = await getDoc(
+                messageDocument.data()["toUserRef"]
+              );
+
+              const message = {
+                id: messageDocument.id,
+                ...messageDocument.data(),
+              };
+
+              delete Object.assign(message, {
+                fromUser: {
+                  id: fromUserDocument.id,
+                  ...fromUserDocument.data(),
+                },
+              })["fromUserRef"];
+
+              delete Object.assign(message, {
+                toUser: { id: toUserDocument.id, ...toUserDocument.data() },
+              })["toUserRef"];
+
+              return message;
+            })
+          );
+
+          const offerDocument = await getDoc(document.data()["offerRef"]);
+          const serviceDocument = await getDoc(
+            offerDocument.data()["serviceRef"]
+          );
+
+          const collaboration = {
             id: document.id,
             ...document.data(),
             collaborators,
+            messages,
+            offer: {
+              id: offerDocument.id,
+              ...offerDocument.data(),
+              service: {
+                id: serviceDocument.id,
+                ...serviceDocument.data(),
+              },
+            },
             status: mapIdToStatus(document.data()["status"]),
           };
+
+          delete collaboration.offerRef;
+
+          return collaboration;
         })
       );
     });
