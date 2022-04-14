@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { TOAST_TYPES } from "utils/toast-util";
-import { formatDate } from "utils/date-time-util";
-import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time-formats";
 import {
   removeNotification,
   acceptCollaborationInvitation,
