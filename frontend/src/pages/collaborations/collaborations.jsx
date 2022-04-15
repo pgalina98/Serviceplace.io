@@ -56,7 +56,7 @@ const useIsMounted = () => {
 };
 
 const Collaborations = ({ authenticationState }) => {
-  const firstRenderRef = useRef(true);
+  const lastMessage = useRef();
   const isMounted = useIsMounted();
   const dispatch = useDispatch();
 
@@ -71,6 +71,8 @@ const Collaborations = ({ authenticationState }) => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+
+  const scrollToBottom = () => lastMessage.current?.scrollIntoView();
 
   useEffect(() => {
     onUsersConnectionsStateChange((activeUsers) => {
@@ -113,11 +115,14 @@ const Collaborations = ({ authenticationState }) => {
                   messages: [...messages, message],
                 })
               );
+              scrollToBottom();
             }
           );
         }
       });
     }
+
+    scrollToBottom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollaboration?.id]);
 
@@ -240,7 +245,10 @@ const Collaborations = ({ authenticationState }) => {
                 collaborator={getCollaborator(selectedCollaboration)}
                 hidden={!isCollaboratorTyping}
               />
-              <div style={{ float: "left", clear: "both" }}></div>
+              <div
+                style={{ float: "left", clear: "both", backgroundColor: "red" }}
+              />
+              <div ref={lastMessage} />
             </>
           ) : (
             <div className="container">
