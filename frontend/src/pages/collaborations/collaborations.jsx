@@ -21,6 +21,7 @@ import TypingIndicator from "components/typing-indicator/typing-indicator";
 
 import {
   getLoggedUserCollaborations,
+  getMessagesByCollaborationId,
   setSelectedCollaboration,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
@@ -47,6 +48,7 @@ const useIsMounted = () => {
 
   useEffect(() => {
     isMounted.current = true;
+
     return () => (isMounted.current = false);
   }, []);
 
@@ -125,11 +127,15 @@ const Collaborations = ({ authenticationState }) => {
 
       onCollaborationMessagesChange(selectedCollaboration.id, (message) => {
         if (message) {
-          dispatch(
-            setSelectedCollaboration({
-              ...selectedCollaboration,
-              messages: [...selectedCollaboration.messages, message],
-            })
+          getMessagesByCollaborationId(selectedCollaboration.id).then(
+            (messages) => {
+              dispatch(
+                setSelectedCollaboration({
+                  ...selectedCollaboration,
+                  messages: [...messages, message],
+                })
+              );
+            }
           );
         }
       });

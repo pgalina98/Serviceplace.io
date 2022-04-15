@@ -194,6 +194,42 @@ export const setSelectedCollaboration = (collaboration) => ({
   payload: collaboration,
 });
 
+export const getMessagesByCollaborationId = (collaborationId) => {
+  return api.fetchCollaborationById(collaborationId).then(async (document) => {
+    const collaboration = { id: document.id, ...document.data() };
+
+    return Promise.all(
+      collaboration.messages.map(async (snapshot) => {
+        const messageDocument = await getDoc(snapshot);
+
+        const message = {
+          id: messageDocument.id,
+          ...messageDocument.data(),
+        };
+
+        const fromUserDocument = await getDoc(message["fromUserRef"]);
+        const toUserDocument = await getDoc(message["toUserRef"]);
+
+        delete Object.assign(message, {
+          fromUser: {
+            id: fromUserDocument.id,
+            ...fromUserDocument.data(),
+          },
+        })["fromUserRef"];
+
+        delete Object.assign(message, {
+          tpUser: {
+            id: toUserDocument.id,
+            ...toUserDocument.data(),
+          },
+        })["toUserRef"];
+
+        return message;
+      })
+    );
+  });
+};
+
 const allCollaboratorsJoinedCollaboration = (collaboration) => {
   return collaboration.collaborators.every(
     (collaborator) => collaborator.joined
