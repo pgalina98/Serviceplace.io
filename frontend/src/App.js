@@ -15,7 +15,7 @@ import {
 } from "actions/authentication-actions";
 import { subscribe as subscribeToNotifications } from "actions/notification-actions";
 
-import { onConnectionStateChange } from "actions/user-actions";
+import { onConnectionStateChange } from "./firebase/api/controllers/users-controller";
 
 function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();

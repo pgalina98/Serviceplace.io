@@ -5,7 +5,6 @@ import {
   getDocs,
   onSnapshot,
   query,
-  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -24,10 +23,7 @@ import {
 
 import { v4 as uuid } from "uuid";
 
-import {
-  CONNECTION_STATUS,
-  CONNECTION_STATUS_ONLINE,
-} from "constants/connection-status-constants";
+import { CONNECTION_STATUS_ONLINE } from "constants/connection-status-constants";
 
 export const createNewUser = async (data) => {
   try {
@@ -56,17 +52,7 @@ export const fetchUserByRef = async (userRef) => {
   return await getDoc(userRef);
 };
 
-export const updateUserActivity = async (userId, isConnected) => {
-  const userRef = await createUserRef(userId);
-
-  const activityStatus = isConnected
-    ? CONNECTION_STATUS.ONLINE
-    : CONNECTION_STATUS.OFFLINE;
-
-  return await updateDoc(userRef, { activityStatus });
-};
-
-export const onConnectionStateChange = (userId, callback) => {
+export const onConnectionStateChange = (userId) => {
   const loggedUserConnectionRef = ref(database, `users/${userId}/connections`);
   const lastConnectionRef = ref(database, `users/${userId}/lastConnection`);
 
@@ -85,8 +71,23 @@ export const onConnectionStateChange = (userId, callback) => {
 
       onDisconnect(lastConnectionRef).set(serverTimestamp());
     }
+  });
+};
 
-    callback(snapshot.val());
+export const onUsersConnectionsStateChange = (callback) => {
+  const usersConnectionsRef = ref(database, `users/`);
+
+  onValue(usersConnectionsRef, (snapshot) => {
+    const keys = snapshot.val();
+    let users = [];
+
+    for (let key in keys) {
+      if (snapshot.val()[key]?.connections) {
+        users.push(key);
+      }
+    }
+
+    callback(users);
   });
 };
 

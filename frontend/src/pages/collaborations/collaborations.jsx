@@ -25,10 +25,7 @@ import {
   setSelectedCollaboration,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
-import {
-  setCollaboratorIsTypingStatus,
-  subscribe as subscribeToUsers,
-} from "actions/user-actions";
+import { setCollaboratorIsTypingStatus } from "actions/user-actions";
 
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
@@ -38,7 +35,10 @@ import {
   mapIdToStatus,
 } from "constants/collaboration-status-constants";
 import { sendNewMessage } from "../../actions/message-actions";
-import { onCollaboratorIsTypingStatusChange } from "../../firebase/api/controllers/users-controller";
+import {
+  onCollaboratorIsTypingStatusChange,
+  onUsersConnectionsStateChange,
+} from "../../firebase/api/controllers/users-controller";
 import { onCollaborationMessagesChange } from "../../firebase/api/controllers/collaborations-controller";
 
 import "./collaborations.scss";
@@ -67,40 +67,18 @@ const Collaborations = ({ authenticationState }) => {
 
   const [activeTab, setActiveTab] = useState(COLLABORATION_TAB.JOINED);
   const [collaborations, setCollaborations] = useState();
-  const [users, setUsers] = useState();
+  const [activeUsers, setActiveUsers] = useState();
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    subscribeToUsers((users) => {
-      setUsers(users);
+    onUsersConnectionsStateChange((activeUsers) => {
+      setActiveUsers(activeUsers);
     });
     fetchLoggedUserCollaborations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false;
-      return;
-    }
-
-    const updatedCollaborations = collaborations?.map((collaboration) => ({
-      ...collaboration,
-      collaborators: collaboration.collaborators?.map((collaborator) => ({
-        ...collaborator,
-        activityStatus: users.find((user) => user.id === collaborator.id)[
-          "activityStatus"
-        ],
-      })),
-    }));
-
-    if (isMounted.current) {
-      setCollaborations(updatedCollaborations);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [users]);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -226,6 +204,7 @@ const Collaborations = ({ authenticationState }) => {
         key={collaboration.id}
         collaboration={collaboration}
         collaborator={getCollaborator(collaboration)}
+        activeUsers={activeUsers}
         onJoinButtonClick={() => onJoinButtonClick(collaboration)}
         isCollaborationItemSelected={isCollaborationItemSelected(collaboration)}
         isSaving={isSaving}

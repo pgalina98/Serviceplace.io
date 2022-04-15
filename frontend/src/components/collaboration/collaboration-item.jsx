@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Spinner } from "react-bootstrap";
 
 import {
-  CONNECTION_STATUS,
-  mapIdToStatus,
+  CONNECTION_STATUS_OFFLINE,
+  CONNECTION_STATUS_ONLINE,
 } from "constants/connection-status-constants";
 import {
   COLLABORATION_STATUS,
@@ -18,6 +18,7 @@ import "../../pages/collaborations/collaborations.scss";
 const CollaborationItem = ({
   collaboration,
   collaborator,
+  activeUsers,
   onJoinButtonClick,
   isCollaborationItemSelected,
   isSaving,
@@ -33,6 +34,10 @@ const CollaborationItem = ({
 
   const onCollaborationItemClick = () => {
     dispatch(setSelectedCollaboration(collaboration));
+  };
+
+  const isUserOnline = () => {
+    return activeUsers.includes(collaborator.id);
   };
 
   return (
@@ -52,12 +57,12 @@ const CollaborationItem = ({
         {mapStatusToId(collaboration.status) === COLLABORATION_STATUS.JOINED ? (
           <div
             className={`badge status-badge mt-1 w-75 ${
-              collaborator.activityStatus === CONNECTION_STATUS.ONLINE
-                ? "status-badge-online"
-                : "status-badge-offline"
+              isUserOnline() ? "status-badge-online" : "status-badge-offline"
             }`}
           >
-            {mapIdToStatus(collaborator.activityStatus)}
+            {isUserOnline()
+              ? CONNECTION_STATUS_ONLINE
+              : CONNECTION_STATUS_OFFLINE}
           </div>
         ) : isJoinButtonShown() ? (
           <button
