@@ -102,6 +102,7 @@ const Collaborations = ({ authenticationState }) => {
         getCollaborator(selectedCollaboration).id,
         (isTyping) => {
           setIsCollaboratorTyping(isTyping);
+          scrollToBottom();
         }
       );
 
@@ -242,6 +243,7 @@ const Collaborations = ({ authenticationState }) => {
                 />
               ))}
               <TypingIndicator
+                forwardedRef={lastMessage}
                 collaborator={getCollaborator(selectedCollaboration)}
                 hidden={!isCollaboratorTyping}
               />

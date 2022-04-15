@@ -2,9 +2,12 @@ import React from "react";
 
 import "./typing-indicator.scss";
 
-const TypingIndicator = ({ collaborator, hidden }) => {
+const TypingIndicator = ({ forwardedRef, collaborator, hidden }) => {
   return (
-    <div className={`view-wrap-item-left mb-2 ${hidden && "d-none"}`}>
+    <div
+      ref={forwardedRef}
+      className={`view-wrap-item-left mb-2 ${hidden && "d-none"}`}
+    >
       <div className="view-wrap-item-left-wrapper">
         <div className="typing-indicator-left">
           <span></span>
