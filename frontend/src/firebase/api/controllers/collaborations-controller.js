@@ -98,23 +98,8 @@ export const onCollaborationMessagesChange = (collaborationId, callback) => {
     `collaborations/${collaborationId}/messages`
   );
 
-  onValue(collaborationRef, async (snapshot) => {
-    const message = snapshot.val();
-
-    if (message) {
-      const fromUserDocument = await getDoc(createUserRef(message["fromUser"]));
-      const toUserDocument = await getDoc(createUserRef(message["toUser"]));
-
-      Object.assign(message, {
-        fromUser: { id: fromUserDocument.id, ...fromUserDocument.data() },
-      });
-
-      Object.assign(message, {
-        toUser: { id: toUserDocument.id, ...toUserDocument.data() },
-      });
-    }
-
-    callback(message);
+  onValue(collaborationRef, (snapshot) => {
+    callback(snapshot.val());
   });
 };
 

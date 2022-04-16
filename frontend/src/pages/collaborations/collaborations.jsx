@@ -21,7 +21,6 @@ import TypingIndicator from "components/typing-indicator/typing-indicator";
 
 import {
   getLoggedUserCollaborations,
-  getMessagesByCollaborationId,
   setSelectedCollaboration,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
@@ -106,19 +105,15 @@ const Collaborations = ({ authenticationState }) => {
         }
       );
 
-      onCollaborationMessagesChange(selectedCollaboration.id, (message) => {
-        if (message) {
-          getMessagesByCollaborationId(selectedCollaboration.id).then(
-            (messages) => {
-              dispatch(
-                setSelectedCollaboration({
-                  ...selectedCollaboration,
-                  messages: [...messages, message],
-                })
-              );
-              scrollToBottom();
-            }
+      onCollaborationMessagesChange(selectedCollaboration.id, (messages) => {
+        if (messages) {
+          dispatch(
+            setSelectedCollaboration({
+              ...selectedCollaboration,
+              messages: [...selectedCollaboration.messages, ...messages],
+            })
           );
+          scrollToBottom();
         }
       });
     }
@@ -178,8 +173,8 @@ const Collaborations = ({ authenticationState }) => {
     setMessage("");
 
     const newMessage = {
-      fromUser: authenticationState.loggedUser.id,
-      toUser: getCollaborator(selectedCollaboration).id,
+      fromUser: authenticationState.loggedUser,
+      toUser: getCollaborator(selectedCollaboration),
       text: message,
     };
 

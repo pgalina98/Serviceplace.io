@@ -12,8 +12,8 @@ export const sendMessage = async (collaborationId, message) => {
   try {
     const newMessage = {
       collaborationRef: await createCollaborationRef(collaborationId),
-      fromUserRef: await createUserRef(message.fromUser),
-      toUserRef: await createUserRef(message.toUser),
+      fromUserRef: await createUserRef(message.fromUser.id),
+      toUserRef: await createUserRef(message.toUser.id),
       text: message.text,
       createdAt: serverTimestamp(),
     };

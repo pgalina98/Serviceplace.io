@@ -28,8 +28,6 @@ export const sendNewMessage = (collaboratioId, message) => {
 
       messages.push(newMessage);
 
-      console.log("msgs: ", messages);
-
       set(collaborationRef, messages);
     },
     {
