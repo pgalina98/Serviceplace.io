@@ -39,6 +39,7 @@ import {
   onUsersConnectionsStateChange,
 } from "../../firebase/api/controllers/users-controller";
 import { onCollaborationMessagesChange } from "../../firebase/api/controllers/collaborations-controller";
+import { ENTER } from "constants/keyboard-keys-constants";
 
 import "./collaborations.scss";
 
@@ -269,6 +270,11 @@ const Collaborations = ({ authenticationState }) => {
             placeholder="Type your message..."
             value={message}
             onChange={onMessageTextChange}
+            onKeyPress={(event) => {
+              if (event.key === ENTER) {
+                onSendMessageButtonClick();
+              }
+            }}
           />
           <div
             className="send-icon-button"
