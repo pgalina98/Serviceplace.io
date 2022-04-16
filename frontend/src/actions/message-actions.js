@@ -11,9 +11,13 @@ import database from "../firebase/realtime-database/index";
 import * as api from "../firebase/api/controllers/messages-controller";
 
 export const sendNewMessage = (collaboratioId, message) => {
+  console.log("serverTimestamp(): ", serverTimestamp());
+
   const newMessage = {
     ...message,
-    createdAt: serverTimestamp(),
+    createdAt: {
+      milliseconds: serverTimestamp(),
+    },
   };
 
   const collaborationRef = ref(
