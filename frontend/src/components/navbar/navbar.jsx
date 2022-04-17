@@ -130,7 +130,11 @@ const Navbar = ({ id, loggedUser, isAuthenticated, notifications }) => {
                 </div>
                 <div className="navbar-item has-dropdown is-hoverable">
                   <div className="notification">
-                    <div className="notBtn">
+                    <div
+                      className={`notBtn ${
+                        notifications.length === 0 && "noHover"
+                      }`}
+                    >
                       <div className="badge">{notifications.length}</div>
                       <i className="bi bi-bell" />
                       <Notifications notifications={notifications} />

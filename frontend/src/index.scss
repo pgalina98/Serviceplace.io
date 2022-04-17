@@ -1626,6 +1626,10 @@ a {
   cursor: pointer;
 }
 
+.noHover {
+  pointer-events: none;
+}
+
 .notification-box {
   width: 400px;
   height: 0px;
