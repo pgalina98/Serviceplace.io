@@ -86,7 +86,7 @@ const Homepage = (props) => {
         </div>
         <section
           id="section"
-          class="scroll-icon"
+          className="scroll-icon"
           onClick={() => scrollToBottom()}
         >
           <a>
