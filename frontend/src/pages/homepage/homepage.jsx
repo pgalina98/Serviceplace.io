@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 
 import { connect } from "react-redux";
 
