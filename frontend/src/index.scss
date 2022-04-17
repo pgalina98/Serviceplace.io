@@ -681,6 +681,7 @@ Hero styles
 ========================================================================== */
 
 .hero-body {
+  height: calc(100vh - 90px);
   padding-top: 6rem;
   padding-bottom: 6.5rem;
   .title,
@@ -1766,7 +1767,7 @@ a {
 
 .scroll-icon a {
   position: absolute;
-  bottom: -40px;
+  bottom: -32px;
   left: 50%;
   z-index: 2;
   display: inline-block;
