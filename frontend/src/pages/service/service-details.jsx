@@ -68,7 +68,7 @@ const ServiceDetails = ({ authenticationState }) => {
             style={{
               backgroundColor: "#f5f5f5",
               height: 325,
-              width: 900,
+              width: "100vw",
               padding: 45,
             }}
           >
