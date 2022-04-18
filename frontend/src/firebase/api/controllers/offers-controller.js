@@ -3,6 +3,7 @@ import {
   doc,
   getDocs,
   query,
+  serverTimestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -17,6 +18,7 @@ export const saveOffer = async (data) => {
     data.fromUser = createUserRef(data.fromUser);
     data.toUser = createUserRef(data.toUser);
     data.service = createServiceRef(data.service);
+    data.createdAt = serverTimestamp();
 
     delete Object.assign(data, {
       fromUserRef: data.fromUser,

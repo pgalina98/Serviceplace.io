@@ -4,8 +4,10 @@ import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
 import { useToasts } from "react-toast-notifications";
+import { format } from "timeago.js";
 import { Spinner } from "react-bootstrap";
 
+import FAB from "components/fab/fab";
 import { OFFER_STATUS, mapIdToStatus } from "constants/offer-status-constants";
 
 import { TOAST_TYPES } from "utils/toast-util";
@@ -18,6 +20,8 @@ import {
   createOfferAcceptedNotification,
   createCollaborationInvitatioNotification,
 } from "../../actions/notification-actions";
+
+import "./offer-card.scss";
 
 const ACTIONS = {
   OFFER_REJECTING: 0,
@@ -128,110 +132,52 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       });
   };
 
+  const convertToMiliseconds = (createdAt) => {
+    return createdAt * 1000;
+  };
+
   return (
-    <div className="column is-one-third offer-card">
-      <div
-        className="feature-card is-bordered has-text-centered revealOnScroll delay-3"
-        data-animation="fadeInLeft"
-        style={{ height: "600px" }}
-      >
-        <div className="card-title card-line-3">
-          <h4>{offer.service.title}</h4>
-        </div>
-        <div className="card-icon">
-          <img src={offer.service.image} alt="service-img" />
-        </div>
-        <div className="card-text card-line-2">
-          <p>{offer.service.description}</p>
-        </div>
-        <div
-          className={`tag is-large ${
-            OFFER_STATUS.ACCEPTED === offer.status ||
-            OFFER_STATUS.COLLABORATION_REQUEST_CREATED === offer.status
-              ? "is-success"
-              : OFFER_STATUS.REJECTED === offer.status
-              ? "is-danger"
-              : "is-dark"
-          }`}
-        >
-          {mapIdToStatus(offer.status)}
-        </div>
-        <hr />
-        <div className="service-offer">
-          <div className="card-line-2 mb-2">
-            <span className="label">
-              {isOfferCreatedByLoggedUser() ? "To User:" : "From User:"}
-            </span>
-            {isOfferCreatedByLoggedUser()
-              ? offer.toUser.fullname
-              : offer.fromUser.fullname}
+    <li>
+      <a href="" className="offer-card">
+        <img
+          src="https://i.imgur.com/oYiTqum.jpg"
+          className="offer-card__image"
+          alt="offer-card-background-img"
+        />
+        <div className="offer-card__overlay">
+          <div className="offer-card__header">
+            <svg className="offer-card__arc" xmlns="http://www.w3.org/2000/svg">
+              <path />
+            </svg>
+            <img
+              className="offer-card__thumb"
+              src={offer.fromUser.avatar}
+              alt="avatar"
+            />
+            <div className="offer-card__header-text">
+              <h3 className="offer-card__title">{offer.fromUser.fullname}</h3>
+              <span className="offer-card__status">
+                {format(
+                  new Date(convertToMiliseconds(offer?.createdAt.seconds))
+                )}
+              </span>
+              <span className="badge status-badge d-block">
+                {mapIdToStatus(offer.status)}
+              </span>
+            </div>
           </div>
-          <div className="card-line-2 mb-2">
-            <span className="label">Note:</span> {offer.note}
-          </div>
-          <div className="card-line-2 mb-2">
-            <span className="label">Price:</span> ${offer.totalPrice}
-          </div>
-          <div className="card-line-2 mb-2">
-            <span className="label">Time:</span> {offer.requestedDuration} hours
-          </div>
-          {showControlButtons && offer.status === OFFER_STATUS.PENDING ? (
-            <>
-              <hr />
-              <div className="d-flex justify-content-evenly">
-                <button
-                  onClick={() => onAcceptButtonClick()}
-                  type="button"
-                  className="btn btn-success"
-                  disabled={savingState.isSaving}
-                >
-                  {ACTIONS.OFFER_ACCEPTING === savingState.action &&
-                  savingState.isSaving ? (
-                    <Spinner as="span" animation="border" size="sm" />
-                  ) : (
-                    "Accept"
-                  )}
-                </button>
-                <button
-                  onClick={() => onRejectButtonClick()}
-                  type="button"
-                  className="btn btn-danger"
-                  disabled={savingState.isSaving}
-                >
-                  {ACTIONS.OFFER_REJECTING === savingState.action &&
-                  savingState.isSaving ? (
-                    <Spinner as="span" animation="border" size="sm" />
-                  ) : (
-                    "Reject"
-                  )}
-                </button>
-              </div>
-            </>
-          ) : (
-            !showControlButtons &&
-            offer.status === OFFER_STATUS.ACCEPTED && (
-              <>
-                <hr />
-                <div className="d-flex justify-content-center"></div>
-                <button
-                  onClick={() => onCreateCollaborationRequestButtonClick()}
-                  type="button"
-                  className="btn btn-info"
-                  disabled={savingState.isSaving}
-                >
-                  {ACTIONS.COLLABORATION_REQUEST_CREATING ===
-                    savingState.action && savingState.isSaving ? (
-                    <Spinner as="span" animation="border" size="sm" />
-                  ) : (
-                    "Create collaboration request"
-                  )}
-                </button>
-              </>
-            )
-          )}
+          <p className="offer-card__description">
+            <b>{offer.note}</b>
+            <br />
+            I'd like to join this learning journey for {
+              offer.requestedDuration
+            }{" "}
+            hours.
+          </p>
+          <FAB />
         </div>
-      </div>
-    </div>
+      </a>
+    </li>
   );
 };
 
