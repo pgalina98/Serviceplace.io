@@ -50,7 +50,7 @@ const ServiceCard = ({
 
   return (
     <>
-      <a class="card" href="#">
+      <a class="card revealOnScroll delay-1" data-animation="fadeInLeft">
         {isDeleteIconShown && (
           <TrashboxIcon
             onDeleteButtonClick={() =>
