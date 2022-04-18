@@ -51,17 +51,26 @@ const ServiceDetails = ({ authenticationState }) => {
   };
 
   return (
-    <div className="hero-body">
+    <div className="mt-60">
       <div className="container has-text-centered">
         <div className="columns is-vcentered">
-          <div className="column is-5">
+          <div className="column is-5" style={{ paddingBottom: 0 }}>
             <figure className="image is-4by3">
-              <img src={service?.image} alt="service-img" />
+              <img
+                src={service?.image}
+                className="rounded-30"
+                alt="service-img"
+              />
             </figure>
           </div>
           <div
-            className="column is-6 is-offset-1"
-            style={{ marginTop: "-100px" }}
+            className="column is-7 rounded-30"
+            style={{
+              backgroundColor: "#f5f5f5",
+              height: 325,
+              width: 900,
+              padding: 45,
+            }}
           >
             <article class="media">
               <figure class="media-left">
