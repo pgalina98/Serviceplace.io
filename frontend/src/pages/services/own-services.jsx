@@ -49,7 +49,7 @@ const OwnServices = ({ authenticationState }) => {
             You don't have any created services yet!
           </Alert>
         )}
-        <div className="columns is-multiline">
+        <div class="card-grid mt-40">
           {isLoading ? <Spinner /> : renderServices()}
         </div>
       </div>

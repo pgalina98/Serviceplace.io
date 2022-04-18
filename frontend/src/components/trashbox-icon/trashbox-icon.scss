@@ -7,8 +7,9 @@ $transition: all 0.2s ease-in-out;
   width: 23px;
   height: 23px;
   position: absolute;
-  right: 60px;
-  top: -2px;
+  right: -5px;
+  top: -7px;
+  z-index: 10;
   cursor: pointer;
 
   &:hover .trash-top {
