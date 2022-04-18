@@ -80,7 +80,7 @@ const OfferModal = (props) => {
       <button
         onClick={() => changeModalState(true)}
         type="button"
-        className="button is-medium is-info is-outlined"
+        className="button is-medium is-info is-outlined mt-5"
         data-toggle="modal"
         data-target="#modal"
         hidden={props.isOfferButtonHidden}
