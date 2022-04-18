@@ -1,7 +1,7 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import TrashboxIcon from "../../components/trashbox-icon/trashbox-icon";
 import DeleteModal from "../../components/delete-modal/delete-modal";
