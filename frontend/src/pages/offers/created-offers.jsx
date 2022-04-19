@@ -36,10 +36,8 @@ const CreatedOffers = ({ authenticationState }) => {
         {!isLoading && offers.length === 0 && (
           <Alert color="primary">You don't have any created offers yet!</Alert>
         )}
-        <div className="content-wrapper">
-          <div className="columns is-multiline">
-            {isLoading ? <Spinner /> : renderOffers()}
-          </div>
+        <div className="offer-cards">
+          {isLoading ? <Spinner /> : renderOffers()}
         </div>
       </div>
     </div>

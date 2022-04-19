@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 
-import { useToasts } from "react-toast-notifications";
 import { format } from "timeago.js";
+import { Spinner } from "react-bootstrap";
+import { useToasts } from "react-toast-notifications";
 
 import FAB from "components/fab/fab";
 import { OFFER_STATUS, mapIdToStatus } from "constants/offer-status-constants";
@@ -74,7 +75,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       });
   };
 
-  const onCreateCollaborationRequestButtonClick = () => {
+  const onCreateCollaborationRequestButtonClick = (event) => {
     setSavingState({
       action: ACTIONS.COLLABORATION_REQUEST_CREATING,
       isSaving: true,
@@ -167,12 +168,32 @@ const OfferCard = ({ data, showControlButtons = false }) => {
             }{" "}
             hours.
           </p>
-          {showControlButtons && offer.status === OFFER_STATUS.PENDING && (
+          {showControlButtons && offer.status === OFFER_STATUS.PENDING ? (
             <FAB
               savingState={savingState}
               onAcceptButtonClick={onAcceptButtonClick}
               onRejectButtonClick={onRejectButtonClick}
             />
+          ) : (
+            !showControlButtons &&
+            offer.status === OFFER_STATUS.ACCEPTED && (
+              <div className="d-flex justify-content-center">
+                <button
+                  onClick={() => onCreateCollaborationRequestButtonClick()}
+                  type="button"
+                  className="btn btn-info"
+                  disabled={savingState.isSaving}
+                  style={{ color: "white" }}
+                >
+                  {ACTIONS.COLLABORATION_REQUEST_CREATING ===
+                    savingState.action && savingState.isSaving ? (
+                    <Spinner as="span" animation="border" size="sm" />
+                  ) : (
+                    "Create collaboration request"
+                  )}
+                </button>
+              </div>
+            )
           )}
         </div>
       </a>
