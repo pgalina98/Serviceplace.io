@@ -2,10 +2,8 @@
 
 import React, { useState } from "react";
 
-import { useSelector } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { format } from "timeago.js";
-import { Spinner } from "react-bootstrap";
 
 import FAB from "components/fab/fab";
 import { OFFER_STATUS, mapIdToStatus } from "constants/offer-status-constants";
@@ -23,7 +21,7 @@ import {
 
 import "./offer-card.scss";
 
-const ACTIONS = {
+export const ACTIONS = {
   OFFER_REJECTING: 0,
   OFFER_ACCEPTING: 1,
   COLLABORATION_REQUEST_CREATING: 2,
@@ -32,16 +30,11 @@ const ACTIONS = {
 const OfferCard = ({ data, showControlButtons = false }) => {
   const { addToast } = useToasts();
 
-  const { loggedUser } = useSelector((state) => state.authenticationState);
-
   const [offer, setOffer] = useState(data);
   const [savingState, setSavingState] = useState({
+    action: null,
     isSaving: false,
   });
-
-  const isOfferCreatedByLoggedUser = () => {
-    return offer.fromUser.uid === loggedUser.uid;
-  };
 
   const onAcceptButtonClick = () => {
     setSavingState({ action: ACTIONS.OFFER_ACCEPTING, isSaving: true });
@@ -174,7 +167,13 @@ const OfferCard = ({ data, showControlButtons = false }) => {
             }{" "}
             hours.
           </p>
-          <FAB />
+          {showControlButtons && offer.status === OFFER_STATUS.PENDING && (
+            <FAB
+              savingState={savingState}
+              onAcceptButtonClick={onAcceptButtonClick}
+              onRejectButtonClick={onRejectButtonClick}
+            />
+          )}
         </div>
       </a>
     </li>
