@@ -105,7 +105,9 @@ const Homepage = (props) => {
             <h3 className="subtitle is-5 is-muted">Currently available</h3>
             <div className="divider is-centered"></div>
           </div>
-          <div class="card-grid mt-40">{renderServices(props.services)}</div>
+          <div className="card-grid mt-40">
+            {renderServices(props.services)}
+          </div>
         </div>
       </section>
     </div>

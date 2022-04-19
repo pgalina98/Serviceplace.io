@@ -50,7 +50,7 @@ const ServiceCard = ({
 
   return (
     <>
-      <a class="card revealOnScroll delay-1" data-animation="fadeInLeft">
+      <a className="card revealOnScroll delay-1" data-animation="fadeInLeft">
         {isDeleteIconShown && (
           <TrashboxIcon
             onDeleteButtonClick={() =>
@@ -59,15 +59,15 @@ const ServiceCard = ({
           />
         )}
         <div
-          class="card__background"
+          className="card__background"
           style={{
             backgroundImage: `url(${service.image})`,
           }}
           onClick={() => navigate(`/services/${service.id}`)}
         ></div>
-        <div class="card__content">
-          <p class="card__category">{service.category}</p>
-          <h3 class="card__heading">{service.title}</h3>
+        <div className="card__content">
+          <p className="card__category">{service.category}</p>
+          <h3 className="card__heading">{service.title}</h3>
         </div>
       </a>
       <DeleteModal

@@ -76,7 +76,7 @@ const OfferModal = (props) => {
   };
 
   return (
-    <div>
+    <div className="d-flex ml-70">
       <button
         onClick={() => changeModalState(true)}
         type="button"

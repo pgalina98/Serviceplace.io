@@ -75,11 +75,12 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       });
   };
 
-  const onCreateCollaborationRequestButtonClick = (event) => {
+  const onCreateCollaborationRequestButtonClick = () => {
     setSavingState({
       action: ACTIONS.COLLABORATION_REQUEST_CREATING,
       isSaving: true,
     });
+
     const updatedOffer = {
       ...offer,
       status: OFFER_STATUS.IN_COLLABORATION,
@@ -90,9 +91,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
         addToast(messages.COLLABORATION_REQUEST_CREATING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
-
         updatedOffer.collaborationId = collaborationId;
-
         saveNotification(createCollaborationInvitatioNotification(updatedOffer))
           .then(() => {
             addToast(
@@ -101,7 +100,6 @@ const OfferCard = ({ data, showControlButtons = false }) => {
                 appearance: TOAST_TYPES.SUCCESS,
               }
             );
-
             setSavingState({
               action: ACTIONS.COLLABORATION_REQUEST_CREATING,
               isSaving: false,
@@ -114,7 +112,6 @@ const OfferCard = ({ data, showControlButtons = false }) => {
             });
             addToast(message, { appearance: TOAST_TYPES.ERROR });
           });
-
         setOffer(updatedOffer);
       })
       .catch(({ message }) => {
@@ -134,15 +131,15 @@ const OfferCard = ({ data, showControlButtons = false }) => {
     <li>
       <a href="" className="offer-card">
         <img
-          src="https://i.imgur.com/oYiTqum.jpg"
+          src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/63915d104315617.5f6084db8b877.jpg"
           className="offer-card__image"
           alt="offer-card-background-img"
         />
-        <div className="offer-card__overlay">
+        <div
+          className="offer-card__overlay"
+          onClick={(event) => event.preventDefault()}
+        >
           <div className="offer-card__header">
-            <svg className="offer-card__arc" xmlns="http://www.w3.org/2000/svg">
-              <path />
-            </svg>
             <img
               className="offer-card__thumb"
               src={offer.fromUser.avatar}
@@ -177,7 +174,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
           ) : (
             !showControlButtons &&
             offer.status === OFFER_STATUS.ACCEPTED && (
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center mb-2">
                 <button
                   onClick={() => onCreateCollaborationRequestButtonClick()}
                   type="button"

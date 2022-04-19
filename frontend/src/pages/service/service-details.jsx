@@ -68,18 +68,18 @@ const ServiceDetails = ({ authenticationState }) => {
             style={{
               backgroundColor: "#f5f5f5",
               height: 325,
-              width: "100vw",
+              width: `100%`,
               padding: 45,
             }}
           >
-            <article class="media">
-              <figure class="media-left">
-                <p class="image is-64x64">
+            <article className="media">
+              <figure className="media-left">
+                <p className="image is-64x64">
                   <img src={service.createdBy.avatar} alt="avatar" />
                 </p>
               </figure>
-              <div class="media-content">
-                <div class="content" style={{ padding: 0 }}>
+              <div className="media-content">
+                <div className="content" style={{ padding: 0 }}>
                   <p>
                     <strong>{service.createdBy.fullname}</strong>{" "}
                     <small>

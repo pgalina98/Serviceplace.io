@@ -30,7 +30,7 @@ export const createOfferAcceptedNotification = (offer) => ({
   type: NOTIFICATION_TYPES.STANDARD,
   text: `${offer.toUser.fullname} accepted your offer for ${offer.service.title}! :)`,
   createdAt: serverTimestamp(),
-  fromUserRef: serverTimestamp(offer.toUser.id),
+  fromUserRef: createUserRef(offer.toUser.id),
   toUserRef: createUserRef(offer.fromUser.id),
   isRemoved: false,
 });
