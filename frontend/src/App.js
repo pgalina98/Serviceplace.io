@@ -14,6 +14,7 @@ import {
   onAuthStateChange,
 } from "actions/authentication-actions";
 import { subscribe as subscribeToNotifications } from "actions/notification-actions";
+import { subscribeToMessages } from "actions/message-actions";
 
 import { onConnectionStateChange } from "./firebase/api/controllers/users-controller";
 
@@ -21,6 +22,11 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
   const dispatch = useDispatch();
 
   const [notifications, setNotifications] = useState({
+    data: [],
+    isFetching: isAuthenticationResolved && isAuthenticated,
+  });
+
+  const [messages, setMessages] = useState({
     data: [],
     isFetching: isAuthenticationResolved && isAuthenticated,
   });
@@ -38,6 +44,9 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
       subscribeToNotifications(loggedUser.id, (notifications) => {
         setNotifications({ data: notifications, isFetching: false });
       });
+      subscribeToMessages(loggedUser.id, (messages) => {
+        setMessages({ data: messages, isFetching: false });
+      });
       onConnectionStateChange(loggedUser.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,12 +63,14 @@ function App({ loggedUser, isAuthenticated, isAuthenticationResolved }) {
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
             notifications={notifications.data}
+            messages={messages.data}
           />
           <Navbar
             id="navbar-clone"
             loggedUser={loggedUser}
             isAuthenticated={isAuthenticated}
             notifications={notifications.data}
+            messages={messages.data}
           />
           <Sidebar />
           <Routes />

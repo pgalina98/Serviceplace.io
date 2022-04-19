@@ -24,6 +24,7 @@ export const fetchServiceById = async (serviceId) => {
 
 export const fetchLoggedUserServices = async (userId) => {
   const userRef = await createUserRef(userId);
+
   const queryGetServicesByUserRef = query(
     servicesCollection,
     where("userRef", "==", userRef)

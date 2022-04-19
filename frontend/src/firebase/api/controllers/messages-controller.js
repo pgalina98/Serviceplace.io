@@ -1,4 +1,11 @@
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  doc,
+  onSnapshot,
+  query,
+  serverTimestamp,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 import {
   createCollaborationRef,
@@ -26,6 +33,24 @@ export const sendMessage = async (collaborationId, message) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const subscribe = (userId, callback) => {
+  const userRef = createUserRef(userId);
+
+  const queryGetMessagesByUserId = query(
+    messagesCollection,
+    where("toUserRef", "==", userRef)
+  );
+
+  onSnapshot(queryGetMessagesByUserId, (response) => {
+    const messages = response.docs.map((document) => ({
+      id: document.id,
+      ...document.data(),
+    }));
+
+    callback(messages);
+  });
 };
 
 export const createNewMessageRef = () => {

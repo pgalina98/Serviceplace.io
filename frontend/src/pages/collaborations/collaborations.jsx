@@ -139,6 +139,7 @@ const Collaborations = ({ authenticationState }) => {
 
     getLoggedUserCollaborations(authenticationState.loggedUser.id)
       .then((collaborations) => {
+        console.log("collaborations: ", collaborations);
         setCollaborations(collaborations);
       })
       .then(() => {

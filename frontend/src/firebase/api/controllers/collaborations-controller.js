@@ -31,6 +31,7 @@ export const saveCollaboration = async (data) => {
       ],
       createdAt: serverTimestamp(),
       status: COLLABORATION_STATUS.PENDING,
+      messages: [],
     };
 
     changeOfferStatus(data);
@@ -46,10 +47,14 @@ export const saveCollaboration = async (data) => {
 };
 
 export const fetchJoinedLoggedUserCollaborations = async (userId) => {
-  const userRef = createUserRef(userId);
+  const userRef = await createUserRef(userId);
+
   const queryGetCollaborationsByUserRef = query(
     collaborationsCollection,
-    where("collaborators", "array-contains", { joined: true, userRef })
+    where("collaborators", "array-contains-any", [
+      { joined: false, userRef },
+      { joined: true, userRef },
+    ])
   );
 
   return await getDocs(queryGetCollaborationsByUserRef);
@@ -103,8 +108,8 @@ export const onCollaborationMessagesChange = (collaborationId, callback) => {
   });
 };
 
-export const subscribe = (userId, callback) => {
-  const userRef = createUserRef(userId);
+export const subscribe = async (userId, callback) => {
+  const userRef = await createUserRef(userId);
 
   const queryGetCollaborationsByUserId = query(
     collaborationsCollection,

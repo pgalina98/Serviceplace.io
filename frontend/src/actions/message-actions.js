@@ -41,3 +41,7 @@ export const sendNewMessage = (collaboratioId, message) => {
 
   api.sendMessage(collaboratioId, newMessage);
 };
+
+export const subscribeToMessages = (userId, callback) => {
+  api.subscribe(userId, (messages) => callback(messages));
+};
