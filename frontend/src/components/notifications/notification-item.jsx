@@ -16,6 +16,8 @@ import { NOTIFICATION_TYPES } from "constants/notification-type-constants";
 import { updateCollaboratorStatus } from "actions/collaboration-actions";
 
 import * as api from "../../firebase/api/controllers/users-controller";
+import { formatDate } from "utils/date-time-util";
+import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time-formats";
 
 const NotificationItem = ({ notification }) => {
   const navigate = useNavigate();
@@ -70,6 +72,10 @@ const NotificationItem = ({ notification }) => {
     removeNotification(notification);
   };
 
+  const convertToMiliseconds = (createdAt) => {
+    return createdAt * 1000;
+  };
+
   return (
     <div className="sec new position-relative">
       <div className="d-flex align-items-center">
@@ -92,9 +98,18 @@ const NotificationItem = ({ notification }) => {
             {isResolved() && notificationState?.text}
           </div>
           <div className="txt sub ml-3">
-            {isResolved() && format(new Date(notificationState?.createdAt))}
+            {isResolved() &&
+              format(
+                new Date(
+                  convertToMiliseconds(notificationState?.createdAt.seconds)
+                )
+              )}
             {" | "}
-            {isResolved() && notificationState?.createdAt}
+            {isResolved() &&
+              formatDate(
+                notificationState?.createdAt.seconds,
+                APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT
+              )}
           </div>
         </div>
         <button
