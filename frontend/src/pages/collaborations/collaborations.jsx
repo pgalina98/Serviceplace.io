@@ -322,17 +322,18 @@ const Collaborations = ({ authenticationState }) => {
               )}
             </div>
             <div className="view-board">
-              {!selectedCollaboration ? (
-                <div className="container">
-                  <div className="content-wrapper pt-3">
-                    <Alert color="primary">
-                      Select collaboration and start conversation! :)
-                    </Alert>
-                  </div>
-                </div>
-              ) : (
-                renderSelectedCollaborationMessages()
-              )}
+              {selectedCollaboration &&
+              selectedCollaboration.status === COLLABORATION_STATUS.JOINED
+                ? renderSelectedCollaborationMessages()
+                : activeTab === COLLABORATION_TAB.JOINED && (
+                    <div className="container">
+                      <div className="content-wrapper pt-3">
+                        <Alert color="primary">
+                          Select collaboration and start conversation! :)
+                        </Alert>
+                      </div>
+                    </div>
+                  )}
             </div>
           </>
         )}
