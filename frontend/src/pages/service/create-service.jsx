@@ -21,23 +21,29 @@ const CreateService = ({ authenticationState }) => {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm();
 
-  const [isSavingData, setIsSavingData] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const onCancelButtonClick = () => {
+    reset();
+  };
 
   const handleCreateServiceButtonClick = (data) => {
-    setIsSavingData(true);
+    setIsSaving(true);
 
     saveService(data, authenticationState.loggedUser.id)
       .then(() => {
         addToast(messages.SERVICE_CREATING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
-        setIsSavingData(false);
+
+        setIsSaving(false);
         navigate("/");
       })
       .catch(({ message }) => {
-        setIsSavingData(false);
+        setIsSaving(false);
         addToast(message, { appearance: TOAST_TYPES.ERROR });
       });
   };
@@ -162,9 +168,9 @@ const CreateService = ({ authenticationState }) => {
                 <button
                   type="submit"
                   className="button is-link"
-                  disabled={isSavingData}
+                  disabled={isSaving}
                 >
-                  {isSavingData ? (
+                  {isSaving ? (
                     <Spinner as="span" animation="border" size="sm" />
                   ) : (
                     "Create service"
@@ -175,7 +181,8 @@ const CreateService = ({ authenticationState }) => {
                 <button
                   type="button"
                   className="button btn-secondary"
-                  disabled={isSavingData}
+                  onClick={() => onCancelButtonClick()}
+                  disabled={isSaving}
                 >
                   Cancel
                 </button>
