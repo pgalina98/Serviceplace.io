@@ -28,7 +28,7 @@ import { setCollaboratorIsTypingStatus } from "actions/user-actions";
 
 import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
-import { COLLABORATION_TAB } from "constants/collaboration-tab-constants";
+import { COLLABORATION_TABS } from "constants/collaboration-tab-constants";
 import {
   COLLABORATION_STATUS,
   mapIdToStatus,
@@ -70,7 +70,7 @@ const Collaborations = ({ authenticationState }) => {
   );
   const [isCollaboratorTyping, setIsCollaboratorTyping] = useState(false);
 
-  const [activeTab, setActiveTab] = useState(COLLABORATION_TAB.JOINED);
+  const [activeTab, setActiveTab] = useState(COLLABORATION_TABS.JOINED);
   const [collaborations, setCollaborations] = useState();
   const [activeUsers, setActiveUsers] = useState();
   const [message, setMessage] = useState("");
@@ -308,7 +308,7 @@ const Collaborations = ({ authenticationState }) => {
       <div className="body">
         {filterCollabrations(
           collaborations,
-          activeTab === COLLABORATION_TAB.JOINED
+          activeTab === COLLABORATION_TABS.JOINED
             ? COLLABORATION_STATUS.JOINED
             : COLLABORATION_STATUS.PENDING
         ).length === 0 ? (
@@ -316,7 +316,7 @@ const Collaborations = ({ authenticationState }) => {
             <div className="content-wrapper pt-3">
               <Alert color="primary">
                 {`You don't have any collaborations in status ${mapIdToStatus(
-                  activeTab === COLLABORATION_TAB.JOINED
+                  activeTab === COLLABORATION_TABS.JOINED
                     ? COLLABORATION_STATUS.JOINED
                     : COLLABORATION_STATUS.PENDING
                 ).toLocaleLowerCase()} yet!`}
@@ -328,16 +328,15 @@ const Collaborations = ({ authenticationState }) => {
             <div className="view-list-user">
               {renderCollaborations(
                 collaborations,
-                activeTab === COLLABORATION_TAB.JOINED
+                activeTab === COLLABORATION_TABS.JOINED
                   ? COLLABORATION_STATUS.JOINED
                   : COLLABORATION_STATUS.PENDING
               )}
             </div>
             <div className="view-board">
-              {selectedCollaboration &&
-              selectedCollaboration.status === COLLABORATION_STATUS.JOINED
+              {selectedCollaboration && activeTab === COLLABORATION_TABS.JOINED
                 ? renderSelectedCollaborationMessages()
-                : activeTab === COLLABORATION_TAB.JOINED && (
+                : activeTab === COLLABORATION_TABS.JOINED && (
                     <div className="container">
                       <div className="content-wrapper pt-3">
                         <Alert color="primary">
@@ -359,10 +358,10 @@ const Collaborations = ({ authenticationState }) => {
         <NavItem>
           <NavLink
             className={classnames({
-              active: activeTab === COLLABORATION_TAB.JOINED,
+              active: activeTab === COLLABORATION_TABS.JOINED,
             })}
             onClick={() => {
-              setActiveTab(COLLABORATION_TAB.JOINED);
+              setActiveTab(COLLABORATION_TABS.JOINED);
             }}
           >
             Joined
@@ -371,10 +370,10 @@ const Collaborations = ({ authenticationState }) => {
         <NavItem>
           <NavLink
             className={classnames({
-              active: activeTab === COLLABORATION_TAB.REQUESTS,
+              active: activeTab === COLLABORATION_TABS.REQUESTS,
             })}
             onClick={() => {
-              setActiveTab(COLLABORATION_TAB.REQUESTS);
+              setActiveTab(COLLABORATION_TABS.REQUESTS);
             }}
           >
             Requests
@@ -382,29 +381,29 @@ const Collaborations = ({ authenticationState }) => {
         </NavItem>
       </Nav>
       <TabContent activeTab={activeTab}>
-        {activeTab === COLLABORATION_TAB.JOINED ? (
-          <TabPane tabId={COLLABORATION_TAB.JOINED}>
+        {activeTab === COLLABORATION_TABS.JOINED ? (
+          <TabPane tabId={COLLABORATION_TABS.JOINED}>
             <Row>
               <Col sm="12">
                 <div className="root">
                   {isLoading ? (
                     <Spinner />
                   ) : (
-                    renderPageContent(COLLABORATION_TAB.JOINED)
+                    renderPageContent(COLLABORATION_TABS.JOINED)
                   )}
                 </div>
               </Col>
             </Row>
           </TabPane>
         ) : (
-          <TabPane tabId={COLLABORATION_TAB.REQUESTS}>
+          <TabPane tabId={COLLABORATION_TABS.REQUESTS}>
             <Row>
               <Col sm="12">
                 <div className="root">
                   {isLoading ? (
                     <Spinner />
                   ) : (
-                    renderPageContent(COLLABORATION_TAB.REQUESTS)
+                    renderPageContent(COLLABORATION_TABS.REQUESTS)
                   )}
                 </div>
               </Col>
