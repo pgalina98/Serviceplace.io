@@ -126,7 +126,7 @@ const Collaborations = ({ authenticationState }) => {
 
     scrollToBottom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCollaboration?.id]);
+  }, []);
 
   useEffect(() => {
     if (selectedCollaboration) {
