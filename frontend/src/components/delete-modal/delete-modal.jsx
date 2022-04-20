@@ -4,8 +4,8 @@ import { Spinner } from "react-bootstrap";
 
 const DeleteModal = ({
   isModalOpen,
-  onDeleteButtonClick,
-  closeModal,
+  handleDeleteButtonClick,
+  handleCloseModal,
   isSavingData,
 }) => {
   return (
@@ -17,7 +17,7 @@ const DeleteModal = ({
             Are you sure you want to delete this service?
           </p>
           <button
-            onClick={closeModal}
+            onClick={handleCloseModal}
             className="delete"
             aria-label="close"
           ></button>
@@ -30,7 +30,7 @@ const DeleteModal = ({
         <footer className="modal-card-foot">
           <button
             className="button is-success"
-            onClick={onDeleteButtonClick}
+            onClick={handleDeleteButtonClick}
             disabled={isSavingData}
           >
             {isSavingData ? (
@@ -39,7 +39,7 @@ const DeleteModal = ({
               "Delete service"
             )}
           </button>
-          <button onClick={closeModal} className="button">
+          <button onClick={handleCloseModal} className="button">
             Cancel
           </button>
         </footer>

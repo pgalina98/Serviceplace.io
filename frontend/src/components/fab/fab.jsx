@@ -8,8 +8,8 @@ import "./fab.scss";
 
 export const FAB = ({
   savingState,
-  onAcceptButtonClick,
-  onRejectButtonClick,
+  handleAcceptButtonClick,
+  handleRejectButtonClick,
 }) => {
   const { action, isSaving } = savingState;
 
@@ -21,7 +21,7 @@ export const FAB = ({
           className="float-element"
           onClick={(event) => {
             event.preventDefault();
-            onAcceptButtonClick();
+            handleAcceptButtonClick();
           }}
         >
           {action === ACTIONS.OFFER_ACCEPTING && isSaving ? (
@@ -34,7 +34,7 @@ export const FAB = ({
           className="float-element"
           onClick={(event) => {
             event.preventDefault();
-            onRejectButtonClick();
+            handleRejectButtonClick();
           }}
         >
           {action === ACTIONS.OFFER_REJECTING && isSaving ? (

@@ -155,7 +155,7 @@ const Collaborations = ({ authenticationState }) => {
     return message.fromUser.id === authenticationState.loggedUser.id;
   };
 
-  const onJoinButtonClick = (collaboration) => {
+  const handleJoinButtonClick = (collaboration) => {
     setIsSaving(true);
 
     updateCollaboratorStatus(
@@ -182,7 +182,7 @@ const Collaborations = ({ authenticationState }) => {
     setMessage(event.target.value);
   };
 
-  const onSendMessageButtonClick = () => {
+  const handleSendMessageButtonClick = () => {
     setMessage("");
 
     const newMessage = {
@@ -219,7 +219,7 @@ const Collaborations = ({ authenticationState }) => {
         collaboration={collaboration}
         collaborator={getCollaborator(collaboration)}
         activeUsers={activeUsers}
-        onJoinButtonClick={() => onJoinButtonClick(collaboration)}
+        handleJoinButtonClick={() => handleJoinButtonClick(collaboration)}
         isCollaborationItemSelected={isCollaborationItemSelected(collaboration)}
         isSaving={isSaving}
       />
@@ -284,7 +284,7 @@ const Collaborations = ({ authenticationState }) => {
             onChange={onMessageTextChange}
             onKeyPress={(event) => {
               if (event.key === ENTER) {
-                onSendMessageButtonClick();
+                handleSendMessageButtonClick();
               }
             }}
           />
@@ -293,7 +293,7 @@ const Collaborations = ({ authenticationState }) => {
             onClick={(event) => {
               isSendMessageButtonDisabled()
                 ? event.preventDefault()
-                : onSendMessageButtonClick();
+                : handleSendMessageButtonClick();
             }}
           >
             <i className="bi bi-send icon" />

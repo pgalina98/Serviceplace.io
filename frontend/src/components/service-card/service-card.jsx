@@ -72,7 +72,7 @@ const ServiceCard = ({
       </a>
       <DeleteModal
         isModalOpen={deleteModalState.isOpen}
-        onDeleteButtonClick={() => handleDeleteServiceButtonClick()}
+        handleDeleteButtonClick={() => handleDeleteServiceButtonClick()}
         closeModal={() => closeModal()}
         isSavingData={isSavingData}
       />

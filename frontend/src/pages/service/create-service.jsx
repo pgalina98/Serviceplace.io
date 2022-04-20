@@ -26,7 +26,7 @@ const CreateService = ({ authenticationState }) => {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const onCancelButtonClick = () => {
+  const handleCancelButtonClick = () => {
     reset();
   };
 
@@ -181,7 +181,7 @@ const CreateService = ({ authenticationState }) => {
                 <button
                   type="button"
                   className="button btn-secondary"
-                  onClick={() => onCancelButtonClick()}
+                  onClick={() => handleCancelButtonClick()}
                   disabled={isSaving}
                 >
                   Cancel

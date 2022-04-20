@@ -37,7 +37,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
     isSaving: false,
   });
 
-  const onAcceptButtonClick = () => {
+  const handleAcceptButtonClick = () => {
     setSavingState({ action: ACTIONS.OFFER_ACCEPTING, isSaving: true });
     const updatedOffer = { ...offer, status: OFFER_STATUS.ACCEPTED };
 
@@ -57,7 +57,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       });
   };
 
-  const onRejectButtonClick = () => {
+  const handleRejectButtonClick = () => {
     setSavingState({ action: ACTIONS.OFFER_REJECTING, isSaving: true });
     const updatedOffer = { ...offer, status: OFFER_STATUS.REJECTED };
 
@@ -75,7 +75,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       });
   };
 
-  const onCreateCollaborationRequestButtonClick = () => {
+  const handleCreateCollaborationRequestButtonClick = () => {
     setSavingState({
       action: ACTIONS.COLLABORATION_REQUEST_CREATING,
       isSaving: true,
@@ -168,15 +168,15 @@ const OfferCard = ({ data, showControlButtons = false }) => {
           {showControlButtons && offer.status === OFFER_STATUS.PENDING ? (
             <FAB
               savingState={savingState}
-              onAcceptButtonClick={onAcceptButtonClick}
-              onRejectButtonClick={onRejectButtonClick}
+              onAcceptButtonClick={handleAcceptButtonClick}
+              onRejectButtonClick={handleRejectButtonClick}
             />
           ) : (
             !showControlButtons &&
             offer.status === OFFER_STATUS.ACCEPTED && (
               <div className="d-flex justify-content-center mb-2">
                 <button
-                  onClick={() => onCreateCollaborationRequestButtonClick()}
+                  onClick={() => handleCreateCollaborationRequestButtonClick()}
                   type="button"
                   className="btn btn-info"
                   disabled={savingState.isSaving}

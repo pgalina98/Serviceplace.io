@@ -19,7 +19,7 @@ const CollaborationItem = ({
   collaboration,
   collaborator,
   activeUsers,
-  onJoinButtonClick,
+  handleJoinButtonClick,
   isCollaborationItemSelected,
   isSaving,
 }) => {
@@ -32,7 +32,7 @@ const CollaborationItem = ({
     ).joined;
   };
 
-  const onCollaborationItemClick = () => {
+  const handleCollaborationItemClick = () => {
     dispatch(setSelectedCollaboration(collaboration));
   };
 
@@ -45,7 +45,7 @@ const CollaborationItem = ({
       className={`view-wrap-item collaboration ${
         isCollaborationItemSelected && "collaboration-item-selected"
       }`}
-      onClick={onCollaborationItemClick}
+      onClick={handleCollaborationItemClick}
     >
       <img
         className="view-avatar-item"
@@ -66,7 +66,7 @@ const CollaborationItem = ({
           </div>
         ) : isJoinButtonShown() ? (
           <button
-            onClick={onJoinButtonClick}
+            onClick={handleJoinButtonClick}
             type="button"
             className="btn btn-success w-75 mt-1"
             disabled={isSaving}

@@ -38,7 +38,7 @@ const NotificationItem = ({ notification }) => {
     return notificationState ?? false;
   };
 
-  const onJoinButtonClick = () => {
+  const handleJoinButtonClick = () => {
     setIsSaving(true);
 
     removeNotification(notification)
@@ -61,7 +61,7 @@ const NotificationItem = ({ notification }) => {
       });
   };
 
-  const onRemoveNotificationButtonClick = (notification) => {
+  const handleRemoveNotificationButtonClick = (notification) => {
     removeNotification(notification);
   };
 
@@ -74,7 +74,7 @@ const NotificationItem = ({ notification }) => {
       <div className="d-flex align-items-center">
         <i
           className="bi bi-x position-absolute top-0 remove-notification-icon"
-          onClick={() => onRemoveNotificationButtonClick(notificationState)}
+          onClick={() => handleRemoveNotificationButtonClick(notificationState)}
         />
         <div className="d-flex flex-wrap justify-content-center border-right col-3">
           <img
@@ -106,7 +106,7 @@ const NotificationItem = ({ notification }) => {
           </div>
         </div>
         <button
-          onClick={() => onJoinButtonClick()}
+          onClick={() => handleJoinButtonClick()}
           type="button"
           className="btn btn-success ml-3 col-2"
           disabled={isSaving}
