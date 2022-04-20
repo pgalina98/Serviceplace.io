@@ -35,6 +35,25 @@ export const createOfferAcceptedNotification = (offer) => ({
   isRemoved: false,
 });
 
+export const getNotificationByCollaborationIdAndNotificationType = async (
+  colaborationId,
+  notificationType
+) => {
+  return api
+    .fetchNotificationByCollaborationIdAndNotificationType(
+      colaborationId,
+      notificationType
+    )
+    .then((response) => {
+      const notifications = response.docs.map((document) => ({
+        id: document.id,
+        ...document.data(),
+      }));
+
+      return notifications[0];
+    });
+};
+
 export const saveNotification = (notification) => {
   return api.saveNotification(notification);
 };

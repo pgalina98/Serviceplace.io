@@ -7,10 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { TOAST_TYPES } from "utils/toast-util";
-import {
-  removeNotification,
-  acceptCollaborationInvitation,
-} from "actions/notification-actions";
+import { removeNotification } from "actions/notification-actions";
 import { messages } from "config/constants";
 import { NOTIFICATION_TYPES } from "constants/notification-type-constants";
 import { updateCollaboratorStatus } from "actions/collaboration-actions";
@@ -43,24 +40,20 @@ const NotificationItem = ({ notification }) => {
 
   const onJoinButtonClick = () => {
     setIsSaving(true);
-    const updatedNotification = {
-      ...notificationState,
-      invitationAccepted: true,
-    };
 
-    acceptCollaborationInvitation(updatedNotification)
+    removeNotification(notification)
       .then(() => {
         setIsSaving(false);
         addToast(messages.COLLABORATION_INVITATION_ACCEPTING_SUCCESS, {
           appearance: TOAST_TYPES.SUCCESS,
         });
-        setNotificationState(updatedNotification);
+
         updateCollaboratorStatus(
-          updatedNotification.collaborationRef.id,
+          notificationState.collaborationRef.id,
           loggedUser.id,
           true
         );
-        navigate(`/collaborations/${updatedNotification.collaborationRef.id}`);
+        navigate("/collaborations");
       })
       .catch(({ message }) => {
         setIsSaving(false);

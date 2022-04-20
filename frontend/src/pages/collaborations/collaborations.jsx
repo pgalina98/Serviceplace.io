@@ -40,6 +40,11 @@ import {
 } from "../../firebase/api/controllers/users-controller";
 import { onCollaborationMessagesChange } from "../../firebase/api/controllers/collaborations-controller";
 import { ENTER } from "constants/keyboard-keys-constants";
+import { NOTIFICATION_TYPES } from "constants/notification-type-constants";
+import {
+  getNotificationByCollaborationIdAndNotificationType,
+  removeNotification,
+} from "actions/notification-actions";
 
 import "./collaborations.scss";
 
@@ -158,7 +163,14 @@ const Collaborations = ({ authenticationState }) => {
       authenticationState.loggedUser.id,
       true
     ).then(() => {
-      setIsSaving(false);
+      getNotificationByCollaborationIdAndNotificationType(
+        collaboration.id,
+        NOTIFICATION_TYPES.COLLABORATION_INVITATION
+      ).then((notification) => {
+        removeNotification(notification);
+
+        setIsSaving(false);
+      });
     });
   };
 

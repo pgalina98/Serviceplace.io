@@ -17,7 +17,7 @@ export const fetchServices = async () => {
 };
 
 export const fetchServiceById = async (serviceId) => {
-  const serviceRef = doc(servicesCollection, serviceId);
+  const serviceRef = createServiceRef(serviceId);
 
   return await getDoc(serviceRef);
 };

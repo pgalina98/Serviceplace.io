@@ -1,6 +1,7 @@
 import {
   addDoc,
   doc,
+  getDocs,
   onSnapshot,
   query,
   updateDoc,
@@ -10,6 +11,24 @@ import {
 import { createUserRef } from "./users-controller";
 
 import { notificationsCollection } from "../../firestore-database/collections";
+import { createCollaborationRef } from "./collaborations-controller";
+
+export const fetchNotificationByCollaborationIdAndNotificationType = async (
+  collaborationId,
+  notificationType
+) => {
+  const collaborationRef = createCollaborationRef(collaborationId);
+
+  const queryGetNotificationByCollaborationIdAndNotificationType = query(
+    notificationsCollection,
+    where("collaborationRef", "==", collaborationRef),
+    where("type", "==", notificationType)
+  );
+
+  return await getDocs(
+    queryGetNotificationByCollaborationIdAndNotificationType
+  );
+};
 
 export const saveNotification = async (data) => {
   try {
@@ -40,6 +59,14 @@ export const updateNotification = async (data) => {
   }
 };
 
+export const createNotificationRef = (notificationId) => {
+  try {
+    return doc(notificationsCollection, notificationId);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 export const subscribe = (userId, callback) => {
   const userRef = createUserRef(userId);
 
@@ -57,12 +84,4 @@ export const subscribe = (userId, callback) => {
 
     callback(notifications);
   });
-};
-
-export const createNotificationRef = (notificationId) => {
-  try {
-    return doc(notificationsCollection, notificationId);
-  } catch (error) {
-    return Promise.reject(error);
-  }
 };

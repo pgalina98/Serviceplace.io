@@ -25,8 +25,17 @@ const ReceivedOffers = ({ authenticationState }) => {
     });
   }, [authenticationState.loggedUser.id]);
 
+  const sortReceivedOffers = (offers) => {
+    return offers.sort((a, b) => {
+      return (
+        new Date(b.createdAt.seconds * 1000) -
+        new Date(a.createdAt.seconds * 1000)
+      );
+    });
+  };
+
   const renderOffers = () => {
-    return offers.map((offer) => (
+    return sortReceivedOffers(offers).map((offer) => (
       <OfferCard key={offer.id} data={offer} showControlButtons />
     ));
   };

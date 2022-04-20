@@ -42,6 +42,7 @@ export const saveOffer = async (data) => {
 
 export const fetchCreatedOffers = async (userId) => {
   const userRef = await createUserRef(userId);
+
   const queryGetOffersByFromUser = query(
     offersCollection,
     where("fromUserRef", "==", userRef)
@@ -52,6 +53,7 @@ export const fetchCreatedOffers = async (userId) => {
 
 export const fetchReceivedOffers = async (userId) => {
   const userRef = await createUserRef(userId);
+
   const queryGetOffersByToUser = query(
     offersCollection,
     where("toUserRef", "==", userRef)
