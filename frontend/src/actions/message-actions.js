@@ -16,6 +16,7 @@ export const sendNewMessage = (collaboratioId, message) => {
     createdAt: {
       milliseconds: serverTimestamp(),
     },
+    isRead: false,
   };
 
   const collaborationRef = ref(
@@ -40,6 +41,10 @@ export const sendNewMessage = (collaboratioId, message) => {
   onDisconnect(collaborationRef).remove();
 
   api.sendMessage(collaboratioId, newMessage);
+};
+
+export const markUnreadMessagesAsRead = (colaboration, userId) => {
+  api.updateMessageIsReadStatus(colaboration, userId);
 };
 
 export const subscribeToMessages = (userId, callback) => {

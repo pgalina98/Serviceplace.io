@@ -27,7 +27,7 @@ const CollaborationItem = ({
   const { loggedUser } = useSelector((state) => state.authenticationState);
 
   const isJoinButtonShown = () => {
-    return !collaboration.collaborators.find(
+    return !collaboration.collaborators?.find(
       (collaborator) => collaborator.id === loggedUser.id
     ).joined;
   };

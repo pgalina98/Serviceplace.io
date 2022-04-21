@@ -1,9 +1,11 @@
 import {
   doc,
+  getDocs,
   onSnapshot,
   query,
   serverTimestamp,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -33,6 +35,34 @@ export const sendMessage = async (collaborationId, message) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+export const updateMessageIsReadStatus = async (collaboration, userId) => {
+  const collaborationRef = createCollaborationRef(collaboration.id);
+  const userRef = createUserRef(userId);
+
+  const queryGetMessagesByToUser = query(
+    messagesCollection,
+    where("collaborationRef", "==", collaborationRef),
+    where("toUserRef", "==", userRef),
+    where("isRead", "==", false)
+  );
+
+  const messages = await getDocs(queryGetMessagesByToUser);
+
+  messages.docs.forEach(async (message) => {
+    const messageRef = createMessageRef(message.id);
+
+    try {
+      updateDoc(messageRef, {
+        ...message.data(),
+        isRead: true,
+        readedAt: serverTimestamp(),
+      });
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  });
 };
 
 export const subscribe = (userId, callback) => {

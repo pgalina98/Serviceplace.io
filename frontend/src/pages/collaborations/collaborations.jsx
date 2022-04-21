@@ -33,7 +33,10 @@ import {
   COLLABORATION_STATUS,
   mapIdToStatus,
 } from "constants/collaboration-status-constants";
-import { sendNewMessage } from "../../actions/message-actions";
+import {
+  markUnreadMessagesAsRead,
+  sendNewMessage,
+} from "../../actions/message-actions";
 import {
   onCollaboratorIsTypingStatusChange,
   onUsersConnectionsStateChange,
@@ -139,6 +142,16 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollaboration, message]);
 
+  useEffect(() => {
+    if (selectedCollaboration) {
+      markUnreadMessagesAsRead(
+        selectedCollaboration,
+        authenticationState.loggedUser.id
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCollaboration]);
+
   const fetchLoggedUserCollaborations = () => {
     setIsLoading(true);
 
@@ -207,7 +220,7 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const getCollaborator = (collaboration) => {
-    return collaboration.collaborators.find(
+    return collaboration.collaborators?.find(
       (collaborator) => collaborator.id !== authenticationState.loggedUser.id
     );
   };
