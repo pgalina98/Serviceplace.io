@@ -32,6 +32,10 @@ const CollaborationItem = ({
     ).joined;
   };
 
+  const hasAnyUnreadMessage = () => {
+    return collaboration.messages.some((message) => !message.isRead);
+  };
+
   const handleCollaborationItemClick = () => {
     dispatch(setSelectedCollaboration(collaboration));
   };
@@ -53,7 +57,13 @@ const CollaborationItem = ({
         alt="icon avatar"
       />
       <div className="view-wrap-content-item d-flex align-items-center">
-        <span className="text-item text-left">{collaborator.fullname}</span>
+        <span
+          className={`text-item text-left ${
+            hasAnyUnreadMessage() && "font-weight-bold"
+          }`}
+        >
+          {collaborator.fullname}
+        </span>
         {mapStatusToId(collaboration.status) === COLLABORATION_STATUS.JOINED ? (
           <div
             className={`badge status-badge mt-1 w-75 ${

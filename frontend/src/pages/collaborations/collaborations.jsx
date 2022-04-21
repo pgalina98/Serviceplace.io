@@ -90,21 +90,21 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (isMounted.current) {
-      if (selectedCollaboration) {
-        const currentlySelectedCollaborationData = collaborations.find(
-          (collaboration) => collaboration.id === selectedCollaboration.id
-        );
+  // useEffect(() => {
+  //   if (isMounted.current) {
+  //     if (selectedCollaboration) {
+  //       const currentlySelectedCollaborationData = collaborations.find(
+  //         (collaboration) => collaboration.id === selectedCollaboration.id
+  //       );
 
-        dispatch(setSelectedCollaboration(currentlySelectedCollaborationData));
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [collaborations]);
+  //       dispatch(setSelectedCollaboration(currentlySelectedCollaborationData));
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [collaborations]);
 
   useEffect(() => {
-    if (selectedCollaboration) {
+    if (selectedCollaboration && isMounted.current) {
       onCollaboratorIsTypingStatusChange(
         selectedCollaboration.id,
         getCollaborator(selectedCollaboration).id,
@@ -132,7 +132,7 @@ const Collaborations = ({ authenticationState }) => {
   }, []);
 
   useEffect(() => {
-    if (selectedCollaboration) {
+    if (selectedCollaboration && isMounted.current) {
       setCollaboratorIsTypingStatus(
         selectedCollaboration.id,
         authenticationState.loggedUser.id,
@@ -143,10 +143,22 @@ const Collaborations = ({ authenticationState }) => {
   }, [selectedCollaboration, message]);
 
   useEffect(() => {
-    if (selectedCollaboration) {
+    if (selectedCollaboration && isMounted.current) {
       markUnreadMessagesAsRead(
         selectedCollaboration,
         authenticationState.loggedUser.id
+      );
+      setCollaborations(
+        collaborations.map((collaboration) => {
+          if (collaboration.id === selectedCollaboration.id) {
+            collaboration.messages = collaboration.messages.map((message) => ({
+              ...message,
+              isRead: true,
+            }));
+          }
+
+          return collaboration;
+        })
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
