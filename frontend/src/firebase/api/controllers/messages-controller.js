@@ -70,7 +70,8 @@ export const subscribe = (userId, callback) => {
 
   const queryGetMessagesByUserId = query(
     messagesCollection,
-    where("toUserRef", "==", userRef)
+    where("toUserRef", "==", userRef),
+    where("isRead", "==", false)
   );
 
   onSnapshot(queryGetMessagesByUserId, (response) => {
