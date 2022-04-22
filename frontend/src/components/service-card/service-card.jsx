@@ -65,7 +65,10 @@ const ServiceCard = ({
           }}
           onClick={() => navigate(`/services/${service.id}`)}
         ></div>
-        <div className="card__content">
+        <div
+          className="card__content w-100"
+          onClick={() => navigate(`/services/${service.id}`)}
+        >
           <p className="card__category">{service.category}</p>
           <h3 className="card__heading">{service.title}</h3>
         </div>
