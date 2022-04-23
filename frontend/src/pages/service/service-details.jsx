@@ -10,6 +10,7 @@ import Spinner from "../../components/spinner/spinner";
 import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
 import { getServiceById } from "../../actions/service-actions";
 import OfferModal from "../../components/offer-modal/offer-modal";
+import SerivceStatsCard from "../../components/service-stats-card/service-stats-card";
 
 const ServiceDetails = ({ authenticationState }) => {
   const dispatch = useDispatch();
@@ -51,25 +52,17 @@ const ServiceDetails = ({ authenticationState }) => {
   };
 
   return (
-    <div className="mt-60">
+    <div className="mt-30">
       <div className="container has-text-centered">
         <div className="columns is-vcentered">
           <div className="column is-5" style={{ paddingBottom: 0 }}>
-            <figure className="image is-4by3">
-              <img
-                src={service?.image}
-                className="rounded-30"
-                alt="service-img"
-              />
-            </figure>
+            <SerivceStatsCard />
           </div>
           <div
-            className="column is-7 rounded-30"
+            className="column is-7 rounded-10 service-card-details"
             style={{
-              backgroundColor: "#f5f5f5",
-              height: 325,
-              width: `100%`,
-              padding: 45,
+              marginTop: "12px",
+              boxShadow: "0 8px 16px -8px rgba(0, 0, 0, 0.4)",
             }}
           >
             <article className="media">
