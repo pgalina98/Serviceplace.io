@@ -5,6 +5,7 @@ import {
   getDoc,
   getDocs,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -39,7 +40,25 @@ export const saveService = async (data, userId) => {
 
     await addDoc(servicesCollection, {
       ...data,
+      offers: [],
     });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const updateService = async (serviceId, offer) => {
+  const serviceRef = createServiceRef(serviceId);
+  const document = await getDoc(serviceRef);
+
+  const updatedDoc = {
+    id: document.id,
+    ...document.data(),
+    offers: [...document.data()["offers"], offer],
+  };
+
+  try {
+    return await updateDoc(serviceRef, updatedDoc);
   } catch (error) {
     return Promise.reject(error);
   }

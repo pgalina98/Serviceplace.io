@@ -1,9 +1,9 @@
 import {
-  addDoc,
   doc,
   getDocs,
   query,
   serverTimestamp,
+  setDoc,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -11,7 +11,7 @@ import {
 import { offersCollection } from "../../firestore-database/collections";
 
 import { createUserRef } from "./users-controller";
-import { createServiceRef } from "./services-controller";
+import { createServiceRef, updateService } from "./services-controller";
 
 export const saveOffer = async (data) => {
   try {
@@ -32,9 +32,11 @@ export const saveOffer = async (data) => {
       serviceRef: data.service,
     })["service"];
 
-    await addDoc(offersCollection, {
-      ...data,
-    });
+    const newOffer = createNewOfferRef();
+
+    await setDoc(newOffer, data);
+
+    updateService(data.serviceRef.id, createOfferRef(newOffer.id));
   } catch (error) {
     return Promise.reject(error);
   }
@@ -67,6 +69,14 @@ export const changeOfferStatus = async (data) => {
 
   try {
     return await updateDoc(offerRef, { status: data.status });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const createNewOfferRef = () => {
+  try {
+    return doc(offersCollection);
   } catch (error) {
     return Promise.reject(error);
   }
