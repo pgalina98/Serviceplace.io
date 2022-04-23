@@ -41,14 +41,14 @@ export const updateMessageIsReadStatus = async (collaboration, userId) => {
   const collaborationRef = createCollaborationRef(collaboration.id);
   const userRef = createUserRef(userId);
 
-  const queryGetMessagesByToUser = query(
+  const queryGetMessagesByToUserRef = query(
     messagesCollection,
     where("collaborationRef", "==", collaborationRef),
     where("toUserRef", "==", userRef),
     where("isRead", "==", false)
   );
 
-  const messages = await getDocs(queryGetMessagesByToUser);
+  const messages = await getDocs(queryGetMessagesByToUserRef);
 
   messages.docs.forEach(async (message) => {
     const messageRef = createMessageRef(message.id);
@@ -68,13 +68,13 @@ export const updateMessageIsReadStatus = async (collaboration, userId) => {
 export const subscribe = (userId, callback) => {
   const userRef = createUserRef(userId);
 
-  const queryGetMessagesByUserId = query(
+  const queryGetMessagesByUserRef = query(
     messagesCollection,
     where("toUserRef", "==", userRef),
     where("isRead", "==", false)
   );
 
-  onSnapshot(queryGetMessagesByUserId, (response) => {
+  onSnapshot(queryGetMessagesByUserRef, (response) => {
     const messages = response.docs.map((document) => ({
       id: document.id,
       ...document.data(),

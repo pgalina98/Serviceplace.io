@@ -111,7 +111,7 @@ export const onCollaborationMessagesChange = (collaborationId, callback) => {
 export const subscribe = async (userId, callback) => {
   const userRef = await createUserRef(userId);
 
-  const queryGetCollaborationsByUserId = query(
+  const queryGetCollaborationsByUserRef = query(
     collaborationsCollection,
     where("collaborators", "array-contains-any", [
       { joined: false, userRef },
@@ -119,7 +119,7 @@ export const subscribe = async (userId, callback) => {
     ])
   );
 
-  onSnapshot(queryGetCollaborationsByUserId, (response) => {
+  onSnapshot(queryGetCollaborationsByUserRef, (response) => {
     const collaborations = response.docs.map((document) => ({
       id: document.id,
       ...document.data(),

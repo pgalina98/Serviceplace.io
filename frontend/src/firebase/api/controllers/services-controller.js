@@ -36,6 +36,7 @@ export const fetchLoggedUserServices = async (userId) => {
 export const saveService = async (data, userId) => {
   try {
     data.userRef = createUserRef(userId);
+
     await addDoc(servicesCollection, {
       ...data,
     });
@@ -47,6 +48,7 @@ export const saveService = async (data, userId) => {
 export const deleteServiceById = async (serviceId) => {
   try {
     const serviceRef = await createServiceRef(serviceId);
+
     await deleteDoc(serviceRef);
   } catch (error) {
     return Promise.reject(error);

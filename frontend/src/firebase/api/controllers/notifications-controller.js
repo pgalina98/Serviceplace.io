@@ -19,14 +19,14 @@ export const fetchNotificationByCollaborationIdAndNotificationType = async (
 ) => {
   const collaborationRef = createCollaborationRef(collaborationId);
 
-  const queryGetNotificationByCollaborationIdAndNotificationType = query(
+  const queryGetNotificationByCollaborationRefAndNotificationType = query(
     notificationsCollection,
     where("collaborationRef", "==", collaborationRef),
     where("type", "==", notificationType)
   );
 
   return await getDocs(
-    queryGetNotificationByCollaborationIdAndNotificationType
+    queryGetNotificationByCollaborationRefAndNotificationType
   );
 };
 
@@ -70,13 +70,13 @@ export const createNotificationRef = (notificationId) => {
 export const subscribe = (userId, callback) => {
   const userRef = createUserRef(userId);
 
-  const queryGetNotificationsByUserId = query(
+  const queryGetNotificationsByUserRef = query(
     notificationsCollection,
     where("toUserRef", "==", userRef),
     where("isRemoved", "==", false)
   );
 
-  onSnapshot(queryGetNotificationsByUserId, (response) => {
+  onSnapshot(queryGetNotificationsByUserRef, (response) => {
     const notifications = response.docs.map((document) => ({
       id: document.id,
       ...document.data(),
