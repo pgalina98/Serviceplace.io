@@ -27,13 +27,13 @@ export const ServiceStatsCard = () => {
               </clipPath>
             </defs>
             <circle cx="125" cy="125" r="120" fill="rgba(0,0,0,0.15)" />
-            <g stroke="none" stroke-width="0" clip-path="url(#scene)">
+            <g stroke="none" strokeWidth="0" clipPath="url(#scene)">
               <rect x="0" y="0" width="250" height="250" fill="#b0d2e5" />
               <g id="head">
                 <path
                   fill="none"
                   stroke="#111111"
-                  stroke-width="2"
+                  strokeWidth="2"
                   d="M 68,103 83,103.5"
                 />
                 <path
@@ -68,15 +68,15 @@ export const ServiceStatsCard = () => {
                   d="M 160,98 C 157,90 147,89 140,94"
                   id="eyebrow-right"
                 />
-                <path stroke="#111111" stroke-width="4" d="M 68,103 83,102.5" />
+                <path stroke="#111111" strokeWidth="4" d="M 68,103 83,102.5" />
                 <path
                   stroke="#111111"
-                  stroke-width="4"
+                  strokeWidth="4"
                   d="M 182,103 167,102.5"
                 />
                 <path
                   stroke="#050505"
-                  stroke-width="3"
+                  strokeWidth="3"
                   fill="none"
                   d="M 119,102 C 123,99 127,99 131,102"
                 />
@@ -90,13 +90,13 @@ export const ServiceStatsCard = () => {
                 />
                 <path
                   stroke="#050505"
-                  stroke-width="3"
+                  strokeWidth="3"
                   fill="rgba(240,240,255,0.4)"
                   d="M 119,102 C 118,111 115,119 98,117 85,115 84,108 84,104 84,97 94,96 105,97 112,98 117,98 119,102 Z"
                 />
                 <path
                   stroke="#050505"
-                  stroke-width="3"
+                  strokeWidth="3"
                   fill="rgba(240,240,255,0.4)"
                   d="M 131,102 C 132,111 135,119 152,117 165,115 166,108 166,104 166,97 156,96 145,97 138,98 133,98 131,102 Z"
                 />
@@ -113,7 +113,7 @@ export const ServiceStatsCard = () => {
                   id="smile"
                   fill="white"
                   d="M125,141 C 140,141 143,132 143,132 143,132 125,133 125,133 125,133 106.5,132 106.5,132 106.5,132 110,141 125,141 Z"
-                  clip-path="url(#lips)"
+                  clipPath="url(#lips)"
                 />
               </g>
               <g id="shirt">
@@ -126,7 +126,7 @@ export const ServiceStatsCard = () => {
                   className="arm"
                   stroke="#8665c2"
                   fill="none"
-                  stroke-width="14"
+                  strokeWidth="14"
                   d="M 118,178 C 94,179 66,220 65,254"
                 />
                 <path
@@ -134,7 +134,7 @@ export const ServiceStatsCard = () => {
                   className="arm"
                   stroke="#8665c2"
                   fill="none"
-                  stroke-width="14"
+                  strokeWidth="14"
                   d="M 132,178 C 156,179 184,220 185,254"
                 />
                 <path
@@ -152,14 +152,14 @@ export const ServiceStatsCard = () => {
                 <circle cx="125" cy="244" r="4" fill="#5a487b" />
                 <path
                   stroke="#daa37f"
-                  stroke-width="1"
+                  strokeWidth="1"
                   className="skin hand"
                   id="hand-left"
                   d="M 51,270 C 46,263 60,243 63,246 65,247 66,248 61,255 72,243 76,238 79,240 82,243 72,254 69,257 72,254 82,241 86,244 89,247 75,261 73,263 77,258 84,251 86,253 89,256 70,287 59,278"
                 />
                 <path
                   stroke="#daa37f"
-                  stroke-width="1"
+                  strokeWidth="1"
                   className="skin hand"
                   id="hand-right"
                   d="M 199,270 C 204,263 190,243 187,246 185,247 184,248 189,255 178,243 174,238 171,240 168,243 178,254 181,257 178,254 168,241 164,244 161,247 175,261 177,263 173,258 166,251 164,253 161,256 180,287 191,278"

@@ -73,22 +73,18 @@ const ServiceDetails = ({ authenticationState }) => {
               </figure>
               <div className="media-content">
                 <div className="content" style={{ padding: 0 }}>
-                  <p>
-                    <strong>{service.createdBy.fullname}</strong>{" "}
-                    <small>
-                      {format(
-                        new Date(
-                          convertToMiliseconds(service?.createdAt.seconds)
-                        )
-                      )}
-                    </small>
-                    <br />
-                    <small>{createNicknameTag()}</small> <br />
-                    <div className="mt-3">
-                      <h4 className="title is-4">{service?.title}</h4>
-                      <p className="subtitle is-5">{service?.description}</p>
-                    </div>
-                  </p>
+                  <strong>{service.createdBy.fullname}</strong>{" "}
+                  <small>
+                    {format(
+                      new Date(convertToMiliseconds(service?.createdAt.seconds))
+                    )}
+                  </small>
+                  <br />
+                  <small>{createNicknameTag()}</small> <br />
+                  <div className="mt-3">
+                    <h4 className="title is-4">{service?.title}</h4>
+                    <p className="subtitle is-5">{service?.description}</p>
+                  </div>
                 </div>
               </div>
             </article>
