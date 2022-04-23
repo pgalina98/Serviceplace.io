@@ -11,6 +11,7 @@ import authenticatedBoundaryRoute from "../../router/authenticated-boundary-rout
 import { getServiceById } from "../../actions/service-actions";
 import OfferModal from "../../components/offer-modal/offer-modal";
 import SerivceStatsCard from "../../components/service-stats-card/service-stats-card";
+import { OFFER_STATUS } from "constants/offer-status-constants";
 
 const ServiceDetails = ({ authenticationState }) => {
   const dispatch = useDispatch();
@@ -39,8 +40,12 @@ const ServiceDetails = ({ authenticationState }) => {
     return <Spinner />;
   }
 
-  const convertToMiliseconds = (createdAt) => {
-    return createdAt * 1000;
+  const hasLoggedUserActiveOfferForService = () => {
+    return service.offers.some(
+      (offer) =>
+        offer.fromUser.id === authenticationState.loggedUser.id &&
+        OFFER_STATUS.IN_COLLABORATION !== offer.status
+    );
   };
 
   const isServiceCreatedByLoggedUser = () => {
@@ -49,6 +54,10 @@ const ServiceDetails = ({ authenticationState }) => {
 
   const createNicknameTag = () => {
     return `@${service.createdBy.email.split("@")[0]}`;
+  };
+
+  const convertToMiliseconds = (createdAt) => {
+    return createdAt * 1000;
   };
 
   return (
@@ -89,7 +98,10 @@ const ServiceDetails = ({ authenticationState }) => {
               </div>
             </article>
             <OfferModal
-              isOfferButtonHidden={isServiceCreatedByLoggedUser()}
+              isOfferButtonHidden={
+                isServiceCreatedByLoggedUser() ||
+                hasLoggedUserActiveOfferForService()
+              }
               service={service}
             />
           </div>

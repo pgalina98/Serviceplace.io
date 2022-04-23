@@ -21,14 +21,38 @@ export const getServices = () => {
 };
 
 export const getServiceById = (id) => {
-  return api.fetchServiceById(id).then(async (response) => {
-    const userRef = response.data()["userRef"];
+  return api.fetchServiceById(id).then(async (document) => {
+    const userRef = document.data()["userRef"];
     const user = await getDoc(userRef);
 
-    const service = { id: response.id, ...response.data() };
+    const service = { id: document.id, ...document.data() };
+
+    const offers = await Promise.all(
+      document.data()["offers"].map(async (offerRef) => {
+        const offerDocument = await getDoc(offerRef);
+        const fromUserDocument = await getDoc(
+          offerDocument.data()["fromUserRef"]
+        );
+
+        const offer = {
+          id: offerDocument.id,
+          ...offerDocument.data(),
+        };
+
+        delete Object.assign(offer, {
+          fromUser: {
+            id: fromUserDocument.id,
+            ...fromUserDocument.data(),
+          },
+        })["fromUserRef"];
+
+        return offer;
+      })
+    );
 
     delete Object.assign(service, {
       createdBy: { id: user.id, ...user.data() },
+      offers,
     })["userRef"];
 
     return { type: SUCCESS(ACTION_TYPES.GET_SERVICE_DATA), payload: service };
