@@ -90,19 +90,6 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   if (isMounted.current) {
-  //     if (selectedCollaboration) {
-  //       const currentlySelectedCollaborationData = collaborations.find(
-  //         (collaboration) => collaboration.id === selectedCollaboration.id
-  //       );
-
-  //       dispatch(setSelectedCollaboration(currentlySelectedCollaborationData));
-  //     }
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [collaborations]);
-
   useEffect(() => {
     if (selectedCollaboration && isMounted.current) {
       onCollaboratorIsTypingStatusChange(
