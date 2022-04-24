@@ -43,11 +43,6 @@ import {
 } from "../../firebase/api/controllers/users-controller";
 import { onCollaborationMessagesChange } from "../../firebase/api/controllers/collaborations-controller";
 import { ENTER } from "constants/keyboard-keys-constants";
-import { NOTIFICATION_TYPES } from "constants/notification-type-constants";
-import {
-  getNotificationByCollaborationIdAndNotificationType,
-  removeNotification,
-} from "actions/notification-actions";
 
 import "./collaborations.scss";
 
@@ -78,7 +73,10 @@ const Collaborations = ({ authenticationState }) => {
   const [activeUsers, setActiveUsers] = useState();
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
+  const [savingState, setSavingState] = useState({
+    collaboration: null,
+    isSaving: false,
+  });
 
   const scrollToBottom = () => lastMessage.current?.scrollIntoView();
 
@@ -168,21 +166,14 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const handleJoinButtonClick = (collaboration) => {
-    setIsSaving(true);
+    setSavingState({ collaboration, isSaving: true });
 
     updateCollaboratorStatus(
       collaboration.id,
       authenticationState.loggedUser.id,
       true
     ).then(() => {
-      getNotificationByCollaborationIdAndNotificationType(
-        collaboration.id,
-        NOTIFICATION_TYPES.COLLABORATION_INVITATION
-      ).then((notification) => {
-        removeNotification(notification);
-
-        setIsSaving(false);
-      });
+      setSavingState({ collaboration, isSaving: false });
     });
   };
 
@@ -233,7 +224,7 @@ const Collaborations = ({ authenticationState }) => {
         activeUsers={activeUsers}
         handleJoinButtonClick={() => handleJoinButtonClick(collaboration)}
         isCollaborationItemSelected={isCollaborationItemSelected(collaboration)}
-        isSaving={isSaving}
+        savingState={savingState}
       />
     ));
   };

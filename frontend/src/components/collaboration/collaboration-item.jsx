@@ -21,7 +21,7 @@ const CollaborationItem = ({
   activeUsers,
   handleJoinButtonClick,
   isCollaborationItemSelected,
-  isSaving,
+  savingState,
 }) => {
   const dispatch = useDispatch();
   const { loggedUser } = useSelector((state) => state.authenticationState);
@@ -30,6 +30,10 @@ const CollaborationItem = ({
     return !collaboration.collaborators?.find(
       (collaborator) => collaborator.id === loggedUser.id
     ).joined;
+  };
+
+  const isJoinButtonDisabled = () => {
+    return savingState?.isSaving || false;
   };
 
   const hasAnyUnreadMessage = () => {
@@ -79,10 +83,11 @@ const CollaborationItem = ({
             onClick={handleJoinButtonClick}
             type="button"
             className="btn btn-success w-75 mt-1"
-            disabled={isSaving}
+            disabled={isJoinButtonDisabled()}
             style={{ height: 32, padding: 2 }}
           >
-            {isSaving ? (
+            {savingState.isSaving &&
+            savingState.collaboration?.id === collaboration?.id ? (
               <Spinner as="span" animation="border" size="sm" />
             ) : (
               "Join"
