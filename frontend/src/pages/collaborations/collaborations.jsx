@@ -149,6 +149,11 @@ const Collaborations = ({ authenticationState }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollaboration]);
 
+  useEffect(() => {
+    fetchLoggedUserCollaborations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab]);
+
   const fetchLoggedUserCollaborations = () => {
     setIsLoading(true);
 
@@ -174,6 +179,7 @@ const Collaborations = ({ authenticationState }) => {
       true
     ).then(() => {
       setSavingState({ collaboration, isSaving: false });
+      setActiveTab(COLLABORATION_TABS.JOINED);
     });
   };
 
