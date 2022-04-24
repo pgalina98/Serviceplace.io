@@ -6,7 +6,10 @@ import {
   query,
   updateDoc,
   where,
+  writeBatch,
 } from "firebase/firestore";
+
+import database from "../../firestore-database/index";
 
 import { createUserRef } from "./users-controller";
 
@@ -40,6 +43,16 @@ export const saveNotification = async (data) => {
   }
 };
 
+export const saveNotifications = async (notifications) => {
+  const batch = writeBatch(database);
+
+  notifications.forEach((notification) => {
+    batch.set(createNewNotificationRef(), notification);
+  });
+
+  await batch.commit();
+};
+
 export const updateNotification = async (data) => {
   const notificationRef = await createNotificationRef(data.id);
 
@@ -54,14 +67,6 @@ export const updateNotification = async (data) => {
 
   try {
     return await updateDoc(notificationRef, updatedDoc);
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
-
-export const createNotificationRef = (notificationId) => {
-  try {
-    return doc(notificationsCollection, notificationId);
   } catch (error) {
     return Promise.reject(error);
   }
@@ -84,4 +89,20 @@ export const subscribe = (userId, callback) => {
 
     callback(notifications);
   });
+};
+
+export const createNewNotificationRef = () => {
+  try {
+    return doc(notificationsCollection);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const createNotificationRef = (notificationId) => {
+  try {
+    return doc(notificationsCollection, notificationId);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };

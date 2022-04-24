@@ -58,6 +58,10 @@ export const saveNotification = (notification) => {
   return api.saveNotification(notification);
 };
 
+export const saveNotifications = (notifications) => {
+  return api.saveNotifications(notifications);
+};
+
 export const removeNotification = (notification) => {
   return api.updateNotification(notification);
 };

@@ -16,7 +16,6 @@ import { createNewCollaboration } from "../../actions/collaboration-actions";
 import {
   saveNotification,
   createOfferAcceptedNotification,
-  createCollaborationInvitatioNotification,
 } from "../../actions/notification-actions";
 
 import "./offer-card.scss";
@@ -47,35 +46,14 @@ const OfferCard = ({ data, showControlButtons = false }) => {
           appearance: TOAST_TYPES.SUCCESS,
         });
 
+        saveNotification(createOfferAcceptedNotification(updatedOffer));
+
         createNewCollaboration(updatedOffer)
-          .then((collaborationId) => {
+          .then(() => {
             addToast(messages.COLLABORATION_REQUEST_CREATING_SUCCESS, {
               appearance: TOAST_TYPES.SUCCESS,
             });
-            saveNotification(createOfferAcceptedNotification(updatedOffer));
-            updatedOffer.collaborationId = collaborationId;
-            saveNotification(
-              createCollaborationInvitatioNotification(updatedOffer)
-            )
-              .then(() => {
-                addToast(
-                  messages.COLLABORATION_INVITATION_NOTIFICATION_CREATING_SUCCESS,
-                  {
-                    appearance: TOAST_TYPES.SUCCESS,
-                  }
-                );
-                setSavingState({
-                  action: ACTIONS.COLLABORATION_REQUEST_CREATING,
-                  isSaving: false,
-                });
-              })
-              .catch(({ message }) => {
-                setSavingState({
-                  action: ACTIONS.COLLABORATION_REQUEST_CREATING,
-                  isSaving: false,
-                });
-                addToast(message, { appearance: TOAST_TYPES.ERROR });
-              });
+
             setOffer(updatedOffer);
           })
           .catch(({ message }) => {
