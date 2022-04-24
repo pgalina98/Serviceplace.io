@@ -80,6 +80,7 @@ const CollaborationItem = ({
             type="button"
             className="btn btn-success w-75 mt-1"
             disabled={isSaving}
+            style={{ height: 32, padding: 2 }}
           >
             {isSaving ? (
               <Spinner as="span" animation="border" size="sm" />
