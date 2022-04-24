@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 
 import { format } from "timeago.js";
-import { Spinner } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
 
 import FAB from "components/fab/fab";
@@ -48,7 +47,44 @@ const OfferCard = ({ data, showControlButtons = false }) => {
           appearance: TOAST_TYPES.SUCCESS,
         });
 
-        saveNotification(createOfferAcceptedNotification(updatedOffer));
+        createNewCollaboration(updatedOffer)
+          .then((collaborationId) => {
+            addToast(messages.COLLABORATION_REQUEST_CREATING_SUCCESS, {
+              appearance: TOAST_TYPES.SUCCESS,
+            });
+            saveNotification(createOfferAcceptedNotification(updatedOffer));
+            updatedOffer.collaborationId = collaborationId;
+            saveNotification(
+              createCollaborationInvitatioNotification(updatedOffer)
+            )
+              .then(() => {
+                addToast(
+                  messages.COLLABORATION_INVITATION_NOTIFICATION_CREATING_SUCCESS,
+                  {
+                    appearance: TOAST_TYPES.SUCCESS,
+                  }
+                );
+                setSavingState({
+                  action: ACTIONS.COLLABORATION_REQUEST_CREATING,
+                  isSaving: false,
+                });
+              })
+              .catch(({ message }) => {
+                setSavingState({
+                  action: ACTIONS.COLLABORATION_REQUEST_CREATING,
+                  isSaving: false,
+                });
+                addToast(message, { appearance: TOAST_TYPES.ERROR });
+              });
+            setOffer(updatedOffer);
+          })
+          .catch(({ message }) => {
+            setSavingState({
+              action: ACTIONS.COLLABORATION_REQUEST_CREATING,
+              isSaving: false,
+            });
+            addToast(message, { appearance: TOAST_TYPES.ERROR });
+          });
         setOffer(updatedOffer);
       })
       .catch(({ message }) => {
@@ -71,54 +107,6 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       })
       .catch(({ message }) => {
         setSavingState({ action: ACTIONS.OFFER_REJECTING, isSaving: false });
-        addToast(message, { appearance: TOAST_TYPES.ERROR });
-      });
-  };
-
-  const handleCreateCollaborationRequestButtonClick = () => {
-    setSavingState({
-      action: ACTIONS.COLLABORATION_REQUEST_CREATING,
-      isSaving: true,
-    });
-
-    const updatedOffer = {
-      ...offer,
-      status: OFFER_STATUS.IN_COLLABORATION,
-    };
-
-    createNewCollaboration(updatedOffer)
-      .then((collaborationId) => {
-        addToast(messages.COLLABORATION_REQUEST_CREATING_SUCCESS, {
-          appearance: TOAST_TYPES.SUCCESS,
-        });
-        updatedOffer.collaborationId = collaborationId;
-        saveNotification(createCollaborationInvitatioNotification(updatedOffer))
-          .then(() => {
-            addToast(
-              messages.COLLABORATION_INVITATION_NOTIFICATION_CREATING_SUCCESS,
-              {
-                appearance: TOAST_TYPES.SUCCESS,
-              }
-            );
-            setSavingState({
-              action: ACTIONS.COLLABORATION_REQUEST_CREATING,
-              isSaving: false,
-            });
-          })
-          .catch(({ message }) => {
-            setSavingState({
-              action: ACTIONS.COLLABORATION_REQUEST_CREATING,
-              isSaving: false,
-            });
-            addToast(message, { appearance: TOAST_TYPES.ERROR });
-          });
-        setOffer(updatedOffer);
-      })
-      .catch(({ message }) => {
-        setSavingState({
-          action: ACTIONS.COLLABORATION_REQUEST_CREATING,
-          isSaving: false,
-        });
         addToast(message, { appearance: TOAST_TYPES.ERROR });
       });
   };
@@ -165,32 +153,12 @@ const OfferCard = ({ data, showControlButtons = false }) => {
             }{" "}
             hours.
           </p>
-          {showControlButtons && offer.status === OFFER_STATUS.PENDING ? (
+          {showControlButtons && offer.status === OFFER_STATUS.PENDING && (
             <FAB
               savingState={savingState}
-              onAcceptButtonClick={handleAcceptButtonClick}
-              onRejectButtonClick={handleRejectButtonClick}
+              handleAcceptButtonClick={handleAcceptButtonClick}
+              handleRejectButtonClick={handleRejectButtonClick}
             />
-          ) : (
-            !showControlButtons &&
-            offer.status === OFFER_STATUS.ACCEPTED && (
-              <div className="d-flex justify-content-center mb-2">
-                <button
-                  onClick={() => handleCreateCollaborationRequestButtonClick()}
-                  type="button"
-                  className="btn btn-info"
-                  disabled={savingState.isSaving}
-                  style={{ color: "white" }}
-                >
-                  {ACTIONS.COLLABORATION_REQUEST_CREATING ===
-                    savingState.action && savingState.isSaving ? (
-                    <Spinner as="span" animation="border" size="sm" />
-                  ) : (
-                    "Create collaboration request"
-                  )}
-                </button>
-              </div>
-            )
           )}
         </div>
       </a>

@@ -44,7 +44,7 @@ const ServiceDetails = ({ authenticationState }) => {
     return service.offers.some(
       (offer) =>
         offer.fromUser.id === authenticationState.loggedUser.id &&
-        OFFER_STATUS.IN_COLLABORATION !== offer.status
+        OFFER_STATUS.FINISHED !== offer.status
     );
   };
 
