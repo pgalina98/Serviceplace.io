@@ -5,8 +5,8 @@ import { SUCCESS } from "utils/action-type-util";
 import * as api from "../firebase/api/controllers/services-controller";
 
 export const ACTION_TYPES = {
-  GET_SERVICES_DATA: "servicesState/GET_SERVICES_DATA",
-  GET_SERVICE_DATA: "servicesState/GET_SERVICE_DATA",
+  GET_SERVICES_STATE: "servicesState/GET_SERVICES_STATE",
+  GET_SERVICE_STATE: "servicesState/GET_SERVICE_STATE",
 };
 
 export const getServices = () => {
@@ -16,7 +16,10 @@ export const getServices = () => {
       ...document.data(),
     }));
 
-    return { type: SUCCESS(ACTION_TYPES.GET_SERVICES_DATA), payload: services };
+    return {
+      type: SUCCESS(ACTION_TYPES.GET_SERVICES_STATE),
+      payload: services,
+    };
   });
 };
 
@@ -55,7 +58,7 @@ export const getServiceById = (id) => {
       offers,
     })["userRef"];
 
-    return { type: SUCCESS(ACTION_TYPES.GET_SERVICE_DATA), payload: service };
+    return { type: SUCCESS(ACTION_TYPES.GET_SERVICE_STATE), payload: service };
   });
 };
 

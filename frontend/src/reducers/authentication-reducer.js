@@ -2,7 +2,7 @@ import { ACTION_TYPES } from "../actions/authentication-actions";
 import { SUCCESS } from "../utils/action-type-util";
 
 const initialState = {
-  loggedUser: {},
+  loggedUser: null,
   isAuthenticated: false,
   isAuthenticationResolved: false,
 };
@@ -20,7 +20,7 @@ const authenticationReducer = (state = initialState, action) => {
 
     case SUCCESS(ACTION_TYPES.CLEAR_AUTHENTICATION_STATE): {
       return {
-        loggedUser: {},
+        loggedUser: null,
         isAuthenticated: false,
         isAuthenticationResolved: true,
       };

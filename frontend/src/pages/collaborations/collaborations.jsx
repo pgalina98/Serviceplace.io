@@ -20,6 +20,7 @@ import Message from "components/message/message";
 import TypingIndicator from "components/typing-indicator/typing-indicator";
 
 import {
+  clearSelectedCollaboration,
   getLoggedUserCollaborations,
   setSelectedCollaboration,
   updateCollaboratorStatus,
@@ -81,6 +82,7 @@ const Collaborations = ({ authenticationState }) => {
   const scrollToBottom = () => lastMessage.current?.scrollIntoView();
 
   useEffect(() => {
+    clearSelectedCollaborationState();
     onUsersConnectionsStateChange((activeUsers) => {
       setActiveUsers(activeUsers);
     });
@@ -153,6 +155,10 @@ const Collaborations = ({ authenticationState }) => {
     fetchLoggedUserCollaborations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
+
+  const clearSelectedCollaborationState = () => {
+    dispatch(clearSelectedCollaboration());
+  };
 
   const fetchLoggedUserCollaborations = () => {
     setIsLoading(true);

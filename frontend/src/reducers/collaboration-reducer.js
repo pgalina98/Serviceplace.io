@@ -7,8 +7,14 @@ const initialState = {
 
 const collaborationReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUCCESS(ACTION_TYPES.SET_COLLABORATION_DATA): {
+    case SUCCESS(ACTION_TYPES.SET_COLLABORATION_STATE): {
       return { ...state, selectedCollaboration: { ...action.payload } };
+    }
+
+    case SUCCESS(ACTION_TYPES.CLEAR_COLLABORATION_STATE): {
+      return {
+        selectedCollaboration: null,
+      };
     }
 
     default:

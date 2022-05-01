@@ -3,16 +3,16 @@ import { SUCCESS } from "../utils/action-type-util";
 
 const initialState = {
   services: [],
-  selectedService: {},
+  selectedService: null,
 };
 
 const serviceReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SUCCESS(ACTION_TYPES.GET_SERVICES_DATA): {
+    case SUCCESS(ACTION_TYPES.GET_SERVICES_STATE): {
       return { ...state, services: [...action.payload] };
     }
 
-    case SUCCESS(ACTION_TYPES.GET_SERVICE_DATA): {
+    case SUCCESS(ACTION_TYPES.GET_SERVICE_STATE): {
       return { ...state, selectedService: { ...action.payload } };
     }
 

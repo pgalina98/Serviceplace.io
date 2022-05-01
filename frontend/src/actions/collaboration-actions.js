@@ -9,7 +9,8 @@ import { SUCCESS } from "utils/action-type-util";
 import * as api from "../firebase/api/controllers/collaborations-controller";
 
 export const ACTION_TYPES = {
-  SET_COLLABORATION_DATA: "collaborationState/SET_COLLABORATION_DATA",
+  SET_COLLABORATION_STATE: "collaborationState/SET_COLLABORATION_STATE",
+  CLEAR_COLLABORATION_STATE: "collaborationState/CLEAR_COLLABORATION_STATE",
 };
 
 export const createNewCollaboration = (collaboration) => {
@@ -189,8 +190,12 @@ export const subscribe = (userId, callback) => {
 };
 
 export const setSelectedCollaboration = (collaboration) => ({
-  type: SUCCESS(ACTION_TYPES.SET_COLLABORATION_DATA),
+  type: SUCCESS(ACTION_TYPES.SET_COLLABORATION_STATE),
   payload: collaboration,
+});
+
+export const clearSelectedCollaboration = () => ({
+  type: SUCCESS(ACTION_TYPES.CLEAR_COLLABORATION_STATE),
 });
 
 export const getMessagesByCollaborationId = (collaborationId) => {
