@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Notifications from "components/notifications/notifications";
 
+import { clearSelectedCollaboration } from "actions/collaboration-actions";
 import { logoutUser } from "../../actions/authentication-actions";
 
 const Navbar = ({
@@ -151,7 +152,10 @@ const Navbar = ({
                   <div className="message">
                     <div
                       className="notBtn"
-                      onClick={() => navigate("/collaborations")}
+                      onClick={() => {
+                        dispatch(clearSelectedCollaboration());
+                        navigate("/collaborations");
+                      }}
                     >
                       <div className="badge">{messages.length}</div>
                       <i className="bi bi-chat-text" />
