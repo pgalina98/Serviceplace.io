@@ -14,6 +14,8 @@ import {
 import { setSelectedCollaboration } from "../../actions/collaboration-actions";
 
 import "../../pages/collaborations/collaborations.scss";
+import { onCollaboratorIsTypingStatusChange } from "../../firebase/api/controllers/users-controller";
+import { onCollaborationMessagesChange } from "../../firebase/api/controllers/collaborations-controller";
 
 const CollaborationItem = ({
   collaboration,
@@ -21,10 +23,15 @@ const CollaborationItem = ({
   activeUsers,
   handleJoinButtonClick,
   isCollaborationItemSelected,
+  setIsCollaboratorTyping,
+  scrollToBottom,
   savingState,
 }) => {
   const dispatch = useDispatch();
   const { loggedUser } = useSelector((state) => state.authenticationState);
+  const { selectedCollaboration } = useSelector(
+    (state) => state.collaborationState
+  );
 
   const isJoinButtonShown = () => {
     return !collaboration.collaborators?.find(
@@ -42,6 +49,33 @@ const CollaborationItem = ({
 
   const handleCollaborationItemClick = () => {
     dispatch(setSelectedCollaboration(collaboration));
+    subscribeToTypingStatusChanges(collaboration);
+    subscribeToCollaborationMessagesChanges(collaboration);
+  };
+
+  const subscribeToTypingStatusChanges = (collaboration) => {
+    onCollaboratorIsTypingStatusChange(
+      collaboration.id,
+      collaborator.id,
+      (isTyping) => {
+        setIsCollaboratorTyping(isTyping);
+        scrollToBottom();
+      }
+    );
+  };
+
+  const subscribeToCollaborationMessagesChanges = (collaboration) => {
+    onCollaborationMessagesChange(collaboration.id, (messages) => {
+      if (messages) {
+        dispatch(
+          setSelectedCollaboration({
+            ...collaboration,
+            messages: [...collaboration?.messages, ...messages],
+          })
+        );
+        scrollToBottom();
+      }
+    });
   };
 
   const isUserOnline = () => {
@@ -53,7 +87,7 @@ const CollaborationItem = ({
       className={`view-wrap-item collaboration ${
         isCollaborationItemSelected && "collaboration-item-selected"
       }`}
-      onClick={handleCollaborationItemClick}
+      onClick={() => handleCollaborationItemClick()}
     >
       <img
         className="view-avatar-item"

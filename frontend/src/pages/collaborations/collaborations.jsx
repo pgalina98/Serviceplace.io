@@ -21,7 +21,6 @@ import TypingIndicator from "components/typing-indicator/typing-indicator";
 
 import {
   getLoggedUserCollaborations,
-  setSelectedCollaboration,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
 import { setCollaboratorIsTypingStatus } from "actions/user-actions";
@@ -37,11 +36,7 @@ import {
   markUnreadMessagesAsRead,
   sendNewMessage,
 } from "../../actions/message-actions";
-import {
-  onCollaboratorIsTypingStatusChange,
-  onUsersConnectionsStateChange,
-} from "../../firebase/api/controllers/users-controller";
-import { onCollaborationMessagesChange } from "../../firebase/api/controllers/collaborations-controller";
+import { onUsersConnectionsStateChange } from "../../firebase/api/controllers/users-controller";
 import { ENTER } from "constants/keyboard-keys-constants";
 
 import "./collaborations.scss";
@@ -61,7 +56,6 @@ const useIsMounted = () => {
 const Collaborations = ({ authenticationState }) => {
   const lastMessage = useRef();
   const isMounted = useIsMounted();
-  const dispatch = useDispatch();
 
   const { selectedCollaboration } = useSelector(
     (state) => state.collaborationState
@@ -85,33 +79,6 @@ const Collaborations = ({ authenticationState }) => {
       setActiveUsers(activeUsers);
     });
     fetchLoggedUserCollaborations();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (selectedCollaboration && isMounted.current) {
-      onCollaboratorIsTypingStatusChange(
-        selectedCollaboration.id,
-        getCollaborator(selectedCollaboration).id,
-        (isTyping) => {
-          setIsCollaboratorTyping(isTyping);
-          scrollToBottom();
-        }
-      );
-
-      onCollaborationMessagesChange(selectedCollaboration.id, (messages) => {
-        if (messages) {
-          dispatch(
-            setSelectedCollaboration({
-              ...selectedCollaboration,
-              messages: [...selectedCollaboration.messages, ...messages],
-            })
-          );
-          scrollToBottom();
-        }
-      });
-    }
-
     scrollToBottom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -133,19 +100,9 @@ const Collaborations = ({ authenticationState }) => {
         selectedCollaboration,
         authenticationState.loggedUser.id
       );
-      setCollaborations(
-        collaborations?.map((collaboration) => {
-          if (collaboration.id === selectedCollaboration.id) {
-            collaboration.messages = collaboration.messages.map((message) => ({
-              ...message,
-              isRead: true,
-            }));
-          }
-
-          return collaboration;
-        })
-      );
     }
+
+    scrollToBottom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCollaboration]);
 
@@ -231,6 +188,8 @@ const Collaborations = ({ authenticationState }) => {
         activeUsers={activeUsers}
         handleJoinButtonClick={() => handleJoinButtonClick(collaboration)}
         isCollaborationItemSelected={isCollaborationItemSelected(collaboration)}
+        setIsCollaboratorTyping={setIsCollaboratorTyping}
+        scrollToBottom={scrollToBottom}
         savingState={savingState}
       />
     ));
@@ -251,9 +210,9 @@ const Collaborations = ({ authenticationState }) => {
           </span>
         </div>
         <div className="view-list-content-chat">
-          {selectedCollaboration.messages.length > 0 ? (
+          {selectedCollaboration?.messages.length > 0 ? (
             <>
-              {selectedCollaboration.messages?.map((message) => (
+              {selectedCollaboration?.messages?.map((message) => (
                 <Message
                   key={uuid()}
                   side={isMessageSentByLoggedUser(message) ? "right" : "left"}
