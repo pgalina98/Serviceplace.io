@@ -90,6 +90,7 @@ const Collaborations = ({ authenticationState }) => {
 
   useEffect(() => {
     if (selectedCollaboration && isMounted.current) {
+      console.log("TU SAM");
       onCollaboratorIsTypingStatusChange(
         selectedCollaboration.id,
         getCollaborator(selectedCollaboration).id,
@@ -134,7 +135,7 @@ const Collaborations = ({ authenticationState }) => {
         authenticationState.loggedUser.id
       );
       setCollaborations(
-        collaborations.map((collaboration) => {
+        collaborations?.map((collaboration) => {
           if (collaboration.id === selectedCollaboration.id) {
             collaboration.messages = collaboration.messages.map((message) => ({
               ...message,
@@ -222,7 +223,7 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const renderCollaborations = (collaborations, status) => {
-    return filterCollabrations(collaborations, status).map((collaboration) => (
+    return filterCollabrations(collaborations, status)?.map((collaboration) => (
       <CollaborationItem
         key={collaboration.id}
         collaboration={collaboration}
@@ -252,7 +253,7 @@ const Collaborations = ({ authenticationState }) => {
         <div className="view-list-content-chat">
           {selectedCollaboration.messages.length > 0 ? (
             <>
-              {selectedCollaboration.messages.map((message) => (
+              {selectedCollaboration.messages?.map((message) => (
                 <Message
                   key={uuid()}
                   side={isMessageSentByLoggedUser(message) ? "right" : "left"}
