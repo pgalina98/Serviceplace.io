@@ -90,7 +90,6 @@ const Collaborations = ({ authenticationState }) => {
 
   useEffect(() => {
     if (selectedCollaboration && isMounted.current) {
-      console.log("TU SAM");
       onCollaboratorIsTypingStatusChange(
         selectedCollaboration.id,
         getCollaborator(selectedCollaboration).id,
@@ -164,6 +163,7 @@ const Collaborations = ({ authenticationState }) => {
       })
       .then(() => {
         setIsLoading(false);
+        scrollToBottom();
       });
   };
 
