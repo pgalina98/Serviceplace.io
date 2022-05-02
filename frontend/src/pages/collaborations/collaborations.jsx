@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Alert,
   TabContent,
@@ -79,7 +79,6 @@ const Collaborations = ({ authenticationState }) => {
       setActiveUsers(activeUsers);
     });
     fetchLoggedUserCollaborations();
-    scrollToBottom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -92,7 +91,7 @@ const Collaborations = ({ authenticationState }) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCollaboration, message]);
+  }, [message]);
 
   useEffect(() => {
     if (selectedCollaboration && isMounted.current) {
@@ -128,6 +127,26 @@ const Collaborations = ({ authenticationState }) => {
     return message.fromUser.id === authenticationState.loggedUser.id;
   };
 
+  const isSendMessageButtonDisabled = () => {
+    return message?.length === 0;
+  };
+
+  const isCollaborationItemSelected = (collaboration) => {
+    return selectedCollaboration
+      ? selectedCollaboration.id === collaboration.id
+      : false;
+  };
+
+  const getCollaborator = (collaboration) => {
+    return collaboration.collaborators?.find(
+      (collaborator) => collaborator.id !== authenticationState.loggedUser.id
+    );
+  };
+
+  const onMessageTextChange = (event) => {
+    setMessage(event.target.value);
+  };
+
   const handleJoinButtonClick = (collaboration) => {
     setSavingState({ collaboration, isSaving: true });
 
@@ -139,14 +158,6 @@ const Collaborations = ({ authenticationState }) => {
       setSavingState({ collaboration, isSaving: false });
       setActiveTab(COLLABORATION_TABS.JOINED);
     });
-  };
-
-  const isSendMessageButtonDisabled = () => {
-    return message?.length === 0;
-  };
-
-  const onMessageTextChange = (event) => {
-    setMessage(event.target.value);
   };
 
   const handleSendMessageButtonClick = () => {
@@ -161,21 +172,9 @@ const Collaborations = ({ authenticationState }) => {
     sendNewMessage(selectedCollaboration.id, newMessage);
   };
 
-  const isCollaborationItemSelected = (collaboration) => {
-    return selectedCollaboration
-      ? selectedCollaboration.id === collaboration.id
-      : false;
-  };
-
   const filterCollabrations = (collaborations, status) => {
     return collaborations.filter(
       (collaboration) => collaboration.status === mapIdToStatus(status)
-    );
-  };
-
-  const getCollaborator = (collaboration) => {
-    return collaboration.collaborators?.find(
-      (collaborator) => collaborator.id !== authenticationState.loggedUser.id
     );
   };
 
