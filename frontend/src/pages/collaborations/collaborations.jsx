@@ -18,6 +18,7 @@ import Spinner from "components/spinner/spinner";
 import CollaborationItem from "components/collaboration/collaboration-item";
 import Message from "components/message/message";
 import TypingIndicator from "components/typing-indicator/typing-indicator";
+import FinishButton from "components/finish-button/finish-button";
 
 import {
   getLoggedUserCollaborations,
@@ -62,7 +63,7 @@ const Collaborations = ({ authenticationState }) => {
   );
   const [isCollaboratorTyping, setIsCollaboratorTyping] = useState(false);
 
-  const [activeTab, setActiveTab] = useState(COLLABORATION_TABS.JOINED);
+  const [activeTab, setActiveTab] = useState(COLLABORATION_TABS.ACTIVE);
   const [collaborations, setCollaborations] = useState();
   const [activeUsers, setActiveUsers] = useState();
   const [message, setMessage] = useState("");
@@ -137,6 +138,13 @@ const Collaborations = ({ authenticationState }) => {
       : false;
   };
 
+  const isFinishButtonHidden = (collaboration) => {
+    return (
+      collaboration.offer.toUser !== authenticationState.loggedUser.id &&
+      COLLABORATION_STATUS.IN_PROGRESS === collaboration.status
+    );
+  };
+
   const getCollaborator = (collaboration) => {
     return collaboration.collaborators?.find(
       (collaborator) => collaborator.id !== authenticationState.loggedUser.id
@@ -156,7 +164,7 @@ const Collaborations = ({ authenticationState }) => {
       true
     ).then(() => {
       setSavingState({ collaboration, isSaving: false });
-      setActiveTab(COLLABORATION_TABS.JOINED);
+      setActiveTab(COLLABORATION_TABS.ACTIVE);
     });
   };
 
@@ -197,16 +205,19 @@ const Collaborations = ({ authenticationState }) => {
   const renderSelectedCollaborationMessages = () => {
     return (
       <div className="view-chat-board">
-        <div className="header-chat-board">
-          <img
-            className="view-avatar-item"
-            src={getCollaborator(selectedCollaboration).avatar}
-            alt="icon avatar"
-          />
-          <span className="text-header-chat-board">
-            {`${getCollaborator(selectedCollaboration).fullname} |
+        <div className="header-chat-board d-flex justify-content-between">
+          <div>
+            <img
+              className="view-avatar-item"
+              src={getCollaborator(selectedCollaboration).avatar}
+              alt="icon avatar"
+            />
+            <span className="text-header-chat-board">
+              {`${getCollaborator(selectedCollaboration).fullname} |
               ${selectedCollaboration.offer.service.title}`}
-          </span>
+            </span>
+          </div>
+          {!isFinishButtonHidden(selectedCollaboration) && <FinishButton />}
         </div>
         <div className="view-list-content-chat">
           {selectedCollaboration?.messages.length > 0 ? (
@@ -276,16 +287,16 @@ const Collaborations = ({ authenticationState }) => {
       <div className="body">
         {filterCollabrations(
           collaborations,
-          activeTab === COLLABORATION_TABS.JOINED
-            ? COLLABORATION_STATUS.JOINED
+          activeTab === COLLABORATION_TABS.ACTIVE
+            ? COLLABORATION_STATUS.IN_PROGRESS
             : COLLABORATION_STATUS.PENDING
         ).length === 0 ? (
           <div className="container">
             <div className="content-wrapper pt-3">
               <Alert color="primary">
                 {`You don't have any collaborations in status ${mapIdToStatus(
-                  activeTab === COLLABORATION_TABS.JOINED
-                    ? COLLABORATION_STATUS.JOINED
+                  activeTab === COLLABORATION_TABS.ACTIVE_STATUS
+                    ? COLLABORATION_STATUS.IN_PROGRESS
                     : COLLABORATION_STATUS.PENDING
                 ).toLocaleLowerCase()} yet!`}
               </Alert>
@@ -296,15 +307,15 @@ const Collaborations = ({ authenticationState }) => {
             <div className="view-list-user">
               {renderCollaborations(
                 collaborations,
-                activeTab === COLLABORATION_TABS.JOINED
-                  ? COLLABORATION_STATUS.JOINED
+                activeTab === COLLABORATION_TABS.ACTIVE
+                  ? COLLABORATION_STATUS.IN_PROGRESS
                   : COLLABORATION_STATUS.PENDING
               )}
             </div>
             <div className="view-board">
-              {selectedCollaboration && activeTab === COLLABORATION_TABS.JOINED
+              {selectedCollaboration && activeTab === COLLABORATION_TABS.ACTIVE
                 ? renderSelectedCollaborationMessages()
-                : activeTab === COLLABORATION_TABS.JOINED && (
+                : activeTab === COLLABORATION_TABS.ACTIVE && (
                     <div className="container">
                       <div className="content-wrapper pt-3">
                         <Alert color="primary">
@@ -326,10 +337,10 @@ const Collaborations = ({ authenticationState }) => {
         <NavItem>
           <NavLink
             className={classnames({
-              active: activeTab === COLLABORATION_TABS.JOINED,
+              active: activeTab === COLLABORATION_TABS.ACTIVE,
             })}
             onClick={() => {
-              setActiveTab(COLLABORATION_TABS.JOINED);
+              setActiveTab(COLLABORATION_TABS.ACTIVE);
             }}
           >
             Joined
@@ -349,15 +360,15 @@ const Collaborations = ({ authenticationState }) => {
         </NavItem>
       </Nav>
       <TabContent activeTab={activeTab}>
-        {activeTab === COLLABORATION_TABS.JOINED ? (
-          <TabPane tabId={COLLABORATION_TABS.JOINED}>
+        {activeTab === COLLABORATION_TABS.ACTIVE ? (
+          <TabPane tabId={COLLABORATION_TABS.ACTIVE}>
             <Row>
               <Col sm="12">
                 <div className="root">
                   {isLoading ? (
                     <Spinner />
                   ) : (
-                    renderPageContent(COLLABORATION_TABS.JOINED)
+                    renderPageContent(COLLABORATION_TABS.ACTIVE)
                   )}
                 </div>
               </Col>

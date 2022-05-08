@@ -99,7 +99,8 @@ const CollaborationItem = ({
         >
           {collaborator.fullname}
         </span>
-        {mapStatusToId(collaboration.status) === COLLABORATION_STATUS.JOINED ? (
+        {mapStatusToId(collaboration.status) ===
+        COLLABORATION_STATUS.IN_PROGRESS ? (
           <div
             className={`badge status-badge mt-1 w-75 ${
               isUserOnline() ? "status-badge-online" : "status-badge-offline"

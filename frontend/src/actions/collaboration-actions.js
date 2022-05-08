@@ -38,7 +38,7 @@ export const updateCollaboratorStatus = async (
       );
 
       if (allCollaboratorsJoinedCollaboration(collaboration)) {
-        collaboration.status = COLLABORATION_STATUS.JOINED;
+        collaboration.status = COLLABORATION_STATUS.IN_PROGRESS;
       }
 
       return await api.updateCollaboration(collaboration);
@@ -110,11 +110,13 @@ export const getLoggedUserCollaborations = async (userId) => {
                 id: serviceDocument.id,
                 ...serviceDocument.data(),
               },
+              toUser: offerDocument.data()["toUserRef"].id,
             },
             status: mapIdToStatus(document.data()["status"]),
           };
 
           delete collaboration.offerRef;
+          delete collaboration.offer.toUserRef;
 
           return collaboration;
         })
