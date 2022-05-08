@@ -1,11 +1,11 @@
 $green: #1ecd97;
 $gray: #bbbbbb;
 
-#finish-button {
+button {
   outline: none;
   height: 40px;
   text-align: center;
-  width: 180px;
+  width: 100px;
   border-radius: 40px;
   background: #fff;
   border: 2px solid $green;
@@ -18,19 +18,17 @@ $gray: #bbbbbb;
   }
   cursor: pointer;
   transition: all 0.25s ease;
+
   &:hover {
     color: white;
     background: $green;
   }
   &:active {
-    //letter-spacing: 2px;
     letter-spacing: 2px;
   }
-  &:after {
-    content: "END COLLABORATION";
-  }
 }
-.onclick {
+
+.clicked {
   width: 40px;
   border-color: $gray;
   border-width: 3px;
@@ -51,6 +49,10 @@ $gray: #bbbbbb;
   font-size: 13px;
   color: white;
   background: $green;
+  &:after {
+    font-family: "Font Awesome 5 Free";
+    content: "\f00c";
+  }
 }
 
 @keyframes rotating {
