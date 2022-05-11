@@ -180,6 +180,10 @@ const Collaborations = ({ authenticationState }) => {
     sendNewMessage(selectedCollaboration.id, newMessage);
   };
 
+  const handleFinishButtonClick = () => {
+    console.log("HANDLE FINISH BUTTON CLICK...");
+  };
+
   const filterCollabrations = (collaborations, status) => {
     return collaborations.filter(
       (collaboration) => collaboration.status === mapIdToStatus(status)
@@ -217,7 +221,9 @@ const Collaborations = ({ authenticationState }) => {
               ${selectedCollaboration.offer.service.title}`}
             </span>
           </div>
-          {!isFinishButtonHidden(selectedCollaboration) && <FinishButton />}
+          {!isFinishButtonHidden(selectedCollaboration) && (
+            <FinishButton handleFinishButtonClick={handleFinishButtonClick} />
+          )}
         </div>
         <div className="view-list-content-chat">
           {selectedCollaboration?.messages.length > 0 ? (

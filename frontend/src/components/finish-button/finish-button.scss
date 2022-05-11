@@ -28,6 +28,12 @@ button {
   }
 }
 
+.finish-button-content {
+  &:before {
+    content: "FINISH";
+  }
+}
+
 .clicked {
   width: 40px;
   border-color: $gray;
@@ -36,7 +42,7 @@ button {
   border-left-color: $blue;
   animation: rotating 2s 0.25s linear infinite;
 
-  &:after {
+  &:before {
     content: "";
   }
   &:hover {

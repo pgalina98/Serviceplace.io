@@ -4,7 +4,7 @@ import $ from "jquery";
 
 import "./finish-button.scss";
 
-export const FinishButton = () => {
+export const FinishButton = ({ handleFinishButtonClick }) => {
   $(function () {
     $("#finish-button").on("click", function () {
       $("#finish-button").addClass("clicked");
@@ -15,6 +15,7 @@ export const FinishButton = () => {
 
     function validate() {
       setTimeout(function () {
+        $("#finish-button").removeClass("finish-button-content");
         $("#finish-button").removeClass("clicked");
         $("#finish-button").addClass("validate");
         setTimeout(() => {
@@ -26,11 +27,18 @@ export const FinishButton = () => {
     function callback() {
       setTimeout(function () {
         $("#finish-button").removeClass("validate");
+        $("#finish-button").addClass("finish-button-content");
       }, 1250);
     }
   });
 
-  return <button id="finish-button">FINISH</button>;
+  return (
+    <button
+      id="finish-button"
+      className="finish-button-content"
+      onClick={handleFinishButtonClick}
+    />
+  );
 };
 
 export default FinishButton;
