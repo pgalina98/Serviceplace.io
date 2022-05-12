@@ -14,4 +14,5 @@ export const messages = {
     "Collaboration invitation notification has been successfully send!",
   COLLABORATION_INVITATION_ACCEPTING_SUCCESS:
     "Collaboration invitation has been successfully accepted!",
+  COLLABORATION_FINISHING_SUCCESS: "Collaboration finished successfully!",
 };

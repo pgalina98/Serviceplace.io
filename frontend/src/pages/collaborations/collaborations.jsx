@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Alert,
   TabContent,
@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import classnames from "classnames";
 import { v4 as uuid } from "uuid";
+import { useToasts } from "react-toast-notifications";
 
 import Spinner from "components/spinner/spinner";
 import CollaborationItem from "components/collaboration/collaboration-item";
@@ -22,6 +23,8 @@ import FinishButton from "components/finish-button/finish-button";
 
 import {
   getLoggedUserCollaborations,
+  setSelectedCollaboration,
+  updateCollaborationStatus,
   updateCollaboratorStatus,
 } from "actions/collaboration-actions";
 import { setCollaboratorIsTypingStatus } from "actions/user-actions";
@@ -39,6 +42,8 @@ import {
 } from "../../actions/message-actions";
 import { onUsersConnectionsStateChange } from "../../firebase/api/controllers/users-controller";
 import { ENTER } from "constants/keyboard-keys-constants";
+import { messages } from "config/constants";
+import { TOAST_TYPES } from "utils/toast-util";
 
 import "./collaborations.scss";
 
@@ -57,6 +62,8 @@ const useIsMounted = () => {
 const Collaborations = ({ authenticationState }) => {
   const lastMessage = useRef();
   const isMounted = useIsMounted();
+  const dispatch = useDispatch();
+  const { addToast } = useToasts();
 
   const { selectedCollaboration } = useSelector(
     (state) => state.collaborationState
@@ -181,7 +188,24 @@ const Collaborations = ({ authenticationState }) => {
   };
 
   const handleFinishButtonClick = () => {
-    console.log("HANDLE FINISH BUTTON CLICK...");
+    updateCollaborationStatus(
+      selectedCollaboration.id,
+      COLLABORATION_STATUS.FINISHED
+    )
+      .then(() => {
+        dispatch(
+          setSelectedCollaboration({
+            ...selectedCollaboration,
+            status: COLLABORATION_STATUS.FINISHED,
+          })
+        );
+        addToast(messages.COLLABORATION_FINISHING_SUCCESS, {
+          appearance: TOAST_TYPES.SUCCESS,
+        });
+      })
+      .catch(({ message }) => {
+        addToast(message, { appearance: TOAST_TYPES.ERROR });
+      });
   };
 
   const filterCollabrations = (collaborations, status) => {
@@ -301,10 +325,10 @@ const Collaborations = ({ authenticationState }) => {
             <div className="content-wrapper pt-3">
               <Alert color="primary">
                 {`You don't have any collaborations in status ${mapIdToStatus(
-                  activeTab === COLLABORATION_TABS.ACTIVE_STATUS
+                  activeTab === COLLABORATION_TABS.ACTIVE
                     ? COLLABORATION_STATUS.IN_PROGRESS
                     : COLLABORATION_STATUS.PENDING
-                ).toLocaleLowerCase()} yet!`}
+                ).replace(/_/g, " ")} yet!`}
               </Alert>
             </div>
           </div>
@@ -342,9 +366,9 @@ const Collaborations = ({ authenticationState }) => {
       <Nav tabs>
         <NavItem>
           <NavLink
-            className={classnames({
+            className={{
               active: activeTab === COLLABORATION_TABS.ACTIVE,
-            })}
+            }}
             onClick={() => {
               setActiveTab(COLLABORATION_TABS.ACTIVE);
             }}

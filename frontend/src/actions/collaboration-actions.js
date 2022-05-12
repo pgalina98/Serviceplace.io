@@ -230,6 +230,18 @@ export const getMessagesByCollaborationId = (collaborationId) => {
   });
 };
 
+export const updateCollaborationStatus = (collaborationId, status) => {
+  return api.fetchCollaborationById(collaborationId).then((document) => {
+    const updatedDoc = {
+      id: document.id,
+      ...document.data(),
+      status,
+    };
+
+    return api.updateCollaboration(updatedDoc);
+  });
+};
+
 const allCollaboratorsJoinedCollaboration = (collaboration) => {
   return collaboration.collaborators.every(
     (collaborator) => collaborator.joined
