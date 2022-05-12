@@ -91,7 +91,7 @@ export const onUsersConnectionsStateChange = (callback) => {
   });
 };
 
-export const setCollaboratorIsTypingStatus = async (
+export const setCollaboratorIsTypingStatus = (
   collaborationId,
   userId,
   status

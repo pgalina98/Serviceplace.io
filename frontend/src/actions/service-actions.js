@@ -62,12 +62,12 @@ export const getServiceById = (id) => {
   });
 };
 
-export const saveService = async (service, userId) => {
-  return await api.saveService(service, userId);
+export const saveService = (service, userId) => {
+  return api.saveService(service, userId);
 };
 
-export const getLoggedUserServices = async (userId) => {
-  return await api.fetchLoggedUserServices(userId).then((response) => {
+export const getLoggedUserServices = (userId) => {
+  return api.fetchLoggedUserServices(userId).then((response) => {
     const userServices = response.docs.map((document) => ({
       id: document.id,
       ...document.data(),
@@ -77,6 +77,6 @@ export const getLoggedUserServices = async (userId) => {
   });
 };
 
-export const deleteServiceById = async (serviceId) => {
-  return await api.deleteServiceById(serviceId);
+export const deleteServiceById = (serviceId) => {
+  return api.deleteServiceById(serviceId);
 };

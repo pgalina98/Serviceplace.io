@@ -35,7 +35,7 @@ export const createOfferAcceptedNotification = (offer) => ({
   isRemoved: false,
 });
 
-export const getNotificationByCollaborationIdAndNotificationType = async (
+export const getNotificationByCollaborationIdAndNotificationType = (
   colaborationId,
   notificationType
 ) => {

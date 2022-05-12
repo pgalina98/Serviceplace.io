@@ -17,35 +17,29 @@ export const createNewCollaboration = (collaboration) => {
   return api.saveCollaboration(collaboration);
 };
 
-export const updateCollaboratorStatus = async (
-  collaborationId,
-  userId,
-  joined
-) => {
-  return await api
-    .fetchCollaborationById(collaborationId)
-    .then(async (document) => {
-      const collaboration = { id: document.id, ...document.data() };
+export const updateCollaboratorStatus = (collaborationId, userId, joined) => {
+  return api.fetchCollaborationById(collaborationId).then(async (document) => {
+    const collaboration = { id: document.id, ...document.data() };
 
-      collaboration.collaborators = collaboration.collaborators.map(
-        (collaborator) => {
-          if (collaborator.userRef.id === userId) {
-            collaborator.joined = joined;
-          }
-
-          return collaborator;
+    collaboration.collaborators = collaboration.collaborators.map(
+      (collaborator) => {
+        if (collaborator.userRef.id === userId) {
+          collaborator.joined = joined;
         }
-      );
 
-      if (allCollaboratorsJoinedCollaboration(collaboration)) {
-        collaboration.status = COLLABORATION_STATUS.IN_PROGRESS;
+        return collaborator;
       }
+    );
 
-      return await api.updateCollaboration(collaboration);
-    });
+    if (allCollaboratorsJoinedCollaboration(collaboration)) {
+      collaboration.status = COLLABORATION_STATUS.IN_PROGRESS;
+    }
+
+    return api.updateCollaboration(collaboration);
+  });
 };
 
-export const getLoggedUserCollaborations = async (userId) => {
+export const getLoggedUserCollaborations = (userId) => {
   return api
     .fetchJoinedLoggedUserCollaborations(userId)
     .then(async (response) => {

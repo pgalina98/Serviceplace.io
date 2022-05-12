@@ -34,7 +34,7 @@ export const registerUser = async (user) => {
   }
 };
 
-export const authenticateUser = async (user) => {
+export const authenticateUser = (user) => {
   const { email, password } = user;
 
   try {
@@ -44,7 +44,7 @@ export const authenticateUser = async (user) => {
   }
 };
 
-export const logoutUser = (userId) => {
+export const logoutUser = () => {
   return signOut(getAuth(app));
 };
 
