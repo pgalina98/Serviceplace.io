@@ -77,3 +77,15 @@ export const acceptOffer = (offer) => {
 export const rejectOffer = (offer) => {
   return api.changeOfferStatus(offer);
 };
+
+export const updateOfferStatus = (offerId, status) => {
+  return api.fetchOfferById(offerId).then((document) => {
+    const updatedDoc = {
+      id: document.id,
+      ...document.data(),
+      status,
+    };
+
+    return api.updateOffer(updatedDoc);
+  });
+};

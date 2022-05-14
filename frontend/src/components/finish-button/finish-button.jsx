@@ -21,7 +21,7 @@ export const FinishButton = ({ handleFinishButtonClick }) => {
         setTimeout(() => {
           callback();
         }, 250);
-      }, 2250);
+      }, 600);
     }
 
     function callback() {

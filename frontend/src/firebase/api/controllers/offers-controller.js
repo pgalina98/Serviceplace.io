@@ -1,5 +1,6 @@
 import {
   doc,
+  getDoc,
   getDocs,
   query,
   serverTimestamp,
@@ -62,6 +63,22 @@ export const fetchReceivedOffers = async (userId) => {
   );
 
   return await getDocs(queryGetOffersByToUser);
+};
+
+export const fetchOfferById = async (offerId) => {
+  const offerRef = createOfferRef(offerId);
+
+  return await getDoc(offerRef);
+};
+
+export const updateOffer = async (updatedDoc) => {
+  const offerRef = createOfferRef(updatedDoc.id);
+
+  try {
+    return await updateDoc(offerRef, updatedDoc);
+  } catch (error) {
+    return Promise.reject(error);
+  }
 };
 
 export const changeOfferStatus = async (data) => {

@@ -7,6 +7,8 @@ import {
 import { SUCCESS } from "utils/action-type-util";
 
 import * as api from "../firebase/api/controllers/collaborations-controller";
+import { updateOfferStatus } from "./offer-actions";
+import { OFFER_STATUS } from "constants/offer-status-constants";
 
 export const ACTION_TYPES = {
   SET_COLLABORATION_STATE: "collaborationState/SET_COLLABORATION_STATE",
@@ -237,6 +239,8 @@ export const updateCollaborationStatus = (collaborationId, status) => {
       ...document.data(),
       status,
     };
+
+    updateOfferStatus(document.data()["offerRef"].id, OFFER_STATUS.FINISHED);
 
     return api.updateCollaboration(updatedDoc);
   });
