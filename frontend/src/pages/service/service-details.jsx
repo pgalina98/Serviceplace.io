@@ -12,6 +12,7 @@ import { getServiceById } from "../../actions/service-actions";
 import OfferModal from "../../components/offer-modal/offer-modal";
 import SerivceStatsCard from "../../components/service-stats-card/service-stats-card";
 import { OFFER_STATUS } from "constants/offer-status-constants";
+import { Alert } from "reactstrap";
 
 const ServiceDetails = ({ authenticationState }) => {
   const dispatch = useDispatch();
@@ -63,6 +64,11 @@ const ServiceDetails = ({ authenticationState }) => {
   return (
     <div className="mt-30">
       <div className="container has-text-centered">
+        {hasLoggedUserActiveOfferForService() && (
+          <Alert color="primary">
+            You already have active collaboration for this service!
+          </Alert>
+        )}
         <div className="columns is-vcentered">
           <div className="column is-5" style={{ paddingBottom: 0 }}>
             <SerivceStatsCard />
