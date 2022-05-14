@@ -126,7 +126,7 @@ const CollaborationItem = ({
             )}
           </button>
         ) : (
-          <div className="badge status-badge w-75">PENDING</div>
+          <div className="badge status-badge w-75">{collaboration.status}</div>
         )}
       </div>
     </div>

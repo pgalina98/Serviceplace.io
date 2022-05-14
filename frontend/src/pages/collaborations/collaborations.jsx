@@ -35,6 +35,7 @@ import { COLLABORATION_TABS } from "constants/collaboration-tab-constants";
 import {
   COLLABORATION_STATUS,
   mapIdToStatus,
+  mapStatusToId,
 } from "constants/collaboration-status-constants";
 import {
   markUnreadMessagesAsRead,
@@ -152,6 +153,13 @@ const Collaborations = ({ authenticationState }) => {
     );
   };
 
+  const isReadOnly = () => {
+    return (
+      mapStatusToId(selectedCollaboration?.status) ===
+      COLLABORATION_STATUS.FINISHED
+    );
+  };
+
   const getCollaborator = (collaboration) => {
     return collaboration.collaborators?.find(
       (collaborator) => collaborator.id !== authenticationState.loggedUser.id
@@ -208,9 +216,9 @@ const Collaborations = ({ authenticationState }) => {
       });
   };
 
-  const filterCollabrations = (collaborations, status) => {
-    return collaborations.filter(
-      (collaboration) => collaboration.status === mapIdToStatus(status)
+  const filterCollabrations = (collaborations, statusArray) => {
+    return collaborations.filter((collaboration) =>
+      statusArray.includes(mapStatusToId(collaboration.status))
     );
   };
 
@@ -245,7 +253,7 @@ const Collaborations = ({ authenticationState }) => {
               ${selectedCollaboration.offer.service.title}`}
             </span>
           </div>
-          {!isFinishButtonHidden(selectedCollaboration) && (
+          {!isFinishButtonHidden(selectedCollaboration) && !isReadOnly() && (
             <FinishButton handleFinishButtonClick={handleFinishButtonClick} />
           )}
         </div>
@@ -285,29 +293,31 @@ const Collaborations = ({ authenticationState }) => {
             </div>
           )}
         </div>
-        <div className="view-bottom">
-          <input
-            className="view-input"
-            placeholder="Type your message..."
-            value={message}
-            onChange={onMessageTextChange}
-            onKeyPress={(event) => {
-              if (event.key === ENTER) {
-                handleSendMessageButtonClick();
-              }
-            }}
-          />
-          <div
-            className="send-icon-button"
-            onClick={(event) => {
-              isSendMessageButtonDisabled()
-                ? event.preventDefault()
-                : handleSendMessageButtonClick();
-            }}
-          >
-            <i className="bi bi-send icon" />
+        {!isReadOnly() && (
+          <div className="view-bottom">
+            <input
+              className="view-input"
+              placeholder="Type your message..."
+              value={message}
+              onChange={onMessageTextChange}
+              onKeyPress={(event) => {
+                if (event.key === ENTER) {
+                  handleSendMessageButtonClick();
+                }
+              }}
+            />
+            <div
+              className="send-icon-button"
+              onClick={(event) => {
+                isSendMessageButtonDisabled()
+                  ? event.preventDefault()
+                  : handleSendMessageButtonClick();
+              }}
+            >
+              <i className="bi bi-send icon" />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   };
@@ -318,8 +328,8 @@ const Collaborations = ({ authenticationState }) => {
         {filterCollabrations(
           collaborations,
           activeTab === COLLABORATION_TABS.ACTIVE
-            ? COLLABORATION_STATUS.IN_PROGRESS
-            : COLLABORATION_STATUS.PENDING
+            ? [COLLABORATION_STATUS.IN_PROGRESS, COLLABORATION_STATUS.FINISHED]
+            : [COLLABORATION_STATUS.PENDING]
         ).length === 0 ? (
           <div className="container">
             <div className="content-wrapper pt-3">
@@ -338,8 +348,11 @@ const Collaborations = ({ authenticationState }) => {
               {renderCollaborations(
                 collaborations,
                 activeTab === COLLABORATION_TABS.ACTIVE
-                  ? COLLABORATION_STATUS.IN_PROGRESS
-                  : COLLABORATION_STATUS.PENDING
+                  ? [
+                      COLLABORATION_STATUS.IN_PROGRESS,
+                      COLLABORATION_STATUS.FINISHED,
+                    ]
+                  : [COLLABORATION_STATUS.PENDING]
               )}
             </div>
             <div className="view-board">
