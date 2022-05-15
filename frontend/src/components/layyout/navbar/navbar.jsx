@@ -4,10 +4,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import Notifications from "components/notifications/notifications";
+import Notifications from "components/shared/notifications/notifications";
 
 import { clearSelectedCollaboration } from "actions/collaboration-actions";
-import { logoutUser } from "../../actions/authentication-actions";
+import { logoutUser } from "../../../actions/authentication-actions";
 
 const Navbar = ({
   id,

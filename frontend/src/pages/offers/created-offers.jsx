@@ -9,8 +9,8 @@ import authenticatedBoundaryRoute from "../../router/authenticated-boundary-rout
 
 import { getCreatedOffers } from "../../actions/offer-actions";
 
-import Spinner from "components/spinner/spinner";
-import OfferCard from "components/offer-card/offer-card";
+import Spinner from "components/utils/spinner/spinner";
+import OfferCard from "components/cards/offer-card/offer-card";
 
 const CreatedOffers = ({ authenticationState }) => {
   const [offers, setOffers] = useState();

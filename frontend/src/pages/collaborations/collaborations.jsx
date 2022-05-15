@@ -15,11 +15,11 @@ import classnames from "classnames";
 import { v4 as uuid } from "uuid";
 import { useToasts } from "react-toast-notifications";
 
-import Spinner from "components/spinner/spinner";
-import CollaborationItem from "components/collaboration/collaboration-item";
-import Message from "components/message/message";
-import TypingIndicator from "components/typing-indicator/typing-indicator";
-import FinishButton from "components/finish-button/finish-button";
+import Spinner from "components/utils/spinner/spinner";
+import CollaborationItem from "components/shared/collaboration/collaboration-item";
+import Message from "components/shared/message/message";
+import TypingIndicator from "components/utils/typing-indicator/typing-indicator";
+import FinishButton from "components/buttons/finish-button/finish-button";
 
 import {
   getLoggedUserCollaborations,

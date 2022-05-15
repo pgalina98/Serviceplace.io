@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import TrashboxIcon from "../../components/trashbox-icon/trashbox-icon";
-import DeleteModal from "../../components/delete-modal/delete-modal";
+import TrashboxIcon from "../../utils/trashbox-icon/trashbox-icon";
+import DeleteModal from "../../modals/delete-modal/delete-modal";
 
 import { deleteServiceById } from "actions/service-actions";
 

@@ -4,7 +4,7 @@ import { format } from "timeago.js";
 
 import { removeNotification } from "actions/notification-actions";
 
-import * as api from "../../firebase/api/controllers/users-controller";
+import * as api from "../../../firebase/api/controllers/users-controller";
 import { formatDate } from "utils/date-time-util";
 import { APP_DATE_WITH_DAY_AND_MONTH_TIME_FORMAT } from "config/date-time-formats";
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ACTIONS } from "components/offer-card/offer-card";
+import { ACTIONS } from "components/cards/offer-card/offer-card";
 
 import { Spinner } from "react-bootstrap";
 
