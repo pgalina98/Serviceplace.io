@@ -17,6 +17,7 @@ import {
   saveNotification,
   createOfferAcceptedNotification,
 } from "../../../actions/notification-actions";
+import LikeButton from "components/buttons/like-button/like-button";
 
 import "./offer-card.scss";
 
