@@ -1,7 +1,7 @@
 export const OFFER_STATUS_PENDING = "PENDING";
 export const OFFER_STATUS_ACCEPTED = "ACCEPTED";
 export const OFFER_STATUS_REJECTED = "REJECTED";
-export const OFFER_STATUS_FINISED = "IN FINISHED";
+export const OFFER_STATUS_FINISHED = "FINISHED";
 
 export const OFFER_STATUS = {
   PENDING: 1,
@@ -19,7 +19,7 @@ export const mapIdToStatus = (statusId) => {
     case OFFER_STATUS.REJECTED:
       return OFFER_STATUS_REJECTED;
     case OFFER_STATUS.FINISHED:
-      return OFFER_STATUS_FINISED;
+      return OFFER_STATUS_FINISHED;
 
     default:
       return null;
