@@ -10,6 +10,7 @@ import { getServices } from "actions/service-actions";
 
 import ServiceCard from "../../components/cards/service-card/service-card";
 import Spinner from "../../components/utils/spinner/spinner";
+import LikeButton from "components/buttons/like-button/like-button";
 
 const Homepage = (props) => {
   const availableServices = useRef();
@@ -90,7 +91,7 @@ const Homepage = (props) => {
           onClick={() => scrollToBottom()}
         >
           <a>
-            <span></span>Scroll
+            <span />Scroll
           </a>
         </section>
       </section>
@@ -103,7 +104,7 @@ const Homepage = (props) => {
           <div className="title-wrapper has-text-centered">
             <h2 className="title is-2">Discover services</h2>
             <h3 className="subtitle is-5 is-muted">Currently available</h3>
-            <div className="divider is-centered"></div>
+            <div className="divider is-centered" />
           </div>
           <div className="card-grid mt-40">
             {renderServices(props.services)}

@@ -2,11 +2,11 @@ import React from "react";
 
 import $ from "jquery";
 
-import "./finish-button.scss";
+import "./finish-button.scoped.scss";
 
 export const FinishButton = ({ handleFinishButtonClick }) => {
-  $(function () {
-    $("#finish-button").on("click", function () {
+  $(function() {
+    $("#finish-button").on("click", function() {
       $("#finish-button").addClass("clicked");
       setTimeout(() => {
         validate();
@@ -14,7 +14,7 @@ export const FinishButton = ({ handleFinishButtonClick }) => {
     });
 
     function validate() {
-      setTimeout(function () {
+      setTimeout(function() {
         $("#finish-button").removeClass("finish-button-content");
         $("#finish-button").removeClass("clicked");
         $("#finish-button").addClass("validate");
@@ -25,7 +25,7 @@ export const FinishButton = ({ handleFinishButtonClick }) => {
     }
 
     function callback() {
-      setTimeout(function () {
+      setTimeout(function() {
         $("#finish-button").removeClass("validate");
         $("#finish-button").addClass("finish-button-content");
       }, 1250);

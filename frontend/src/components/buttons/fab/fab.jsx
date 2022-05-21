@@ -4,7 +4,7 @@ import { ACTIONS } from "components/cards/offer-card/offer-card";
 
 import { Spinner } from "react-bootstrap";
 
-import "./fab.scss";
+// import "./fab.scss";
 
 export const FAB = ({
   savingState,

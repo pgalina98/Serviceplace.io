@@ -49,10 +49,10 @@ const CreateService = ({ authenticationState }) => {
   };
 
   return (
-    <div className="create-page">
+    <div className="create-page content-wrapper">
       <div className="container">
-        <div className="form-container">
-          <h1 className="title">Create Service</h1>
+        <h1 className="title">Create Service</h1>
+        <div className="form-container mt-40">
           <form onSubmit={handleSubmit(handleCreateServiceButtonClick)}>
             <div className="field">
               <label className="label">Category</label>
