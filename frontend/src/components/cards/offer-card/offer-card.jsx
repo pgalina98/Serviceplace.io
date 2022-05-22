@@ -99,22 +99,22 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       <a href="" className="offer-card">
         <img
           src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/63915d104315617.5f6084db8b877.jpg"
-          className="offer-card__image"
+          className="offer-card_image"
           alt="offer-card-background-img"
         />
         <div
-          className="offer-card__overlay"
+          className="offer-card_overlay"
           onClick={(event) => event.preventDefault()}
         >
-          <div className="offer-card__header">
+          <div className="offer-card_header">
             <img
-              className="offer-card__thumb"
+              className="offer-card_thumb"
               src={offer.fromUser.avatar}
               alt="avatar"
             />
-            <div className="offer-card__header-text">
-              <h3 className="offer-card__title">{offer.fromUser.fullname}</h3>
-              <span className="offer-card__status">
+            <div className="offer-card_header-text">
+              <h3 className="offer-card_title">{offer.fromUser.fullname}</h3>
+              <span className="offer-card_status">
                 {format(
                   new Date(convertToMiliseconds(offer?.createdAt.seconds))
                 )}
@@ -124,7 +124,7 @@ const OfferCard = ({ data, showControlButtons = false }) => {
               </span>
             </div>
           </div>
-          <p className="offer-card__description">
+          <p className="offer-card_description">
             <b>{offer.note}</b>
             <br />
             I'd like to join this learning journey for {

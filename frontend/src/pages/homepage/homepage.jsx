@@ -10,7 +10,6 @@ import { getServices } from "actions/service-actions";
 
 import ServiceCard from "../../components/cards/service-card/service-card";
 import Spinner from "../../components/utils/spinner/spinner";
-import LikeButton from "components/buttons/like-button/like-button";
 
 const Homepage = (props) => {
   const availableServices = useRef();
@@ -91,7 +90,8 @@ const Homepage = (props) => {
           onClick={() => scrollToBottom()}
         >
           <a>
-            <span />Scroll
+            <span />
+            Scroll
           </a>
         </section>
       </section>
