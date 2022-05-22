@@ -5,12 +5,12 @@ import { Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 
-import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
-import { isValidImage } from "../../helpers/validator";
-import { messages } from "../../config/constants";
-import { TOAST_TYPES } from "../../utils/toast-util";
+import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
+import { isValidImage } from "helpers/validator";
+import { messages } from "config/constants";
+import { TOAST_TYPES } from "utils/toast-util";
 
-import { saveService } from "../../actions/service-actions";
+import { saveService } from "actions/service-actions";
 
 import "./service.scoped.scss";
 

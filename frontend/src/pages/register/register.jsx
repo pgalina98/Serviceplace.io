@@ -8,15 +8,12 @@ import { useForm } from "react-hook-form";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
 
-import notAuthenticatedBoundaryRoute from "../../router/not-authenticated-boundary-route/not-authenticated-boundary-route";
+import notAuthenticatedBoundaryRoute from "router/not-authenticated-boundary-route/not-authenticated-boundary-route";
 
-import { TOAST_TYPES } from "../../utils/toast-util";
+import { TOAST_TYPES } from "utils/toast-util";
 import * as api from "../../firebase/api/controllers/authentication-controller";
-import { messages } from "../../config/constants";
-import {
-  isValidImage,
-  isConfirmationPasswordMatched,
-} from "../../helpers/validator";
+import { messages } from "config/constants";
+import { isValidImage, isConfirmationPasswordMatched } from "helpers/validator";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -67,8 +64,7 @@ const Register = () => {
                   <input
                     {...register("email", {
                       required: true,
-                      pattern:
-                        /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
+                      pattern: /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/,
                     })}
                     name="email"
                     className="input is-large"
@@ -183,8 +179,9 @@ const Register = () => {
                       required: true,
                       minLength: 7,
                       validate: {
-                        isConfirmationPasswordMatched:
-                          isConfirmationPasswordMatched(getValues),
+                        isConfirmationPasswordMatched: isConfirmationPasswordMatched(
+                          getValues
+                        ),
                       },
                     })}
                     name="passwordConfirmation"

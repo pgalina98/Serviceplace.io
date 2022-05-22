@@ -4,7 +4,7 @@ import {
   initializeDispatchWithLogger,
   initializeDispatchWithPromiseSupport,
   applyMiddlewares,
-} from "../config/dispatch-middlewares";
+} from "config/dispatch-middlewares";
 
 import serviceReducer from "reducers/service-reducer";
 import authenticationReducer from "reducers/authentication-reducer";

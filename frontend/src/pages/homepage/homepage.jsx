@@ -8,8 +8,8 @@ import TypeWriterEffect from "react-typewriter-effect";
 
 import { getServices } from "actions/service-actions";
 
-import ServiceCard from "../../components/cards/service-card/service-card";
-import Spinner from "../../components/utils/spinner/spinner";
+import ServiceCard from "components/cards/service-card/service-card";
+import Spinner from "components/utils/spinner/spinner";
 
 const Homepage = (props) => {
   const availableServices = useRef();

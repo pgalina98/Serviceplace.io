@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import TrashboxIcon from "../../utils/trashbox-icon/trashbox-icon";
-import DeleteModal from "../../modals/delete-modal/delete-modal";
+import TrashboxIcon from "components/utils/trashbox-icon/trashbox-icon";
+import DeleteModal from "components/modals/delete-modal/delete-modal";
 
 import { deleteServiceById } from "actions/service-actions";
 
@@ -64,7 +64,7 @@ const ServiceCard = ({
             backgroundImage: `url(${service.image})`,
           }}
           onClick={() => navigate(`/services/${service.id}`)}
-        ></div>
+        />
         <div
           className="card__content w-100"
           onClick={() => navigate(`/services/${service.id}`)}

@@ -1,17 +1,17 @@
 import React from "react";
 import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
 
-import Homepage from "../pages/homepage/homepage";
-import FrequentlyAskedQuestions from "../pages/frequently-asked-questions/frequently-asked-questions";
-import Profile from "../pages/profile/profile";
-import Servkces from "../pages/services/services";
-import Login from "../pages/login/login";
-import Register from "../pages/register/register";
-import ServkceDetails from "../pages/service/service-details";
-import CreateService from "../pages/service/create-service";
-import OwnServices from "../pages/services/own-services";
-import CreatedOffers from "../pages/offers/created-offers";
-import ReceivedOffers from "../pages/offers/received-offers";
+import Homepage from "pages/homepage/homepage";
+import FrequentlyAskedQuestions from "pages/frequently-asked-questions/frequently-asked-questions";
+import Profile from "pages/profile/profile";
+import Servkces from "pages/services/services";
+import Login from "pages/login/login";
+import Register from "pages/register/register";
+import ServkceDetails from "pages/service/service-details";
+import CreateService from "pages/service/create-service";
+import OwnServices from "pages/services/own-services";
+import CreatedOffers from "pages/offers/created-offers";
+import ReceivedOffers from "pages/offers/received-offers";
 import Collaborations from "pages/collaborations/collaborations";
 
 const Routes = () => {

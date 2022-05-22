@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Notifications from "components/shared/notifications/notifications";
 
 import { clearSelectedCollaboration } from "actions/collaboration-actions";
-import { logoutUser } from "../../../actions/authentication-actions";
+import { logoutUser } from "actions/authentication-actions";
 
 const Navbar = ({
   id,
@@ -47,17 +47,14 @@ const Navbar = ({
                 <path
                   className="path1"
                   d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"
-                ></path>
-                <path className="path2" d="M 300 500 L 700 500"></path>
+                />
+                <path className="path2" d="M 300 500 L 700 500" />
                 <path
                   className="path3"
                   d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"
-                ></path>
+                />
               </svg>
-              <button
-                id="menu-icon-trigger"
-                className="menu-icon-trigger"
-              ></button>
+              <button id="menu-icon-trigger" className="menu-icon-trigger" />
             </div>
           </a>
 
@@ -68,9 +65,9 @@ const Navbar = ({
             aria-expanded="false"
             data-target="navbar-menu"
           >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
           </a>
         </div>
 
@@ -86,17 +83,14 @@ const Navbar = ({
                   <path
                     className="path1"
                     d="M 300 400 L 700 400 C 900 400 900 750 600 850 A 400 400 0 0 1 200 200 L 800 800"
-                  ></path>
-                  <path className="path2" d="M 300 500 L 700 500"></path>
+                  />
+                  <path className="path2" d="M 300 500 L 700 500" />
                   <path
                     className="path3"
                     d="M 700 600 L 300 600 C 100 600 100 200 400 150 A 400 380 0 1 1 200 800 L 800 200"
-                  ></path>
+                  />
                 </svg>
-                <button
-                  id="menu-icon-trigger"
-                  className="menu-icon-trigger"
-                ></button>
+                <button id="menu-icon-trigger" className="menu-icon-trigger" />
               </div>
             </a>
           </div>
@@ -138,9 +132,8 @@ const Navbar = ({
                 <div className="navbar-item has-dropdown is-hoverable">
                   <div className="notification">
                     <div
-                      className={`notBtn ${
-                        notifications.length === 0 && "noHover"
-                      }`}
+                      className={`notBtn ${notifications.length === 0 &&
+                        "noHover"}`}
                     >
                       <div className="badge">{notifications.length}</div>
                       <i className="bi bi-bell" />

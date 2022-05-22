@@ -11,11 +11,11 @@ import {
   COLLABORATION_STATUS,
   mapStatusToId,
 } from "constants/collaboration-status-constants";
-import { setSelectedCollaboration } from "../../../actions/collaboration-actions";
+import { setSelectedCollaboration } from "actions/collaboration-actions";
 import { onCollaboratorIsTypingStatusChange } from "../../../firebase/api/controllers/users-controller";
 import { onCollaborationMessagesChange } from "../../../firebase/api/controllers/collaborations-controller";
 
-import "../../../pages/collaborations/collaborations.scoped.scss";
+import "pages/collaborations/collaborations.scoped.scss";
 
 const CollaborationItem = ({
   collaboration,

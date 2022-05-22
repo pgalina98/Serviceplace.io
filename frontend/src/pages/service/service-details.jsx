@@ -6,11 +6,11 @@ import { connect, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { format } from "timeago.js";
 
-import Spinner from "../../components/utils/spinner/spinner";
-import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
-import { getServiceById } from "../../actions/service-actions";
-import OfferModal from "../../components/modals/offer-modal/offer-modal";
-import SerivceStatsCard from "../../components/cards/service-stats-card/service-stats-card";
+import Spinner from "components/utils/spinner/spinner";
+import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
+import { getServiceById } from "actions/service-actions";
+import OfferModal from "components/modals/offer-modal/offer-modal";
+import SerivceStatsCard from "components/cards/service-stats-card/service-stats-card";
 import { OFFER_STATUS } from "constants/offer-status-constants";
 import { Alert } from "reactstrap";
 

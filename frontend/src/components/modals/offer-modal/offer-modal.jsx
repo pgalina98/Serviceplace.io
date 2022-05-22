@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
 
-import { messages } from "../../../config/constants";
-import { TOAST_TYPES } from "../../../utils/toast-util";
+import { messages } from "config/constants";
+import { TOAST_TYPES } from "utils/toast-util";
 import { OFFER_STATUS } from "constants/offer-status-constants";
 
 import { saveOffer } from "actions/offer-actions";

@@ -5,9 +5,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Alert } from "reactstrap";
 
-import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
+import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
-import { getReceivedOffers } from "../../actions/offer-actions";
+import { getReceivedOffers } from "actions/offer-actions";
 
 import Spinner from "components/utils/spinner/spinner";
 import OfferCard from "components/cards/offer-card/offer-card";

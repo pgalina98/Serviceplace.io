@@ -1,5 +1,5 @@
-import { ACTION_TYPES } from "../actions/service-actions";
-import { SUCCESS } from "../utils/action-type-util";
+import { ACTION_TYPES } from "actions/service-actions";
+import { SUCCESS } from "utils/action-type-util";
 
 const initialState = {
   services: [],

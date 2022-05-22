@@ -11,12 +11,12 @@ import { OFFER_STATUS, mapIdToStatus } from "constants/offer-status-constants";
 import { TOAST_TYPES } from "utils/toast-util";
 import { messages } from "config/constants";
 
-import { acceptOffer, rejectOffer } from "../../../actions/offer-actions";
-import { createNewCollaboration } from "../../../actions/collaboration-actions";
+import { acceptOffer, rejectOffer } from "actions/offer-actions";
+import { createNewCollaboration } from "actions/collaboration-actions";
 import {
   saveNotification,
   createOfferAcceptedNotification,
-} from "../../../actions/notification-actions";
+} from "actions/notification-actions";
 
 import "./offer-card.scss";
 
