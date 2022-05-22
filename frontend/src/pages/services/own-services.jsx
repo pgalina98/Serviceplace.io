@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 
 import { Alert } from "reactstrap";
 
-import Spinner from "../../components/utils/spinner/spinner";
-import ServiceCard from "../../components/cards/service-card/service-card";
+import Spinner from "components/utils/spinner/spinner";
+import ServiceCard from "components/cards/service-card/service-card";
 
-import authenticatedBoundaryRoute from "../../router/authenticated-boundary-route/authenticated-boundary-route";
+import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 
-import { getLoggedUserServices } from "../../actions/service-actions";
+import { getLoggedUserServices } from "actions/service-actions";
 
 const OwnServices = ({ authenticationState }) => {
   const [services, setServices] = useState();

@@ -18,7 +18,7 @@ import {
   createOfferAcceptedNotification,
 } from "../../../actions/notification-actions";
 
-import "./offer-card.scoped.scss";
+import "./offer-card.scss";
 
 export const ACTIONS = {
   OFFER_REJECTING: 0,
