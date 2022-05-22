@@ -2,7 +2,7 @@ import React from "react";
 
 import { format } from "timeago.js";
 
-import "../../../pages/collaborations/collaborations.scss";
+import "../../../pages/collaborations/collaborations.scoped.scss";
 
 const Message = ({ side, data }) => {
   const convertToMiliseconds = (createdAt) => {

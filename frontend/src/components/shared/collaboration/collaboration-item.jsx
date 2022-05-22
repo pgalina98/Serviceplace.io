@@ -12,10 +12,10 @@ import {
   mapStatusToId,
 } from "constants/collaboration-status-constants";
 import { setSelectedCollaboration } from "../../../actions/collaboration-actions";
-
-import "../../../pages/collaborations/collaborations.scss";
 import { onCollaboratorIsTypingStatusChange } from "../../../firebase/api/controllers/users-controller";
 import { onCollaborationMessagesChange } from "../../../firebase/api/controllers/collaborations-controller";
+
+import "../../../pages/collaborations/collaborations.scoped.scss";
 
 const CollaborationItem = ({
   collaboration,
@@ -81,9 +81,8 @@ const CollaborationItem = ({
 
   return (
     <div
-      className={`view-wrap-item collaboration ${
-        isCollaborationItemSelected && "collaboration-item-selected"
-      }`}
+      className={`view-wrap-item collaboration ${isCollaborationItemSelected &&
+        "collaboration-item-selected"}`}
       onClick={() => handleCollaborationItemClick()}
     >
       <img
@@ -93,9 +92,8 @@ const CollaborationItem = ({
       />
       <div className="view-wrap-content-item d-flex align-items-center">
         <span
-          className={`text-item text-left ${
-            hasAnyUnreadMessage() && "font-weight-bold"
-          }`}
+          className={`text-item text-left ${hasAnyUnreadMessage() &&
+            "font-weight-bold"}`}
         >
           {collaborator.fullname}
         </span>

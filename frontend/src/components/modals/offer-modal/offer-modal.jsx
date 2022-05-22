@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import { useToasts } from "react-toast-notifications";
 import { Spinner } from "react-bootstrap";
@@ -14,9 +16,7 @@ import {
   saveNotification,
 } from "actions/notification-actions";
 
-import "./offer-modal.scss";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import "./offer-modal.scoped.scss";
 
 const OfferModal = (props) => {
   const navigate = useNavigate();
@@ -99,7 +99,7 @@ const OfferModal = (props) => {
       </button>
       <form onSubmit={handleSubmit(handleCreateOfferButtonClick)}>
         <div className={`modal ${isModalOpen && "is-active"}`}>
-          <div className="modal-background"></div>
+          <div className="modal-background" />
           <div className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">Make an offer</p>
@@ -107,7 +107,7 @@ const OfferModal = (props) => {
                 onClick={() => changeModalState(false)}
                 className="delete"
                 aria-label="close"
-              ></button>
+              />
             </header>
             <section className="modal-card-body">
               <div className="field">

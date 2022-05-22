@@ -12,7 +12,7 @@ import { TOAST_TYPES } from "../../utils/toast-util";
 
 import { saveService } from "../../actions/service-actions";
 
-import "./service.scss";
+import "./service.scoped.scss";
 
 const CreateService = ({ authenticationState }) => {
   const navigate = useNavigate();

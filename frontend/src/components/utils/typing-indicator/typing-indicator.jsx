@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./typing-indicator.scss";
+import "./typing-indicator.scoped.scss";
 
 const TypingIndicator = ({ forwardedRef, collaborator, hidden }) => {
   return (
@@ -10,9 +10,9 @@ const TypingIndicator = ({ forwardedRef, collaborator, hidden }) => {
     >
       <div className="view-wrap-item-left-wrapper">
         <div className="typing-indicator-left">
-          <span></span>
-          <span></span>
-          <span></span>
+          <span />
+          <span />
+          <span />
         </div>
         <img
           src={collaborator.avatar}

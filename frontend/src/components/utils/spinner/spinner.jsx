@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./spinner.scss";
+import "./spinner.scoped.scss";
 
 const Spinner = () => {
   return (

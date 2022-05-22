@@ -46,7 +46,7 @@ import { ENTER } from "constants/keyboard-keys-constants";
 import { messages } from "config/constants";
 import { TOAST_TYPES } from "utils/toast-util";
 
-import "./collaborations.scss";
+import "./collaborations.scoped.scss";
 
 const useIsMounted = () => {
   const isMounted = useRef(false);

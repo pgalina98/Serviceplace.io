@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./service-stats-card.scss";
+import "./service-stats-card.scoped.scss";
 
 export const ServiceStatsCard = () => {
   return (
@@ -182,22 +182,22 @@ export const ServiceStatsCard = () => {
           <div className="stats">
             <div>
               <div className="title">Awards</div>
-              <i className="fa fa-trophy"></i>
+              <i className="fa fa-trophy" />
               <div className="value">2</div>
             </div>
             <div>
               <div className="title">Matches</div>
-              <i className="fa fa-gamepad"></i>
+              <i className="fa fa-gamepad" />
               <div className="value">27</div>
             </div>
             <div>
               <div className="title">Pals</div>
-              <i className="fa fa-group"></i>
+              <i className="fa fa-group" />
               <div className="value">123</div>
             </div>
             <div>
               <div className="title">Coffee</div>
-              <i className="fa fa-coffee"></i>
+              <i className="fa fa-coffee" />
               <div className="value infinity">∞</div>
             </div>
           </div>

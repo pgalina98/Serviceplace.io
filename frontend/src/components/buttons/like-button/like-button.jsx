@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./like-button.scss";
+import "./like-button.scoped.scss";
 
 export const LikeButton = () => {
   return (
