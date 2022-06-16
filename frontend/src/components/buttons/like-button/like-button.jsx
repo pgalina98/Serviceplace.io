@@ -4,7 +4,7 @@ import "./like-button.scoped.scss";
 
 export const LikeButton = () => {
   return (
-    <div>
+    <div className="-mr-1">
       <input type="checkbox" id="checkbox" />
       <label htmlFor="checkbox">
         <svg

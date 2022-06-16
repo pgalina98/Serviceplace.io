@@ -19,6 +19,7 @@ import {
 } from "actions/notification-actions";
 
 import "./offer-card.scss";
+import LikeButton from "components/buttons/like-button/like-button";
 
 export const ACTIONS = {
   OFFER_REJECTING: 0,
@@ -94,8 +95,8 @@ const OfferCard = ({ data, showControlButtons = false }) => {
   };
 
   return (
-    <li>
-      <a href="" className="offer-card">
+    <div>
+      <a className="offer-card">
         <img
           src="https://mir-s3-cdn-cf.behance.net/project_modules/1400/63915d104315617.5f6084db8b877.jpg"
           className="offer-card_image"
@@ -103,7 +104,11 @@ const OfferCard = ({ data, showControlButtons = false }) => {
         />
         <div
           className="offer-card_overlay"
-          onClick={(event) => event.preventDefault()}
+          {...showControlButtons && {
+            onClick: (event) => {
+              event.preventDefault();
+            },
+          }}
         >
           <div className="offer-card_header">
             <img
@@ -123,24 +128,25 @@ const OfferCard = ({ data, showControlButtons = false }) => {
               </span>
             </div>
           </div>
-          <p className="offer-card_description">
-            <b>{offer.note}</b>
-            <br />
-            I'd like to join this learning journey for {
-              offer.requestedDuration
-            }{" "}
-            hours.
-          </p>
-          {showControlButtons && offer.status === OFFER_STATUS.PENDING && (
-            <FAB
-              savingState={savingState}
-              handleAcceptButtonClick={handleAcceptButtonClick}
-              handleRejectButtonClick={handleRejectButtonClick}
-            />
-          )}
+          <div className="d-flex align-items-center offer-card_description-wrapper">
+            <p className="offer-card_description">
+              <b>{offer.note}</b>
+              <br />
+              I'd like to join this learning journey for{" "}
+              {offer.requestedDuration} hours.
+            </p>
+            {showControlButtons && offer.status === OFFER_STATUS.PENDING && (
+              <FAB
+                savingState={savingState}
+                handleAcceptButtonClick={handleAcceptButtonClick}
+                handleRejectButtonClick={handleRejectButtonClick}
+              />
+            )}
+            {offer.status === OFFER_STATUS.FINISHED && <LikeButton />}
+          </div>
         </div>
       </a>
-    </li>
+    </div>
   );
 };
 

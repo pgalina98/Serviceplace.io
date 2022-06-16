@@ -98,12 +98,12 @@
 }
 
 .offer-card_description {
-  padding: 0 2em 2em;
+  font-size: 15px;
   margin: 0;
   color: #d7bdca;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-  width: 85%;
+  width: 80%;
+}
+
+.offer-card_description-wrapper {
+  padding: 0 2em 2em;
 }
