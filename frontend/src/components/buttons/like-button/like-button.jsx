@@ -2,10 +2,14 @@ import React from "react";
 
 import "./like-button.scoped.scss";
 
-export const LikeButton = () => {
+export const LikeButton = ({ handleLikeButtonClick }) => {
   return (
     <div className="-mr-1">
-      <input type="checkbox" id="checkbox" />
+      <input
+        type="checkbox"
+        id="checkbox"
+        onClick={() => handleLikeButtonClick()}
+      />
       <label htmlFor="checkbox">
         <svg
           id="heart-svg"

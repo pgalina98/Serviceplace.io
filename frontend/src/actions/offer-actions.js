@@ -89,3 +89,17 @@ export const updateOfferStatus = (offerId, status) => {
     return api.updateOffer(updatedDoc);
   });
 };
+
+export const likeOffer = (offerId) => {
+  return api.fetchOfferById(offerId).then((document) => {
+    const isLiked = document.data()?.isLiked ? !document.data()?.isLiked : true;
+
+    const updatedDoc = {
+      id: document.id,
+      ...document.data(),
+      isLiked,
+    };
+
+    return api.updateOffer(updatedDoc);
+  });
+};

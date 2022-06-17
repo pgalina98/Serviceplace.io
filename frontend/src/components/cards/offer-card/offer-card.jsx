@@ -11,7 +11,7 @@ import { OFFER_STATUS, mapIdToStatus } from "constants/offer-status-constants";
 import { TOAST_TYPES } from "utils/toast-util";
 import { messages } from "config/constants";
 
-import { acceptOffer, rejectOffer } from "actions/offer-actions";
+import { acceptOffer, likeOffer, rejectOffer } from "actions/offer-actions";
 import { createNewCollaboration } from "actions/collaboration-actions";
 import {
   saveNotification,
@@ -90,6 +90,10 @@ const OfferCard = ({ data, showControlButtons = false }) => {
       });
   };
 
+  const handleLikeButtonClick = () => {
+    likeOffer(offer.id);
+  };
+
   const convertToMiliseconds = (createdAt) => {
     return createdAt * 1000;
   };
@@ -142,7 +146,9 @@ const OfferCard = ({ data, showControlButtons = false }) => {
                 handleRejectButtonClick={handleRejectButtonClick}
               />
             )}
-            {offer.status === OFFER_STATUS.FINISHED && <LikeButton />}
+            {offer.status === OFFER_STATUS.FINISHED && (
+              <LikeButton handleLikeButtonClick={handleLikeButtonClick} />
+            )}
           </div>
         </div>
       </a>
