@@ -13,14 +13,19 @@ import OfferModal from "components/modals/offer-modal/offer-modal";
 import SerivceStatsCard from "components/cards/service-stats-card/service-stats-card";
 import { OFFER_STATUS } from "constants/offer-status-constants";
 import { Alert } from "reactstrap";
+import LikeButton from "components/buttons/like-button/like-button";
+import { likeServiceById } from "actions/service-actions";
 
 const ServiceDetails = ({ authenticationState }) => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  const { loggedUser } = authenticationState;
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [service, setService] = useState();
+  const [isLikeButtonActive, setIsLikeButtonActive] = useState(false);
 
   useEffect(() => {
     fetchServiceById(id);
@@ -33,8 +38,17 @@ const ServiceDetails = ({ authenticationState }) => {
       setService({
         ...service.payload,
       });
+      setIsLikeButtonActive(
+        service.payload.likes.some((user) => user.id === loggedUser.id)
+      );
       setIsLoading(false);
     });
+  };
+
+  const handleLikeButtonClick = () => {
+    setIsLikeButtonActive(!isLikeButtonActive);
+
+    likeServiceById(service.id, loggedUser.id);
   };
 
   if (isLoading) {
@@ -44,13 +58,21 @@ const ServiceDetails = ({ authenticationState }) => {
   const hasLoggedUserActiveOfferForService = () => {
     return service.offers.some(
       (offer) =>
-        offer.fromUser.id === authenticationState.loggedUser.id &&
+        offer.fromUser.id === loggedUser.id &&
         OFFER_STATUS.FINISHED !== offer.status
     );
   };
 
+  const hasLoggedUserFinishedOfferForService = () => {
+    return service.offers.some(
+      (offer) =>
+        offer.fromUser.id === loggedUser.id &&
+        OFFER_STATUS.FINISHED === offer.status
+    );
+  };
+
   const isServiceCreatedByLoggedUser = () => {
-    return service.createdBy.id === authenticationState.loggedUser.id;
+    return service.createdBy.id === loggedUser.id;
   };
 
   const createNicknameTag = () => {
@@ -74,7 +96,7 @@ const ServiceDetails = ({ authenticationState }) => {
             <SerivceStatsCard />
           </div>
           <div
-            className="column is-7 rounded-10 service-card-details"
+            className="rounded-10 service-card-details"
             style={{
               marginTop: "12px",
               boxShadow: "0 8px 16px -8px rgba(0, 0, 0, 0.4)",
@@ -103,13 +125,21 @@ const ServiceDetails = ({ authenticationState }) => {
                 </div>
               </div>
             </article>
-            <OfferModal
-              isOfferButtonHidden={
-                isServiceCreatedByLoggedUser() ||
-                hasLoggedUserActiveOfferForService()
-              }
-              service={service}
-            />
+            <div className="d-flex" style={{ position: "relative" }}>
+              <OfferModal
+                isOfferButtonHidden={
+                  isServiceCreatedByLoggedUser() ||
+                  hasLoggedUserActiveOfferForService()
+                }
+                service={service}
+              />
+              {hasLoggedUserFinishedOfferForService() && (
+                <LikeButton
+                  handleLikeButtonClick={handleLikeButtonClick}
+                  isActive={isLikeButtonActive}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

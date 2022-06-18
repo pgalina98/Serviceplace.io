@@ -2,13 +2,15 @@ import React from "react";
 
 import "./like-button.scoped.scss";
 
-export const LikeButton = ({ handleLikeButtonClick }) => {
+export const LikeButton = ({ handleLikeButtonClick, isActive }) => {
   return (
-    <div className="-mr-1">
+    <div style={{ position: "absolute", right: 0, top: 15 }}>
       <input
         type="checkbox"
         id="checkbox"
+        checked={isActive}
         onClick={() => handleLikeButtonClick()}
+        readOnly
       />
       <label htmlFor="checkbox">
         <svg

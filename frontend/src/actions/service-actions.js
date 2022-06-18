@@ -2,6 +2,8 @@ import { getDoc } from "firebase/firestore";
 
 import { SUCCESS } from "utils/action-type-util";
 
+import { createUserRef } from "../firebase/api/controllers/users-controller";
+
 import * as api from "../firebase/api/controllers/services-controller";
 
 export const ACTION_TYPES = {
@@ -23,8 +25,8 @@ export const getServices = () => {
   });
 };
 
-export const getServiceById = (id) => {
-  return api.fetchServiceById(id).then(async (document) => {
+export const getServiceById = (serviceId) => {
+  return api.fetchServiceById(serviceId).then(async (document) => {
     const userRef = document.data()["userRef"];
     const user = await getDoc(userRef);
 
@@ -79,4 +81,27 @@ export const getLoggedUserServices = (userId) => {
 
 export const deleteServiceById = (serviceId) => {
   return api.deleteServiceById(serviceId);
+};
+
+export const likeServiceById = (serviceId, userId) => {
+  return api.fetchServiceById(serviceId).then(async (document) => {
+    const userRef = await createUserRef(userId);
+
+    const userAlreadyLikeService = document
+      .data()
+      .likes.some((userRef) => userRef.id === userId);
+
+    const updatedDoc = {
+      id: document.id,
+      ...document.data(),
+    };
+
+    if (userAlreadyLikeService) {
+      updatedDoc.likes = updatedDoc.likes.filter((user) => user.id !== userId);
+    } else {
+      updatedDoc.likes.push(userRef);
+    }
+
+    return api.updateService(serviceId, updatedDoc);
+  });
 };

@@ -41,13 +41,14 @@ export const saveService = async (data, userId) => {
     await addDoc(servicesCollection, {
       ...data,
       offers: [],
+      likes: [],
     });
   } catch (error) {
     return Promise.reject(error);
   }
 };
 
-export const updateService = async (serviceId, offer) => {
+export const updateServiceWithNewOffer = async (serviceId, offer) => {
   const serviceRef = createServiceRef(serviceId);
   const document = await getDoc(serviceRef);
 
@@ -56,6 +57,16 @@ export const updateService = async (serviceId, offer) => {
     ...document.data(),
     offers: [...document.data()["offers"], offer],
   };
+
+  try {
+    return await updateDoc(serviceRef, updatedDoc);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const updateService = async (serviceId, updatedDoc) => {
+  const serviceRef = createServiceRef(serviceId);
 
   try {
     return await updateDoc(serviceRef, updatedDoc);

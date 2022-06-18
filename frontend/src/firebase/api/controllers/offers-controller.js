@@ -12,7 +12,10 @@ import {
 import { offersCollection } from "../../firestore-database/collections";
 
 import { createUserRef } from "./users-controller";
-import { createServiceRef, updateService } from "./services-controller";
+import {
+  createServiceRef,
+  updateServiceWithNewOffer,
+} from "./services-controller";
 
 export const saveOffer = async (data) => {
   try {
@@ -37,7 +40,7 @@ export const saveOffer = async (data) => {
 
     await setDoc(newOffer, data);
 
-    updateService(data.serviceRef.id, createOfferRef(newOffer.id));
+    updateServiceWithNewOffer(data.serviceRef.id, createOfferRef(newOffer.id));
   } catch (error) {
     return Promise.reject(error);
   }
