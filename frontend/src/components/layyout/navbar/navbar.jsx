@@ -33,7 +33,7 @@ const Navbar = ({
     >
       <div className="container">
         <div className="navbar-brand">
-          <Link to="/" className="navbar-item" style={{ marginBottom: 10 }}>
+          <Link to="/" className="navbar-item mb-10">
             <div className="title">Serviceplace.io</div>
           </Link>
 

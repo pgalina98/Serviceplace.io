@@ -15,8 +15,7 @@ export const ServiceStatsCard = () => {
             xmlns="http://www.w3.org/2000/svg"
             role="img"
             aria-labelledby="title desc"
-            className="center skin eyes hair line"
-            style={{ marginBottom: "24px" }}
+            className="center skin eyes hair line mb-24"
           >
             <defs>
               <clipPath id="scene">

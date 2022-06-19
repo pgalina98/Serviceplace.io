@@ -112,9 +112,8 @@ const CollaborationItem = ({
           <button
             onClick={handleJoinButtonClick}
             type="button"
-            className="btn btn-success w-75 mt-1"
+            className="btn btn-success w-75 mt-1 height-32 p-2"
             disabled={isJoinButtonDisabled()}
-            style={{ height: 32, padding: 2 }}
           >
             {savingState.isSaving &&
             savingState.collaboration?.id === collaboration?.id ? (

@@ -92,13 +92,12 @@ const ServiceDetails = ({ authenticationState }) => {
           </Alert>
         )}
         <div className="columns is-vcentered">
-          <div className="column is-5" style={{ paddingBottom: 0 }}>
+          <div className="column is-5 pb-0">
             <SerivceStatsCard />
           </div>
           <div
-            className="rounded-10 service-card-details"
+            className="rounded-10 service-card-details mt-12"
             style={{
-              marginTop: "12px",
               boxShadow: "0 8px 16px -8px rgba(0, 0, 0, 0.4)",
             }}
           >
@@ -109,7 +108,7 @@ const ServiceDetails = ({ authenticationState }) => {
                 </p>
               </figure>
               <div className="media-content">
-                <div className="content" style={{ padding: 0 }}>
+                <div className="content p-0">
                   <strong>{service.createdBy.fullname}</strong>{" "}
                   <small>
                     {format(
@@ -125,7 +124,7 @@ const ServiceDetails = ({ authenticationState }) => {
                 </div>
               </div>
             </article>
-            <div className="d-flex" style={{ position: "relative" }}>
+            <div className="d-flex position-relative">
               <OfferModal
                 isOfferButtonHidden={
                   isServiceCreatedByLoggedUser() ||
@@ -133,13 +132,7 @@ const ServiceDetails = ({ authenticationState }) => {
                 }
                 service={service}
               />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  marginLeft: "auto",
-                }}
-              >
+              <div className="d-flex flex-direction-column ml-auto">
                 <LikeButton
                   hasLoggedUserFinishedOfferForService={hasLoggedUserFinishedOfferForService()}
                   isActive={isLikeButtonActive()}

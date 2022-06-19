@@ -272,9 +272,7 @@ const Collaborations = ({ authenticationState }) => {
                 collaborator={getCollaborator(selectedCollaboration)}
                 hidden={!isCollaboratorTyping}
               />
-              <div
-                style={{ float: "left", clear: "both", backgroundColor: "red" }}
-              />
+              <div className="float-left" style={{ clear: "both" }} />
               <div ref={lastMessage} />
             </>
           ) : (

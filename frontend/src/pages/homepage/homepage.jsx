@@ -97,8 +97,7 @@ const Homepage = (props) => {
       </section>
       <section
         ref={availableServices}
-        className="section section-feature-grey is-medium"
-        style={{ paddingBottom: "20px" }}
+        className="section section-feature-grey is-medium pb-20"
       >
         <div className="container">
           <div className="title-wrapper has-text-centered">

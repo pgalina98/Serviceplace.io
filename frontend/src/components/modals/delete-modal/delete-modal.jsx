@@ -10,7 +10,7 @@ const DeleteModal = ({
 }) => {
   return (
     <div className={`modal ${isModalOpen && "is-active"}`}>
-      <div className="modal-background"></div>
+      <div className="modal-background" />
       <div className="modal-card">
         <header className="modal-card-head">
           <p className="modal-card-title">
@@ -20,10 +20,10 @@ const DeleteModal = ({
             onClick={handleCloseModal}
             className="delete"
             aria-label="close"
-          ></button>
+          />
         </header>
         <section className="modal-card-body">
-          <span style={{ float: "left" }}>
+          <span className="float-left">
             Service will be permanently deleted!
           </span>
         </section>

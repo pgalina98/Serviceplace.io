@@ -1469,68 +1469,83 @@ body #backtotop a {
   color: $white !important;
 }
 
-.mb-20 {
-  margin-bottom: 20px !important;
+@mixin mt($size) {
+  .mt-#{$size} {
+    margin-top: #{$size}px !important;
+  }
 }
 
-.mb-40 {
-  margin-bottom: 40px !important;
+@mixin mb($size) {
+  .mb-#{$size} {
+    margin-bottom: #{$size}px !important;
+  }
 }
 
-.mb-60 {
-  margin-bottom: 60px !important;
+@mixin -mb($size) {
+  .-mb-#{$size} {
+    margin-bottom: -#{$size}px !important;
+  }
 }
 
-.mt-20 {
-  margin-top: 20px !important;
+@mixin mr($size) {
+  .mr-#{$size} {
+    margin-right: #{$size}px !important;
+  }
 }
 
-.mt-30 {
-  margin-top: 30px !important;
+@mixin ml($size) {
+  .ml-#{$size} {
+    margin-left: #{$size}px !important;
+  }
 }
 
-.mt-40 {
-  margin-top: 40px !important;
+@mixin pb($size) {
+  .pb-#{$size} {
+    padding-bottom: #{$size}px !important;
+  }
 }
 
-.mt-50 {
-  margin-top: 50px !important;
+@mixin p($size) {
+  .p-#{$size} {
+    padding: #{$size}px !important;
+  }
 }
 
-.mt-60 {
-  margin-top: 60px !important;
-}
+@include mt(5);
+@include mt(12);
+@include mt(20);
+@include mt(30);
+@include mt(40);
+@include mt(50);
+@include mt(60);
 
-.ml-30 {
-  margin-left: 30px !important;
-}
+@include mb(10);
+@include mb(20);
+@include mb(24);
+@include mb(40);
+@include mb(60);
 
-.ml-40 {
-  margin-left: 40px !important;
-}
+@include -mb(10);
 
-.ml-50 {
-  margin-left: 50px !important;
-}
+@include ml(30);
+@include ml(40);
+@include ml(50);
+@include ml(60);
+@include ml(70);
 
-.ml-60 {
-  margin-left: 60px !important;
-}
+@include pb(0);
+@include pb(20);
+@include pb(40);
 
-.ml-70 {
-  margin-left: 70px !important;
+@include p(0);
+@include p(2);
+
+.ml-auto {
+  margin-left: auto !important;
 }
 
 .huge-pb {
   padding-bottom: 100px;
-}
-
-.pb-20 {
-  padding-bottom: 20px !important;
-}
-
-.pb-40 {
-  padding-bottom: 40px !important;
 }
 
 //Input placeholders
@@ -1997,4 +2012,28 @@ a {
   height: 250px;
   width: 100%;
   padding: 25px;
+}
+
+.float-left {
+  float: left;
+}
+
+@mixin height($size) {
+  .height-#{$size} {
+    height: #{$size}px !important;
+  }
+}
+
+@include height(32);
+
+.position-relative {
+  position: relative;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-direction-column {
+  flex-direction: column;
 }

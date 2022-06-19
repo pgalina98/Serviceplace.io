@@ -8,7 +8,7 @@ export const LikeButton = ({
   handleLikeButtonClick,
 }) => {
   return (
-    <div style={{ marginBottom: "-10px", marginTop: "5px" }}>
+    <div className="-mb-10 mt-5">
       <input
         type="checkbox"
         id="checkbox"
