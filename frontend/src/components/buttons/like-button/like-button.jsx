@@ -2,13 +2,17 @@ import React from "react";
 
 import "./like-button.scoped.scss";
 
-export const LikeButton = ({ handleLikeButtonClick, isActive }) => {
+export const LikeButton = ({
+  hasLoggedUserFinishedOfferForService,
+  isActive,
+  handleLikeButtonClick,
+}) => {
   return (
-    <div style={{ position: "absolute", right: 0, top: 15 }}>
+    <div style={{ marginBottom: "-10px", marginTop: "5px" }}>
       <input
         type="checkbox"
         id="checkbox"
-        checked={isActive}
+        checked={isActive || !hasLoggedUserFinishedOfferForService}
         onClick={() => handleLikeButtonClick()}
         readOnly
       />

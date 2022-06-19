@@ -102,6 +102,8 @@ export const likeServiceById = (serviceId, userId) => {
       updatedDoc.likes.push(userRef);
     }
 
-    return api.updateService(serviceId, updatedDoc);
+    api.updateService(serviceId, updatedDoc);
+
+    return updatedDoc;
   });
 };

@@ -25,7 +25,6 @@ const ServiceDetails = ({ authenticationState }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [service, setService] = useState();
-  const [isLikeButtonActive, setIsLikeButtonActive] = useState(false);
 
   useEffect(() => {
     fetchServiceById(id);
@@ -38,17 +37,14 @@ const ServiceDetails = ({ authenticationState }) => {
       setService({
         ...service.payload,
       });
-      setIsLikeButtonActive(
-        service.payload.likes.some((user) => user.id === loggedUser.id)
-      );
       setIsLoading(false);
     });
   };
 
   const handleLikeButtonClick = () => {
-    setIsLikeButtonActive(!isLikeButtonActive);
-
-    likeServiceById(service.id, loggedUser.id);
+    likeServiceById(service.id, loggedUser.id).then((response) => {
+      setService({ ...service, likes: response.likes });
+    });
   };
 
   if (isLoading) {
@@ -73,6 +69,10 @@ const ServiceDetails = ({ authenticationState }) => {
 
   const isServiceCreatedByLoggedUser = () => {
     return service.createdBy.id === loggedUser.id;
+  };
+
+  const isLikeButtonActive = () => {
+    return service.likes.some((user) => user.id === loggedUser.id);
   };
 
   const createNicknameTag = () => {
@@ -133,12 +133,26 @@ const ServiceDetails = ({ authenticationState }) => {
                 }
                 service={service}
               />
-              {hasLoggedUserFinishedOfferForService() && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginLeft: "auto",
+                }}
+              >
                 <LikeButton
+                  hasLoggedUserFinishedOfferForService={hasLoggedUserFinishedOfferForService()}
+                  isActive={isLikeButtonActive()}
                   handleLikeButtonClick={handleLikeButtonClick}
-                  isActive={isLikeButtonActive}
                 />
-              )}
+                <small>
+                  {isLikeButtonActive()
+                    ? service.likes.length === 1
+                      ? `You and 0 others`
+                      : `You and ${service.likes.length} others`
+                    : `${service.likes.length} others`}
+                </small>
+              </div>
             </div>
           </div>
         </div>
