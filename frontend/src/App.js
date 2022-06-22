@@ -4,9 +4,9 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 
 import Spinner from "components/utils/spinner/spinner";
-import Sidebar from "./components/layyout/sidebar/sidebar";
-import Navbar from "components/layyout/navbar/navbar";
-import Routes from "./router/routes";
+import Sidebar from "components/layout/sidebar/sidebar";
+import Navbar from "components/layout/navbar/navbar";
+import Routes from "router/routes";
 
 import {
   setAuthenticatedUser,
