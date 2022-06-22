@@ -1,19 +1,28 @@
 import React from "react";
 
+import { connect } from "react-redux";
+
 import "./like-button.scoped.scss";
 
 export const LikeButton = ({
   hasLoggedUserFinishedOfferForService,
   isActive,
   handleLikeButtonClick,
+  authenticationState,
 }) => {
+  const { loggedUser } = authenticationState;
+
   return (
     <div className="-mb-10 mt-5">
       <input
         type="checkbox"
         id="checkbox"
         checked={isActive || !hasLoggedUserFinishedOfferForService}
-        onClick={() => handleLikeButtonClick()}
+        {...loggedUser?.id && {
+          onClick: () => {
+            handleLikeButtonClick();
+          },
+        }}
         readOnly
       />
       <label htmlFor="checkbox">
@@ -21,6 +30,7 @@ export const LikeButton = ({
           id="heart-svg"
           viewBox="467 392 58 57"
           xmlns="http://www.w3.org/2000/svg"
+          className={loggedUser?.id && "cursor-pointer"}
         >
           <g
             id="Group"
@@ -83,4 +93,8 @@ export const LikeButton = ({
   );
 };
 
-export default LikeButton;
+const mapStateToProps = (state) => ({
+  authenticationState: state.authenticationState,
+});
+
+export default connect(mapStateToProps)(LikeButton);

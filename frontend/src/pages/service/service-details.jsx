@@ -7,7 +7,6 @@ import { useParams } from "react-router";
 import { format } from "timeago.js";
 
 import Spinner from "components/utils/spinner/spinner";
-import authenticatedBoundaryRoute from "router/authenticated-boundary-route/authenticated-boundary-route";
 import { getServiceById } from "actions/service-actions";
 import OfferModal from "components/modals/offer-modal/offer-modal";
 import SerivceStatsCard from "components/cards/service-stats-card/service-stats-card";
@@ -51,7 +50,15 @@ const ServiceDetails = ({ authenticationState }) => {
     return <Spinner />;
   }
 
+  const isAuthenticated = () => {
+    return loggedUser?.id || false;
+  };
+
   const hasLoggedUserActiveOfferForService = () => {
+    if (!isAuthenticated()) {
+      return false;
+    }
+
     return service.offers.some(
       (offer) =>
         offer.fromUser.id === loggedUser.id &&
@@ -60,6 +67,10 @@ const ServiceDetails = ({ authenticationState }) => {
   };
 
   const hasLoggedUserFinishedOfferForService = () => {
+    if (!isAuthenticated()) {
+      return false;
+    }
+
     return service.offers.some(
       (offer) =>
         offer.fromUser.id === loggedUser.id &&
@@ -68,10 +79,17 @@ const ServiceDetails = ({ authenticationState }) => {
   };
 
   const isServiceCreatedByLoggedUser = () => {
+    if (!isAuthenticated()) {
+      return false;
+    }
+
     return service.createdBy.id === loggedUser.id;
   };
 
   const isLikeButtonActive = () => {
+    if (!isAuthenticated()) {
+      return false;
+    }
     return service.likes.some((user) => user.id === loggedUser.id);
   };
 
@@ -128,7 +146,8 @@ const ServiceDetails = ({ authenticationState }) => {
               <OfferModal
                 isOfferButtonHidden={
                   isServiceCreatedByLoggedUser() ||
-                  hasLoggedUserActiveOfferForService()
+                  hasLoggedUserActiveOfferForService() ||
+                  !isAuthenticated()
                 }
                 service={service}
               />
@@ -156,8 +175,7 @@ const ServiceDetails = ({ authenticationState }) => {
 
 const mapStateToProps = (state) => ({
   service: state.servicesState.selectedService,
+  authenticationState: state.authenticationState,
 });
 
-export default connect(mapStateToProps)(
-  authenticatedBoundaryRoute(ServiceDetails)
-);
+export default connect(mapStateToProps)(ServiceDetails);

@@ -1,5 +1,4 @@
 svg {
-  cursor: pointer;
   overflow: visible;
   width: 60px;
   #heart {
@@ -9,6 +8,10 @@ svg {
   #main-circle {
     transform-origin: 29.5px 29.5px;
   }
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 #checkbox {
